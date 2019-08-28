@@ -86,7 +86,7 @@ public class ProductController {
                 System.out.println(mtfRequest.getServletContext().getContextPath());
                 destinationFile.getParentFile().mkdirs(); 
                 
-            	prodImg.setImgnum(prod.getProductnum());
+            	prodImg.setImgnum(prod.getProductseq());
             	prodImg.setFileName(destinationFileName);
             	prodImg.setFileUrl(uploadFileDir);
                 prodImg.setDetailnum(detailNum);
@@ -117,7 +117,7 @@ public class ProductController {
 				op.setOptioncontent(optionContent[i]);
 				op.setOptionname(optionName[i]);
 				op.setOptionprice(optionPrice[i]);
-				op.setProductseq(prod.getProductnum());
+				op.setProductseq(prod.getProductseq());
 				opService.insertOption(op);
 			}
 		}
@@ -139,7 +139,7 @@ public class ProductController {
 	
 	@GetMapping("/product_getProduct2")
 	public ModelAndView product_getProduct(ModelAndView mav,Product prod) {
-		System.out.println("번호 :"+prod.getProductnum());
+		System.out.println("번호 :"+prod.getProductseq());
 		mav.setViewName("product_getProduct2");
 		mav.addObject("proDe", service.getProd(prod));
 		mav.addObject("proDeImg", imgService.getProdImg(prod));
@@ -158,7 +158,7 @@ public class ProductController {
 		buc.setPrice(Integer.parseInt(request.getParameter("price")));
 		buc.setQuantity(Integer.parseInt(request.getParameter("quantity")));
 		buc.setSellername(request.getParameter("name"));   //나중에 스토에 이름으로 변경
-		buc.setBucketowner(Long.parseLong(request.getParameter("owner")));
+		buc.setUserseq(Long.parseLong(request.getParameter("owner")));
 		service.insertBucket(buc);
 		return "redirect:newbucketlist";
 		

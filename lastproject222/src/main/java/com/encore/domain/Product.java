@@ -17,13 +17,13 @@ import lombok.ToString;
 public class Product {
 	@Id
 	@GeneratedValue
-	private Long productnum;
+	private Long productseq;//num->seq변경
 	private String Name;
 	private int price;
-	private int discount;
 	private int jaego;
 	private String editor;
 	private Long optionseq;
+	private int discount;
 	private String categorybig;
 	private String categorysmall;
 	

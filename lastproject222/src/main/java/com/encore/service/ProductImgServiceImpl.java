@@ -37,7 +37,7 @@ public class ProductImgServiceImpl implements ProductImgService {
 	
 	@Override
 	public List<ProductImg> getProdImg(Product prod) {
-		List<ProductImg> list=rep.findByImgnum(prod.getProductnum());
+		List<ProductImg> list=rep.findByImgnum(prod.getProductseq());
 		System.out.println("이미지 "+list.get(0).getFileName());
 		return list;
 	}

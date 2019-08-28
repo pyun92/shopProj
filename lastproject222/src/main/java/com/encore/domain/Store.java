@@ -4,12 +4,23 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
 @Entity
+@ToString
+@Table(name="store")
 public class Store {
 
 	@Id
+	@GeneratedValue
 	private Long storeseq;//주인아이디시퀀스들어감
 	
 	@Column(nullable = false)
@@ -28,10 +39,10 @@ public class Store {
 	private String storeemail;//사업자이메일
 	
 	@Column(nullable = false)
-	private Date requestdate;//글등록시간
+	private String requestdate;//글등록시간
 	
 	@Column(nullable = true)
-	private Date confirmdate;
+	private String confirmdate;
 	
 	
 	
