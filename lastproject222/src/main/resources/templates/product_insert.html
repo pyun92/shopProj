@@ -364,7 +364,7 @@ function fileReader(file){
 	reader.onload=function(e){
 		console.log("파일의 인덱스"+index);
 		index++
-		$("#img_full").append("<div class='"+index+"del col s4' height=168px><a href=javascript:void(0) onclick=re("+index+")><img src='"+e.target.result+"' width=100% height=100%></a></div>");
+		$("#img_full").append("<div class='"+index+"del col s4' style='height:200px;'><a href=javascript:void(0) onclick=re("+index+")><img src='"+e.target.result+"' width=100% height=100%></a></div>");
 	}
 	reader.readAsDataURL(file);
 }

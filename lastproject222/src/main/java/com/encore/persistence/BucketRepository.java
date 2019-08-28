@@ -8,5 +8,5 @@ import com.encore.domain.Bucket;
 
 public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	
-	List<Bucket> findByBucketowner(Long num);
+	List<Bucket> findByUserseq(Long num);
 }

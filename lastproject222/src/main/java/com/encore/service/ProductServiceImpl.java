@@ -49,17 +49,23 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Bucket> findallbucket(Long userseq) {
 		
-		return (List<Bucket>)buc.findByBucketowner(userseq);
+		return (List<Bucket>)buc.findByUserseq(userseq);
 	}
 
 	@Override
 	public void quantitymodify(Bucket data) {
-		Bucket bucketq = buc.findById(data.getBucketseq()).get();
-		
-		bucketq.setQuantity(data.getQuantity());
-		buc.save(bucketq);
+		// TODO Auto-generated method stub
 		
 	}
+
+	/*
+	 * @Override public void quantitymodify(Bucket data) { Bucket bucketq =
+	 * buc.findById(data.getBucketseq()).get();
+	 * 
+	 * bucketq.setQuantity(data.getQuantity()); buc.save(bucketq);
+	 * 
+	 * }
+	 */
 	
 //	@Override
 //	public void updateBoard(Board3 board) {

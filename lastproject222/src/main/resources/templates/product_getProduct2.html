@@ -59,14 +59,14 @@ height: 100%;
 			
 			 <div class="carousel carousel-slider center" >
     		 	<div class="carousel-item"  th:each="pro:${proDeImg}">
-    				<img class="total-image" th:src="@{/image/upload/}+${pro.fileName}">
+    				<img class="total-image" th:src="@{../upload/}+${pro.fileName}">
     				<input type="hidden" th:value="${pro.fileName}" name="filename">
    			 	</div>
   			</div>
 			</div>
 		<!-- 제품명,가격,판매수량,옵션 -->
 			<div class="col s6">
-			<input type="hidden" th:value="${proDe.productnum}" name="productnum">
+			<input type="hidden" th:value="${proDe.productseq}" name="productseq">
 			<input type="hidden" th:value="${proDe.name}" name="name">
 			<input type="hidden" th:value="${proDe.discount}" name="discount">
 			<input type="hidden" th:value="${proDe.price}" name="price">

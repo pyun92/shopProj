@@ -5,7 +5,9 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -20,7 +22,8 @@ import lombok.ToString;
 public class Store {
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name = "STORE", sequenceName = "STORE_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "STORE")
 	private Long storeseq;//주인아이디시퀀스들어감
 	
 	@Column(nullable = false)

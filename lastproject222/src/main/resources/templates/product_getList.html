@@ -73,11 +73,11 @@ padding-top: 60px;
     
     <!-- 상품한개 -->
     <div class="col s12 l3" th:each="prodall : ${prodall}">
-    <th:block th:each="procimgdetail:${procimgdetail}" th:if="${prodall.productnum}==${procimgdetail.imgnum}"> 
+    <th:block th:each="procimgdetail:${procimgdetail}" th:if="${prodall.productseq}==${procimgdetail.imgnum}"> 
       <div class="card" >
-      <a th:href="@{/product_getProduct2(productnum=${prodall.productnum})}"><!--  @{/getBoard(seq=${board.seq})} -->
+      <a th:href="@{/product_getProduct2(productseq=${prodall.productseq})}"><!--  @{/getBoard(seq=${board.seq})} -->
         <div class="card-image" >
-          <img th:src="@{/image/upload/}+${procimgdetail.fileName}" >
+          <img th:src="@{../upload/}+${procimgdetail.fileName}" >
           <span class="card-title" style="color: black;"><th:block th:text="${procimgdetail.imgnum}" ></th:block> </span>
         </div>
         <div class="card-content">

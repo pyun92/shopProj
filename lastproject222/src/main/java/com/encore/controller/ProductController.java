@@ -69,6 +69,7 @@ public class ProductController {
         prod.setJaego(Integer.parseInt(mtfRequest.getParameter("jaego")));
         prod.setPrice(Integer.parseInt(mtfRequest.getParameter("price")));
         prod.setDiscount(Integer.parseInt(mtfRequest.getParameter("discount")));
+        prod.setEditor("ddd");  //나중에 변경
         prod.setStoreseq(userdata.getUserseq());
         service.insertProd(prod); //게시글 insert
         Long detailNum= (long) 0.0;

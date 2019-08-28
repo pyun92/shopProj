@@ -97,9 +97,9 @@ th{
 		</tr>
 		
 		<tr th:each="proc:${proc}">
-				<th:block  th:each="procimg:${procimg}" th:if="${proc.productnum}==${procimg.imgnum}">
+				<th:block  th:each="procimg:${procimg}" th:if="${proc.productseq}==${procimg.imgnum}">
 				<td class="list_img">
-					<img th:src="@{/image/upload/}+${procimg.fileName}"> 
+					<img th:src="@{/upload/}+${procimg.fileName}"> 
 				</td>
 				</th:block>
 			

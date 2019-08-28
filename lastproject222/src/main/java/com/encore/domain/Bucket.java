@@ -2,6 +2,7 @@ package com.encore.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.SequenceGenerators;
@@ -16,7 +17,8 @@ import lombok.Data;
 public class Bucket {
 
 	@Id
-	@SequenceGenerator(name = "bucketseq", sequenceName = "TEAM_SEQ", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "bucketseq", sequenceName = "BUCKET_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "bucketseq")
 	private Long bucketseq;
 
 	private Long userseq;

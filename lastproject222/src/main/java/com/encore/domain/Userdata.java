@@ -3,7 +3,9 @@ package com.encore.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.validator.constraints.UniqueElements;
 
@@ -14,7 +16,8 @@ import lombok.Data;
 public class Userdata {
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name = "USERDATA", sequenceName = "USERDATA_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "USERDATA")
 	private Long userseq;
 	
 	@Column(unique = true)
