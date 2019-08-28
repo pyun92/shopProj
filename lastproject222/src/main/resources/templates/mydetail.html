@@ -1,0 +1,260 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.container.row{
+padding-top: 50px;
+}
+.contnet{
+padding: 0px;
+margin-left: 24;
+}
+.info-top{
+background-color: #555555;
+padding: 22px 24px;
+height: 76px;
+}
+.info-top h1{
+	margin: 0px;
+}
+.txt{
+font-size: 21px;
+font-family:맑은고딕;
+color:black;
+margin-top: 0;
+}
+.info-under{
+margin: 0;
+height:109px;
+}
+.info-under-item1.col.s3.m3.l3{
+padding: 24px;
+border-left: 1px solid #d9d9d9;
+border-right: 1px solid #d9d9d9;
+border-bottom: 1px solid #d9d9d9;
+}
+
+
+.info-under-item.col.s3.m3.l3{
+padding: 24px;
+border-right: 1px solid #d9d9d9;
+border-bottom: 1px solid #d9d9d9;
+}
+
+.label{
+vertical-align: top;
+font-size:16px;
+font-weight: bold;
+margin: 0px;
+}
+.value{
+display: block;
+font-size: 24px;
+color: red;
+}
+
+.order-title, .favor-maker,.recent-item{
+padding-top: 40px;
+padding-bottom: 8px;
+margin-bottom: 16px;
+border-bottom: 1px solid #555	;
+}
+
+.empty-msg,.faver-empty-msg ,.recent-empty-msg{
+padding-bottom: 60px;
+padding-top: 60px;
+text-align: center;
+
+}
+.msg-alarm-msg.col.s6.m6.l6 ,.msg-alarm-alarm.col.s6.m6.l6{
+margin-bottom: 16px;
+
+}
+
+.msg-title,.alarm-title{
+padding-top: 40px;
+padding-bottom: 8px;
+margin-bottom: 16px;
+border-bottom: 1px solid #555;
+
+}
+
+.alarm-item-list,.msg-item-list{
+margin-left: 8px;
+margin-top: 8px;
+margin-bottom:0px;
+height: 100%;
+
+}
+.alarm-item-list > li,.msg-item-list > li{
+padding:16px 12px;
+width: 418px;
+height: 95px;
+
+}
+
+.msg-item-info.col.s9.m9.l9 > span,.alarm-item-info.col.s9.m9.l9>span{
+font-size: 16px;
+font-family: 맑은고딕;
+
+}
+.msg-item-info.col.s9.m9.l9 > p,.alarm-item-info.col.s9.m9.l9>span{
+font-size: 12px;
+margin: 0;
+}
+
+.recent-item-card.col.s3.m3.l3{
+
+
+}
+.recent-card{
+border: 1px solid #d9d999;
+}
+.recent-card-content{
+height: 96px;
+padding: 8px 10px;
+}
+
+.col.s2.m2.l2.side{
+padding-right: 10px;
+}
+</style>
+</head>	
+<body>
+	<!-- 개인정보 외각 -->
+	<div class="container row" >
+		
+		<!-- 사이드바 불러오는 부분 -->
+		<th:block th:include="myinfoside.html"></th:block>
+		
+		<!-- 내정보 시작  -->
+		<div class="col s10 m10 l10 content">
+			<div class="info-top">
+			<h1 class="txt">MY 정보</h1> 
+			</div>
+			
+			<!-- 주문내역 및 쿠폰 간략보기  -->
+			
+				<ul class="info-under">
+					<li><div class="info-under-item1 col s3 m3 l3">
+					<strong class="label">적립금</strong>
+					<a href="#" class="value">0P</a></div></li>
+					
+					<li><div class="info-under-item col s3 m3 l3">
+					<strong class="label">할인 쿠폰</strong>
+					<a href="#" class="value">0</a></div></li>
+					
+					<li><div class="info-under-item col s3 m3 l3">
+					<strong class="label">발송 완료</strong>
+					<a href="#" class="value">0</a></div></li>
+					
+					<li><div class="info-under-item col s3 m3 l3">
+					<strong class="label">취소/환불 요청</strong>
+					<a href="#" class="value">0</a></div></li>
+				</ul>
+		
+			
+			<!-- 최근 주문 내역 -->
+			<div class="order-title">
+				<h2 class="label">최근 주문 내역</h2>
+			</div>
+			<p class="empty-msg">최근 1개월 주문한 내용이 없습니다</p>
+			
+			<!-- 메시지 와 알림창  -->
+			<div class="msg-alarm">
+				<div class="msg-alarm-msg col s6 m6 l6">
+					<div class="msg-title">
+						<h2 class="label">안읽은 메시지</h2>
+					</div>
+					
+					<ul class="msg-item-list">
+						<li> <a href="#">
+							<div class="msg-item-info col s3 m3 l3">
+								<i class="fas fa-user-check fa-3x"></i> 
+							</div>
+							<div class="msg-item-info col s9 m9 l9">
+								<span style="color: black;">마당</span>
+								<p>제가 신규 가입 뇌물로 아이디어스 최고 회원등급인 금손 등급으로 올려드렸어요.</p>
+							</div>
+						</a></li>
+					</ul>
+				</div>
+
+				
+				
+				
+				<div class="msg-alarm-alarm col s6 m6 l6">
+					<div class="alarm-title">
+						<h2 class="label">알림</h2>
+					</div>
+					<!-- 내용 시작 -->
+					<ul class="alarm-item-list">
+						<li> 
+							<a href="#">
+								<div class="alarm-item-info col s3 m3 l3">
+									<i class="fas fa-user-check fa-3x"></i> 
+								</div>
+								<div class="alarm-item-info col s9 m9 l9">
+									<span style="color: black;">(쿠폰)마당</span>
+									<p>신규 가입 쿠폰</p>
+								</div>
+							</a>
+						</li>
+						
+						<li> 
+							<a href="#">
+								<div class="alarm-item-info col s3 m3 l3">
+									<i class="fas fa-user-check fa-3x"></i> 
+								</div>
+								<div class="alarm-item-info col s9 m9 l9">
+									<span style="color: black;">(쿠폰)마당</span>
+									<p>신규 가입 쿠폰</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+					
+				</div>
+			</div>
+			
+			<!-- 좋아하는 작가 -->
+			<div class="favor-maker">
+				<h2 class="label">좋아하는 작가</h2>
+			</div>
+			<p class="faver-empty-msg">좋아하는 작가가 없습니다</p>
+			
+			<!-- 최근 본 작품 -->
+			<div class="recent-item">
+				<h2 class="label">최근 본 작품</h2>
+			</div>
+			<!-- <p class="recent-empty-msg">최근 본 작품이 없습니다</p> -->
+			
+			<!-- 본작품이 있으면 저장되고 내용 출력 -->
+			  <div class="row">
+			
+			    <div class="col s12 m12 l12" style="padding: 0;">
+			    <th:block th:each="num:${#numbers.sequence(1,4)}">
+			    <div class="recent-item-card col s3 m3 l3">
+			      <div class="recent-card">
+			        <div class="recent-card-image">
+			          <img src="image/a.jpg" style="width: 100%;">			      
+			        </div>
+			        <div class="recent-card-content">
+			        <a href="#">
+			         <p style="color:#999999;margin: 0;">착한 음식</p>
+			         <p style="color:black;margin: 0;">직접 농사한 콩으로 만든!</p>
+			        </a> 
+			        </div>
+			      </div>
+			    </div>
+			    </th:block>
+			    </div>
+			  </div>
+		</div>
+	</div>
+	<th:block th:include="footer.html"></th:block>
+</body>
+</html>

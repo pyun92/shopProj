@@ -1,0 +1,43 @@
+	<th:block th:include="main.html" ></th:block>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.label{
+vertical-align: top;
+font-size:30px;
+font-weight: bold;
+margin: 0px;
+}
+
+.account-title {
+padding-bottom: 8px;
+margin-bottom: 20px;
+border-bottom: 2px solid #555;
+}
+</style>
+</head>
+<body>
+<div class="container row" >
+	<th:block th:include="myinfoside.html" ></th:block>
+				
+	<div class="content-body col s10 m10 l10 ">
+		<div class="point-info">
+			<div class="total-point">
+				<span> 현제 적립금</span>
+				<h2 clas> 0P</h2>		
+			</div>
+		</div>
+		
+		
+		
+		
+		<div class="account-title">
+			<h2 class="label">적립금</h2>
+		</div>
+	</div>
+</div>
+</body>
+</html>

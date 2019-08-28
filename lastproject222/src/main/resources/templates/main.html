@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" type="text/css" href="main.css">
+
+ <!--  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>-->
+<!-- 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css" integrity="sha256-13EKEXRsynh3cmmNF1dlW6uvoC1SZVaW94bIHZQJoMU=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha256-OweaP/Ic6rsV+lysfyS4h+LM6sRwuO3euTYfr6M124g=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js" integrity="sha256-6DDZX77BrYnAmK9a3N3tvNPtyTIk1q1w9iW+UBtot3Y=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/aj	ax/libs/materialize/1.0.0/js/materialize.min.js" integrity="sha256-U/cHDMTIHCeMcvehBv1xQ052bPSbJtbuiw4QA9cTKz0=" crossorigin="anonymous"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+	-->
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet"> -->
+<!-- 폰트 어썸 -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" integrity="sha256-U/cHDMTIHCeMcvehBv1xQ052bPSbJtbuiw4QA9cTKz0=" crossorigin="anonymous"></script>
+
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="navbar-fixed-top ">
+		<nav class="nav-fix col s12 m12 l12">
+			<!--  Logo 부분-->
+			<div class="row top-menu">
+				<div class="col s3 m3 l3" style="align: center;">
+					<a href="welcome">
+					<img alt="logo" src="/image/logo.png"
+						style="width: 80px; height: 80px;">
+					</a>
+				</div>
+			
+				<!--검색 text-->
+				<div class="col s6 m6 l6 search-bar" style="padding: 0;">
+					<div class="col s10 m10 l10" id="search">
+						<input type="text" class="search" placeholder="검색어 입력"
+							>
+					</div>
+
+					<!--검색 버튼-->
+					<button class="div-search btn col s2 m2 l2">검색</button>
+				</div>
+
+				<!--실시간 검색어-->
+				<div class="col s1 m1 l1">검색어</div>
+				
+				<!--회원가입 ,장바구니 -->
+				<div class="col s2 m2 l2">
+				
+					<th:block th:if="${session['data'] == null}">
+					 <div class="bucket-icon col s4 m4 l4"> 
+					<!-- 회원가입 모달창 -->
+							<a href="#loginModal" class="modal-trigger">
+							<ul>
+				              <li>
+				              <i class="fas fa-user-check fa-3x"></i>       
+				  			 </li>
+				  			  <li style="color: black; padding: 0">로그인</li>
+				  			 </ul>
+				  			  </a>
+				  		</div>
+				  		 <div class="bucket-icon col s4 m4 l4"> 	
+				  			<a href="reg" class="modal-trigger">
+							 <ul>
+				              <li>
+				              <i class="fas fa-user-check fa-3x"></i>       
+				  			 </li>
+				  			  <li style="color: black; padding: 0">회원가입</li>
+				  			 </ul>
+				  			  </a>
+				  		</div>  
+						</th:block> 
+						
+
+						
+						<th:block th:if="${session['data'] != null}"> 
+						<div class="bucket-icon col s4 m4 l4"> 
+							<a href="logout" class="modal-trigger">
+							 <ul>
+				              <li>
+				              <i class="fas fa-user-check fa-3x"></i>       
+				  			 </li>
+				  			  <li style="color: black; padding: 0">로그아웃</li>
+				  			 </ul>
+				  			  </a>
+				  		</div>
+				  		
+				  		<div class="bucket-icon col s4 m4 l4"> 
+							<a href="mydetail" class="modal-trigger">
+							 <ul>
+				              <li>
+				              <i class="fas fa-user-check fa-3x"></i>       
+				  			 </li>
+				  			  <li style="color: black; padding: 0">개인정보</li>
+				  			 </ul>
+				  			  </a>
+				  		</div>
+						</th:block> 
+						
+						<!-- 모달창 구조및 내용 -->
+						
+					 <div class="modal fade" id="loginModal" z-index="9999" role="dialog" style="margin-top: 100px;" >
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content" style="padding-top: 0px;">
+						      <div class="modal-header" style="text-align: right; ">
+						        <a href="#" class="modal-close" style="color:black;"><i class="far fa-times-circle" style="color: black;"></i></a>
+						      </div>
+						      <div class="modal-body">
+						        <div class="container">
+						          <form class="form-signin" action="login" method="post" >
+						            <h2 class="form-signin-heading">Please sign in</h2>
+						            <label for="inputEmail" class="sr-only">Email address</label>
+						            <input type="text" id="inputEmail" class="form-control" placeholder="Email address" name="userid" required autofocus>
+						            <label for="inputPassword" class="sr-only">Password</label>
+						            <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+						            <div class="warning"></div>
+						            <div class="checkbox">
+						              <label>
+						                <input type="checkbox" value="remember-me"> 아이디 기억하기
+						              </label>
+						            </div>
+						            <button class="btn btn-lg btn-primary btn-block" id="btnLogin" type="submit">로그인</button>
+						          </form>
+						        </div>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="reset" class="btn btn-default" data-dismiss="modal">닫기</button>
+						        <a href="reg" id="btnJoin" class="btn btn-primary">회원가입</a>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+				
+					<!-- 회원 가입 모달창 끝 -->
+			
+					
+				
+	             <div class="bucket-icon col s4 m4 l4">
+	             <a href="newbucketlist">
+	             <ul>
+	              <li>
+	              <i class="fas fa-shopping-cart fa-3x"></i>     
+	  			  </li>
+	  			  <li style="padding: 0;">장바구니</li>
+	  			  </ul>
+	  			</a>  
+				</div>
+				
+			</div>
+			</div>
+			
+
+          </div>
+        
+
+        </nav>
+        
+        </div>
+	<nav class="menu-nav-con1">
+          <div class="menu-nav-con col s12 m12 l12 ">
+			<!-- 매뉴 목록 -->
+	        <ul class="nav">
+            <!----- Full Drop Down Name ----> 
+              <li class="dropdown">
+              <a href="#">메인 메뉴</a>     
+            <!----- Full Drop Down Name Ends Here ---->     
+                         
+            <!----- Full Drop Down Contents  Starts Here---->     
+              <div class="fulldrop">              
+                <div class="column">
+                  <h3>식품</h3>
+                  <ul> 
+					<li><a href="getList/" id="food1">주류</a></li>
+					<li><a href="#" id="food2">간식</a></li>
+					<li><a href="#" id="food3">발효 식품</a></li>
+					<li><a href="#" id="food4">김치</a></li>
+					<li><a href="#" id="food5">김치</a></li>
+					<li><a href="#" id="food6">김치</a></li>
+					<li><a href="#" id="food7">김치</a></li>		
+					<li><a href="#"></a></li>
+                  </ul>
+                </div>
+                
+                
+                
+                <div class="column">
+                  <h3>옷</h3>
+                  <ul>
+					<li><a href="#" id="dress1">전통 한복</a></li>
+					<li><a href="#" id="dress2">계량 한복</a></li>
+					<li><a href="#" id="dress3">신</a></li>
+					<li><a href="#" ></a></li>
+                  </ul>
+                </div>
+                
+                
+     		  <div class="column">
+      	            <h3>식품</h3>
+                  <ul>
+					<li><a href="#">주류</a></li>
+					<li><a href="#">간식</a></li>
+					<li><a href="#">발효 식품</a></li>
+					<li><a href="#">김치</a></li>
+					<li><a href="#"></a></li>
+                  </ul>
+                </div>
+ 
+              </div>
+              </li>
+             
+              
+         
+               <li><a href="#"> LifeStyle</a></li>
+               <li><a href="#"> About</a></li>
+      
+              
+                <th:block th:if="${session['data'] != null}">  
+               		<li><a href="index"> 개인 상점</a></li>
+               </th:block>
+     
+
+                 
+          </ul>
+          </div> 
+	</nav>
+
+		<!-- 스크립트  -->
+	
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+				$("#food1").on('click' , function(){
+					var food=$("#food1").val();
+					alert(food);
+				});
+			
+			  $(".zeta-menu ul li:has(ul)")
+			    .find("a:first")
+			    .append("<p style='float:right;margin:-3px'>&#9656;</p>");
+			  
+				//모달 오픈
+				$('.modal').modal();
+				$('.cardmodal').modal();
+				$('.accountmodal').modal();
+				
+				  
+				$('select').formSelect();
+				
+				//이메일 주소 다시 입력하는 창
+				$('.new-email-btn').click(function(){
+					if($('.new-email').css("display") == "none"){
+						$('.new-email-btn').text("변경취소");
+						$('.new-email').show();
+					}else{
+						$('.new-email').hide();
+						$('.new-email-btn').text("변경하기");
+					}
+				})
+				//전화 번호 다시 입력창
+				$('.new-phone-btn').click(function(){
+					if($('.new-phone').css("display") == "none"){
+						$('.new-phone-btn').text("변경취소");
+						$('.new-phone').show();
+					}else{
+						$('.new-phone').hide();
+						$('.new-phone-btn').text("변경하기");
+					}
+				})
+				
+				$('.email-check').click(function(){
+					var email=$('input.name-insert-input').val();
+					alert(email);
+					$('.insert-email').text(email);
+					if($('.new-email').css("display") != "none"){
+						
+						$('.new-email').hide();
+						$('.new-email-btn').text("변경하기");
+					}
+				})
+				
+				
+					$("input:text[numberOnly]").on("keyup", function() {
+					    $(this).val($(this).val().replace(/[^0-9]/g,""));
+					});
+
+				$('.scrollspy').scrollSpy();
+				
+				$(window).scroll(function(){
+					var scrollTop=$(document).scrollTop();
+					
+					if(scrollTop>=690){
+						$("#followquick").css('visibility','visible');
+					}else{
+						$("#followquick").css('visibility','hidden');
+					}
+					$("#followquick").show();
+					$("#followquick").stop();
+					$("#followquick").animate({"top":scrollTop+50});
+				});
+				
+				
+			
+				
+ 				$(window).scroll(function(){
+					var scrollTop=$(document).scrollTop();
+					
+					if(scrollTop<=125){
+						$(".menu-nav-con").css('position','relative');
+					}else{
+						$(".menu-nav-con").css('position','fixed');
+						$(".menu-nav-con").css({opacity : 1, top: 0 ,},10000);
+					}
+		
+				});	 
+				
+			
+				
+				
+ 				
+ 				 
+		});
+		
+	</script>
+	</body>
+	</html>

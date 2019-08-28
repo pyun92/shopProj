@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css"
+	media="screen,projection" />
+
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+	crossorigin="anonymous">
+
+<title>Insert title here</title>
+<style type="text/css">
+html {
+	font-family: 나눔고딕;
+	font-weight: bold;
+}
+
+.rowa {
+	margin-bottom: 3px;
+}
+
+p {
+	height: 30px;
+}
+
+img {
+	height: 100%;
+	width: 100%;
+}
+
+.margins {
+	margin: 3px;
+}
+
+.closediv {
+	margin-bottom: 0px;
+}
+
+.fullsize {
+	width: 100%;
+	height: 100%;
+	font-size: 22px;
+	font-size-adjust: inherit;
+}
+</style>
+
+</head>
+
+<body class="blue lighten-5">
+	<div class="container ">
+
+		<form th:action="insertuser" method="post" class="col s12"
+			id="idcheck">
+			<div class="row ">
+				<div class="col s5 offset-s3 margins">
+					<img src="/image/logo.png">
+				</div>
+			</div>
+
+			<div class="row ">
+				<div class="input-field col s5 offset-s3 ">
+					아이디 <br> <input type="text" class="validate" name="userid"
+						id="userid">
+					<p class="idchecked" style="color: red;">아이디를 입력해주세요</p>
+				</div>
+			</div>
+
+			<div class="row closediv">
+				<div class="input-field col s5 offset-s3">
+					비밀번호 <br> <input type="password" class="validate"
+						name="password" id="password">
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s5 offset-s3">
+					비밀번호 확인 <br> <input type="password" class="validate"
+						id="passwordc">
+					<p id="passc"></p>
+				</div>
+			</div>
+			<div class="row closediv">
+				<div class="input-field col s5 offset-s3">
+					이름 <br> <input type="text" class="validate" name="username"
+						id="username">
+					<p id="nameck" style="color: red;">이름을 입력해주세요</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s5 offset-s3">
+					생년월일 <br> <input type="text" class="validate" name="birthday"
+						id="birthday" placeholder="ex)19900101">
+					<p id="birthck" style="color: red;">생년월일을 입력해주세요</p>
+				</div>
+			</div>
+			<div class="row closediv">
+				<div class="input-field col s5 offset-s3">
+					전화 번호<br> <input type="text" class="validate" name="phone"
+						id="phone">
+				</div>
+			</div>
+		</form>
+		<div class="row ">
+			<form action="/mailgo" method="post">
+				<div class="input-field col s3 offset-s3 float">
+					이메일 인증 <br> <input type="text" class="validate emailaddr"
+						placeholder="이곳에 이메일을 입력해주세용">
+				</div>
+				<div class=" col s3">
+					<br> <br>
+					<button class="emailchk btn waves-effect modal-trigger waves-light" id="emailchk"
+						type="button" href="#modal1">
+						인증요청&nbsp;&nbsp;<i class="material-icons">send</i>
+					</button>
+				</div>
+				<div class=" col s4">
+					<div class="col s4 center-align res1"></div>
+				</div>
+			</form>
+			<!-- Modal Structure -->
+			<div id="modal1" class="modal">
+				<div class="modal-content">
+					<h4>이메일 인증번호를 입력해 주세요</h4>
+					<p>입력하신 이메일에서 인증번호를 확인한 후 아래 입력해주세요</p>
+				</div>
+				<div class="modal-footer">
+					<input class="certchk" type="text" placeholder="인증번호를 입력해주세요">
+					<button class="modal-close waves-effect waves-green btn-flat emailok">확인</button>
+					<a href="#!" class="modal-close waves-effect waves-green btn-flat">취소</a>
+				</div>
+			</div>
+		</div>
+		<div class="row rowa">
+			<div class="col s5 offset-s3 float ">
+				<p>
+					<label> <input type="checkbox" id="checkbox1" /> <span>이용약관에
+							동의(필수)</span>
+					</label>
+				</p>
+			</div>
+		</div>
+		<div class="row rowa">
+			<div class=" col s5 offset-s3 float valign-wrapper">
+				<p>
+					<label> <input type="checkbox" id="checkbox2" /> <span>개인정보
+							취급에 동의(필수)</span>
+					</label>
+				</p>
+			</div>
+		</div>
+		<div class="row rowa">
+			<div class=" col s5 offset-s3 float valign-wrapper">
+				<p>
+					<label> <input type="checkbox" /> <span>마케팅/광고등
+							수신동의 </span>
+					</label>
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s5 offset-s3 float valign-wrapper">
+				<button class="btn waves-effect waves-light green fullsize"
+					name="action" type="button" id="submitbtn">회원가입하기</button>
+			</div>
+		</div>
+
+
+
+
+	</div>
+	<th:block th:include="footer.html"></th:block>
+	<!-- 스크립트  -->
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var birthbool = false;
+		var namebool=false;
+		var idbool=false;
+		var passbool=false;
+		var mailinjoong = false;
+		var mailkey;
+		//아이디 중복 검사
+		var idck=0;
+		$("#userid").keyup(function(){
+			var userid =  $("#userid").val();
+			if(userid == ""){
+				$(".idchecked").text("아이디를 입력해주세요");
+				$(".idchecked").css("color","red");
+				idbool=false;
+			}else{
+			$.ajax({
+	            async: true,
+	            type : 'POST',
+	            data : userid,
+	            url : "/idcheck",
+	            dataType : "json",
+	            contentType: "application/json; charset=UTF-8",
+	            success : function(data) {
+	                if (data.cnt > 0) {
+	                    $(".idchecked").text("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+	                    $(".idchecked").css("color","red");
+	                    //아이디가 존제할 경우 빨깡으로 , 아니면 파랑으로 처리하는 디자인
+	                    idbool=false;
+	                } else {
+	                	   $(".idchecked").text("사용가능한 아이디입니다.");
+	                	   $(".idchecked").css("color","green");
+	                	 //아이디가 존제할 경우 빨깡으로 , 아니면 초록색으로 처리하는 디자인
+	                  	idbool=true;
+	                    
+	                }
+	            }
+	         
+	        });
+			}
+		});
+		
+		//메일 인증 관련
+		$(".emailchk").click(function(){
+		var emailaddr = $('.emailaddr').val();
+		if(emailaddr==""){
+			alert("이메일을 입력하고 요청하세요");
+		}else{
+			 $('.modal').modal();
+			$.ajax({
+	            async: true,
+	            type : 'POST',
+	            data : emailaddr,
+	            url : "/mailgo",
+	            dataType : "json",
+	            contentType: "application/json; charset=UTF-8",
+	            success : function(data) {
+	            	mailkey = data.certkey;
+	            }
+	        });
+		}
+		});
+		
+		$('.emailok').click(function(){
+			if($('.certchk').val()== mailkey){
+				$('.res1').text("인증이 완료되었습니다.");
+				$('#emailchk').hide();
+				mailinjoong = true;
+			}else{
+				alert("인증번호가 틀렸습니다. 다시 이메일 인증을 진행해 주십시오.");
+			}
+		});
+		
+		
+		//비밀 번호 일치 검사
+		$("#passwordc").keyup(function(){
+			var passbol;
+			var pass=$("#password").val();
+			var passc=$("#passwordc").val();
+			if(passc==pass){
+				 $("#passc").text("비밀번호가 일치합니다");
+				 $("#passc").css("color","green");
+				 passbool=true;
+				 
+			}else{
+				$("#passc").text("비밀번호가 일치하지 않습니다");
+				$("#passc").css("color","red");
+				passbool=false;
+			}
+		});
+		
+		//이름 유효성 검사
+		$("#username").keyup(function(){
+			namebool=false;
+			var RegexName = RegExp(/^[가-힣]{2,6}$/); 
+			if(RegexName.test($("#username").val())) {
+				$("#nameck").text("이름이 입력되었습니다");
+				$("#nameck").css("color","green");
+				namebool=true;
+				
+			}else{
+				$("#nameck").text("이름을 확인 해주세요");
+				$("#nameck").css("color","red");
+				
+			}
+		
+		});
+		
+		//생년 월일 검사
+		$("#birthday").keyup(function(){
+			birthbool = false;
+				var dateStr = $("#birthday").val();	
+			    var year = Number(dateStr.substr(0,4)); // 입력한 값의 0~4자리까지 (연)
+			    var month = Number(dateStr.substr(4,2)); // 입력한 값의 4번째 자리부터 2자리 숫자 (월)
+			    var day = Number(dateStr.substr(6,2)); // 입력한 값 6번째 자리부터 2자리 숫자 (일)
+			    var today = new Date(); // 날짜 변수 선언
+			    var yearNow = today.getFullYear(); // 올해 연도 가져옴
+			   
+			    if (dateStr.length <=8) {
+					// 연도의 경우 1900 보다 작거나 yearNow 보다 크다면 false를 반환합니다.
+				    if (1900 > year || year > yearNow){
+				    	$('#birthck').text('생년월일을 확인해주세요 :)');
+						$('#birthck').css('color', 'red');  
+				    	
+				    }else if (month < 1 || month > 12) {
+				    		
+				    	$('#birthck').text('생년월일을 확인해주세요 :)');
+						$('#birthck').css('color', 'red');  
+				    
+				    }else if (day < 1 || day > 31) {
+				    	
+				    	$('#birthck').text('생년월일을 확인해주세요 :)');
+						$('#birthck').css('color', 'red');  
+				    	
+				    }else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
+				    	 
+				    	$('#birthck').text('생년월일을 확인해주세요 :)');
+						$('#birthck').css('color', 'red');  
+				    	 
+				    }else if (month == 2) {
+				    	 
+				       	var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+				       	
+				     	if (day>29 || (day==29 && !isleap)) {
+				     		
+				     		$('#birthck').text('생년월일을 확인해주세요 :)');
+							$('#birthck').css('color', 'red');  
+				    	
+						}else{
+							$('#birthck').text('');
+							birthbool = true;
+						}//end of if (day>29 || (day==29 && !isleap))
+				     	
+				    }else{
+				    	
+				    	$('#birthck').text(''); 
+				    	birthbool = true;
+					}//end of if
+					
+				}else{
+						//1.입력된 생년월일이 8자 초과할때 :  auth:false
+						$('#birthck').text('생년월일을 확인해주세요 :)');
+					$('#birthck').css('color', 'red');  
+				}
+			}); //End of method /*
+		
+		//가입 버튼시 공란 , checkbox 여부 확인
+		
+		$("#submitbtn").on('click',function(){
+			var check1=$("#checkbox1").prop("checked");
+			var check2=$("#checkbox2").prop("checked");
+			
+			if($("#userid").val() == ""){
+		        alert("아이디 확인 해주세요");
+		        $("#userid").focus();
+		        return false;
+			}else if($("#password").val() == "" || passbool==false){
+			        alert("비밀번호를 확인 해주세요");
+			        $("#password").focus();
+			        return false;
+		    }else if($("#username").val() == "" || namebool==false){
+			        alert("이름을 확인 해주세요");
+			        $("#username").focus();
+	       		 return false;
+			}else if($("#birthday").val() == "" || birthbool==false){	
+		        alert("생년월일을 확인 해주세요");
+		        $("#birthday").focus();
+       		 return false;
+			}else if(mailinjoong==false){
+				alert("이메일을 인증해주세요");
+				$('.emailaddr').focus();
+				return false;
+			}else if(check1&&check2){
+				document.getElementById("idcheck").submit();
+			}
+			else{
+				alert("이용약관에 동의 해주세요");
+				return;
+			}
+		});
+	});
+	</script>
+
+</body>
+</html>

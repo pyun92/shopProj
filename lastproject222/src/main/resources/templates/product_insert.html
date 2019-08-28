@@ -1,0 +1,382 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 머티리얼 라이즈 css파일 -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style type="text/css">
+/* html, body { height:100%; } */
+/* 썸네일 이미지 */
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: 나눔고딕;
+}
+
+html .pullheight {
+	margin-bottom: 60%;
+}
+
+.sidenav {
+	padding-bottom: 40px;
+	padding-top: 40px;
+}
+
+.user-view {
+	padding-bottom: 80px;
+}
+
+.border1 {
+	/* 	border: 1px solid; */
+	border-color: #90a4ae;
+	margin-bottom: 11px;
+}
+
+.img {
+	height: 100%;
+	width: 100%;
+}
+/* insert.html의 css */
+.spimg{
+	overflow: hidden;
+	width:100%;
+	height:300px;
+}
+
+.sping img{
+	display: block;
+	max-width: 100%;
+	max-height: auto;
+	-ms-interpolation-mode: bicubic;
+}
+
+.spdetail{
+	width:100%;
+}
+
+.sp_add_img{
+	
+}
+
+/* 파일첨부 버튼 바꿈 */
+.file_btn{
+  display: inline-block;
+  padding: .5em .75em;
+  color: black;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+}
+/* 파일명 숨기기 */
+.file_btn input[type="file"]{
+	position:absolute;
+	overflow:hidden;
+	clip:rect(0,0,0,0);
+}
+
+</style>
+</head>
+<body>
+	<div class="container">
+	<div class="row">
+		<!-- 배너  -->
+		<div class="col s3 pullheight grey lighten-5">
+				<ul id="slide-out" class=" center-align">
+					<li><div class="user-view">
+							<a href="#name"><span class="black-text name">감자탕 만드는
+									남자</span></a><br> <br> <a href="#user"><img class="img circle"
+								src="image/a.jpg"></a><br> <br> <br>
+							<div>
+								<span class="black-text ">안녕하세요 감만남  <th:block th:text="${session['data'].userid}"> 입니다.</span>
+							</div>
+
+						</div></li>
+					<li class="border1"><a class="black-text" href="#!">판매목록
+							보기</a></li>
+					<li class="border1"><a class="black-text" href="sjTimeLine.html">담벼락(공지사항)
+							관리</a></li>
+					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
+					<li class="border1"><a class="black-text" href="product_insert.html">상품등록</a></li>
+					<li class="border1"><a class="black-text" href="product_getList_sj.html">상품관리</a></li>
+					<li><div class="divider paddingup200"></div></li>
+					<li><a class="subheader">감자탕을 만드는 남자</a></li>
+					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
+				</ul>
+		</div>
+	<form method="post" enctype="multipart/form-data" id="insertForm">
+		<!-- 상품 이미지 버튼 -->
+		<div class="col s9">
+			<h3>상품등록</h3>
+			<div class="row">
+				<div class="col s6">
+					<div class="spimg">
+				<!-- 사진추가할때 가져오는거 생각하기<input type="file" value="사진을 선택해주세요"> -->
+					<img class="img" src="image/a.jpg"><!-- 대표이미지는 있는 공간에 사진 들어가기 -->
+					
+					</div>
+				</div>
+		<!-- 제품명,가격,판매수량 -->
+				<div class="col s6">
+					<span><label>제품명</label><input type="text" name="name"></span>
+					<span><label>제품가격</label><input type="text" name="price"></span>
+					<span><label>할인</label><input type="text" name="discount"></span>
+					<span><label>판매수량</label><input type="text" name="jaego"></span>
+					<label class="file_btn">대표이미지 업로드<input type="file" id="file_img" accept="image/*"></label>
+					<label class="file_btn">제품이미지 추가<input type="file" id="file_add_img" accept="image/*" multiple></label>
+				</div>	
+			</div>	
+			<div class="divider"></div>
+		 
+		 	<!-- 이미지 추가시 div row 밑으로 들어감 -->
+				<p>제품이미지</p>
+				<div class="row" id="img_full">
+					<!-- 여기에 자바스크립트로 이름 들어감 -->
+				</div>
+		
+			<div class="divider"></div>
+		
+		<!-- 옵션 선택  :클릭시 사용자가 옵션을 추가할수 있도록-->
+			<p>옵션여부 :<label><input class="with-gap" name="option" value="yes" type="radio"/><span style="color:black;">선택</span></label>
+      				<label><input class="with-gap" name="option" value="no" type="radio"/><span style="color:black;">선택안함</span></label>
+      		</p>
+      		<div class="yesoption" style="display:none;">
+      			<label>옵션명은 ,로 분리해서 적어주세요</label>
+      			<a class="btn" id="option_add">옵션 추가하기</a>
+      			<table id="optiontable">
+      				<tr>
+      				<td>옵션설명</td><td>옵션명</td><td>추가금액</td><td>삭제</td>
+      				</tr>
+      				<tbody></tbody>
+      				<!-- 여기에 옵션 클릭할때마다 추가됨 -->
+      			</table>
+      		</div>		
+    	<div class="divider"></div>
+    	<p>상품분류</p>
+    	<table>
+    		<tr>
+    			<th style="width:50%;">대분류</th>
+    			<th style="width:50%;">소분류</th>
+    		</tr>
+    		<tr>
+    		<td style="width:50%;"><!-- 대분류-->
+    		<ul id="big">
+    			<li>식품</li>
+    			<li>음료/주류</li>
+    			<li>인테리어소품</li>
+    			<li>의류</li>
+    			<li>악세사리</li>
+    		</ul>
+    		</td>
+    		<td style="width:50%;"><!-- 소분류 -->
+				<ul id="small">
+				</ul>	
+    		</td>
+    		</tr>
+    	</table>
+		
+		<div class="divider"></div>
+		
+			<p>상세설명</p>
+			<table border="0">
+				<tr>
+				<td>
+					<input type="button" class="file_btn" value="B" onclick="htmliframe.document.execCommand('bold')">
+					<input type="button" class="file_btn" value="I" onclick="htmliframe.document.execCommand('Italic')">
+					<input type="button" class="file_btn" value="underline" onclick="htmliframe.document.execCommand('Underline')">
+					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifyleft')"><i class="material-icons" >format_align_left</i></a></label>
+					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifycenter')"><i class="material-icons">format_align_center</i></a></label>
+					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifyright')"><i class="material-icons">format_align_right</i></a></label>
+					<!-- <label class="file_btn"><i class="material-icons">image</i><input type="file" id="editorImage" accept="image/*"></label> -->
+				</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea id="product_detail" name="editor" style="display:none;"></textarea>
+         				<iframe id="htmlframe" name="htmliframe" width="100%" height="400px"></iframe>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<!-- <textarea></textarea>  -->
+			<!-- 상점인덱스 -->
+			<!-- <input type="hidden" name="shopSeq" value="1"> -->
+			<div class="right-align">
+			<a href="" class="waves-effect waves-light btn red lighten-1" id="product_submit" name="product_submit">제출하기</a>
+			<a href="" class="waves-effect waves-light btn red lighten-1" name="product_reset" > 취소하기</a>
+			</div>
+		</form>
+		</div>
+	</div>	
+		
+		<th:block th:include="footer.html"></th:block>
+		
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
+<!--머티리얼 디자인 자바스크립트-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script> -->
+<script>
+var index=1;//이미지추가시 인덱스
+var img_Files=[];
+//0번 고정, 나머지1부터
+
+$(function(){
+		if("${session['data'].userid}"!= null){
+			$(".product_detail").html("${session['data'].userid}");
+		}
+	htmliframe.document.designMode='On';
+	var iframe=$("#htmlframe").contents();
+	//제출버튼 눌렀을때
+	$('#product_submit').on("click",function(){
+		 event.preventDefault();
+		 //대표이미지 안들어왔을때 alert 으로 알려주기
+		 if(img_Files[0]==null){
+			 alert("대표 이미지는 반드시 등록해야 합니다.");
+			 return;
+		 }
+		$("#product_detail").html(iframe.find('body').html());
+		
+		var form=$('#insertForm')[0];
+		console.log(form.name);
+		var formData=new FormData(form);
+		
+		for(var i=0;i<img_Files.length;i++){
+			formData.append("files",img_Files[i],img_Files[i].name);
+		}
+		
+		 $.ajax({
+             url:'insertProc',
+             processData: false,
+             contentType: false,
+             data: formData,
+             type: 'POST',
+             cache: false,
+             enctype: 'multipart/form-data',
+             success: function(result){
+            	 console.log(result);
+                 alert("업로드 성공!!");
+                 location.href = "welcome";
+              },
+              error:function(xhr){
+            	  console.log(xhr.responseText);
+              }
+         });
+	});
+	
+	$('#option_add').on("click",function() {
+				var eleCount = $('.opcount').length;
+				if (eleCount >= 6) {
+					alert("옵션은 6개까지 추가 가능합니다.");
+				} else {
+					var innerHtml = '<tr class="opcount"><td><input type="text" name="optionContent"></td>'
+							+ '<td><input type="text" name="optionName"></td>'
+							+ '<td><input type="text" name="optionPrice"></td>'
+							+ '<td><input type="button" class="removeBtn btn" value="삭제"></td></tr>'
+					$('#optiontable> tbody:last').append(
+							innerHtml);
+				}//td만들어줌
+
+				$('.removeBtn').on("click", function() {
+					$(this).parent().parent().remove();//td
+				});
+			});
+	
+	$('input:radio[name="option"]').on("click",function(){
+		var value=$('input:radio[name="option"]:checked').val();
+		if(value==='yes'){//유튜브
+			$('.yesoption').css("display","block");
+		}else{
+			$('.yesoption').css("display","none");
+		}
+	});
+	$("#file_img").on("change",function(){//대표이미지 썸넬-1개
+		if(this.files && this.files[0]){
+			img_Files[0]=this.files[0];
+			var reader=new FileReader();
+			reader.onload=function(e){
+				console.log(img_Files);
+				$(".spimg img").attr('src',e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		}	
+	});
+	
+	$("#file_add_img").on("change",function(event){//이미지추가 썸넬 
+		
+		console.log("index "+index+"현재 file배열:"+img_Files);
+		var Files=event.target.files;
+		console.log(Files.length);
+		
+		if(Files.length==1){//선택된 파일의 갯수가 1개
+			fileReader(this.files[0]);
+		}else if(Files.length>1){//선택된 파일의 갯수가 2개
+			var filesArr=Array.prototype.slice.call(Files);
+			filesArr.forEach(function(f){
+				fileReader(f);
+			});
+			return;
+		}
+	});
+	
+	$('.modal').modal();
+	
+	$('#big').find('li').on('click',function(){
+		$('#small').empty();
+		//클릭한 li의 위치 얻어오기
+		var li=$(this).text();
+		var li_list=['식품','음료/주류','인테리어소품','의류','악세사리'];
+		var small_list=new Array();
+		small_list[0]=new Array('전통장','떡','김치','그외 먹거리');
+		small_list[1]=new Array('전통음료','전통주');
+		small_list[2]=new Array('공예제품','도자기');
+		small_list[3]=new Array('생활한복');
+		small_list[4]=new Array('반지','팔찌','헤어소품');
+		
+		for(var i=0;i<li_list.length;i++){
+			if(li==li_list[i]){
+				//ul 소분류 밑에 만들어주기
+				for(var j=0;j<small_list[i].length;j++){
+					var li_ele=document.createElement('li');
+					var txt=document.createTextNode(small_list[i][j]);
+					li_ele.appendChild(txt);
+					$('#small').append(li_ele);
+				}
+			}
+		}
+		//alert(list);
+	})
+	
+});
+//제품이미지파일리더
+function fileReader(file){
+	img_Files.push(file);
+	var reader=new FileReader();
+	reader.onload=function(e){
+		console.log("파일의 인덱스"+index);
+		index++
+		$("#img_full").append("<div class='"+index+"del col s4' height=168px><a href=javascript:void(0) onclick=re("+index+")><img src='"+e.target.result+"' width=100% height=100%></a></div>");
+	}
+	reader.readAsDataURL(file);
+}
+
+function re(e){//이미지클릭해서 삭제
+	if(confirm("사진을 삭제 하시겠습니까?")== true){
+		$('.'+e+'del').remove();//이미지 클래스 숫자+del
+		index--;
+	}else{
+		return;
+	}
+};
+</script>
+</body>
+</html>

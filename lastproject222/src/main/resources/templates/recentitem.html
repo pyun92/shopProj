@@ -1,0 +1,95 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+.txt{
+font-size: 21px;
+font-family:맑은고딕;
+color:black;
+margin-top: 0;
+}
+.recent-top {
+padding-bottom: 8px;
+margin-bottom: 20px;
+border-bottom: 2px solid #555;
+}
+</style>
+</head>
+<body>
+<div class="container row" >
+		
+		<!-- 사이드바 불러오는 부분 -->
+		<th:block th:include="myinfoside.html"></th:block>
+		
+		<!-- 내정보 시작  -->
+		<div class="col s10 m10 l10 content">
+		
+		<div class="recent-top">
+			<h1 class="txt">최근 본 상품</h1> 
+		</div>
+					<div class="row">
+		<!-- 상품한개 -->
+    <div class="col s12 l3">
+      <div class="card">
+      <a href="product_getProduct2">
+        <div class="card-image">
+          <img src="image/04.jpg">
+          <span class="card-title">상품제목</span>
+        </div>
+        <div class="card-content">
+          <p>상품가격 보여줌</p>
+        </div>
+        </a>
+      </div>
+    </div>
+    <div class="col s12 l3">
+      <div class="card">
+      <a href="product_getProduct2">
+        <div class="card-image">
+          <img src="image/04.jpg">
+          <span class="card-title">상품제목</span>
+        </div>
+        <div class="card-content">
+          <p>상품가격 보여줌</p>
+        </div>
+        </a>
+      </div>
+    </div>
+    <!-- 상품한개 -->
+    <div class="col s12 l3">
+      <div class="card">
+      <a href="product_getProduct2">
+        <div class="card-image">
+          <img src="image/04.jpg">
+          <span class="card-title">상품제목</span>
+        </div>
+        <div class="card-content">
+          <p>상품가격 보여줌</p>
+        </div>
+        </a>
+      </div>
+    </div>
+    <!-- 상품한개 -->
+    <div class="col s12 l3">
+      <div class="card">
+      <a href="product_getProduct2">
+        <div class="card-image">
+          <img src="image/04.jpg">
+          <span class="card-title">상품제목</span>
+        </div>
+        <div class="card-content">
+          <p>상품가격 보여줌</p>
+        </div>
+        </a>
+      </div>
+    </div>
+  </div>
+			
+		</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<th:block th:include="main.html"></th:block>
+<div class="navbar-fixed ">
+		<nav id="nav-fix">
+			<!--  Logo 부분-->
+			<div class="row" style="height: 120px; margin-bottom: 0px;">
+
+				<div class="col s3 m3 l3" style="align: center;">
+					<a href="index">
+					<img alt="logo" src="/image/logo.png"
+						style="width: 80px; height: 80px;">
+					</a>
+				</div>
+
+				<!--검색 text-->
+				<div class="col s6 m6 l6 search-bar" style="padding: 0;">
+					<div class="col s10 m10 l10" id="search">
+						<input type="text" class="search" placeholder="검색어 입력"
+							style="border: none;">
+					</div>
+
+					<!--검색 버튼-->
+					<button class="btn red col s2 m2 l2" id="div-search">검색</button>
+				</div>
+
+				<!--실시간 검색어-->
+				<div class="col s1 m1 l1">검색어</div>
+				
+				<!--회원가입 ,장바구니 -->
+				<div class="col s2 m2 l2">
+					<!-- 회원가입 모달창 -->
+					<div class="col s6" id="insert_member">
+						<a class="modal-trigger" href="#loginModal"><i
+							class="fas fa-user-check fa-2x"></i>로그인</a>
+							
+						<!-- 모달창 구조및 내용 -->
+					 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" >
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content" style="padding-top: 0px;">
+						      <div class="modal-header" style="text-align: right; ">
+						        <a href="#" class="modal-close" style="color:black;">X</a>
+						      </div>
+						      <div class="modal-body">
+						        <div class="container">
+						          <form class="form-signin">
+						            <h2 class="form-signin-heading">Please sign in</h2>
+						            <label for="inputEmail" class="sr-only">Email address</label>
+						            <input type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+						            <label for="inputPassword" class="sr-only">Password</label>
+						            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+						            <div class="warning"></div>
+						            <div class="checkbox">
+						              <label>
+						                <input type="checkbox" value="remember-me"> 아이디 기억하기
+						              </label>
+						            </div>
+						            <button class="btn btn-lg btn-primary btn-block" id="btnLogin" type="submit">로그인</button>
+						          </form>
+						        </div>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="reset" class="btn btn-default" data-dismiss="modal">닫기</button>
+						        <a href="reg" id="btnJoin" class="btn btn-primary">회원가입</a>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</div>
+					<!-- 회원 가입 모달창 끝 -->
+					
+					<div class="col s6" id="bucket">
+						<a href="bucket"><i class="fas fa-shopping-cart fa-2x"></i>장바구니</a>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<!-- 매뉴 목록 -->
+			
+			
+			<div class="row" id="main_menu">
+				<!-- 메뉴 다운매뉴 -->
+				<ul>
+					<li><a tabindex="-1" href="#">HTML</a></li>
+					<li><a tabindex="-1" href="#">CSS</a></li>
+					<li class="dropdown-submenu" style="background-color: black;">
+						<a class="test" tabindex="-1" href="#">New dropdown<span
+							class="caret"></span></a>
+
+						<ul class="dropdown-menu" style="display: none;">
+							<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+							<li><a tabindex="-1" href="#">2nd level dropdown</a></li>
+							<li class="dropdown-submenu"><a class="test" href="#">Another
+									dropdown <span class="caret"></span>
+							</a>
+								<ul class="dropdown-menu" style="display: none;">
+									<li><a href="#">3rd level dropdown</a></li>
+									<li><a href="#">3rd level dropdown</a></li>
+								</ul></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			
+			
+		</nav>
+	</div>
+	
+
+<div class="carousel carousel-slider">
+    <a class="carousel-item" href="#one!">asdasdasd<img src="/image/p1.jpg">dasdasd	</a>
+    <a class="carousel-item" href="#two!">asdasdasd<img src="/image/p1.jpg"></a>
+    <a class="carousel-item" href="#three!">asdasd<img src="/image/p1.jpg"></a>
+    <a class="carousel-item" href="#four!">asdasd<img src="/image/p1.jpg"></a>
+</div>
+
+<div id="Index" class="carousel slide container" data-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img class="size" src="/image/p1.jpg" alt="paris">
+			</div>
+		
+			<div class="carousel-item">
+				<img class="size" src="/image/p1.jpg" alt="workbench">
+			</div>
+		
+	
+			<div class="carousel-item">
+				<img class="size" src="/image/p1.jpg" alt="workshop">
+			</div>
+		</div>
+			<ul class="carousel-indicators">
+			<a class="carousel-control-prev" href="#Index" data-slide="prev">
+                <span><i class="fas fa-arrow-alt-circle-left"></i></i></span>
+            </a>
+		
+			<li data-target="#Index" data-slide-to="0" class="active"></li>
+			<li data-target="#Index" data-slide-to="1" ></li>
+			<li data-target="#Index" data-slide-to="2" ></li>
+			
+			<a class="carousel-control-next" href="#Index" data-slide="next">
+                <span><i class="fas fa-arrow-alt-circle-right"></i></span>
+            </a>
+		</ul>
+</div>
+ 
+ 
+ 
+<div class="carousel carousel-slider center">
+    <div class="carousel-fixed-item center">
+      <a class="btn waves-effect white grey-text darken-text-2">button</a>
+    </div>
+    <div class="carousel-item red white-text" href="#one!">
+      <h2>First Panel</h2>
+      <p class="white-text">This is your first panel</p>
+    </div>
+    <div class="carousel-item amber white-text" href="#two!">
+      <h2>Second Panel</h2>
+      <p class="white-text">This is your second panel</p>
+    </div>
+    <div class="carousel-item green white-text" href="#three!">
+      <h2>Third Panel</h2>
+      <p class="white-text">This is your third panel</p>
+    </div>
+    <div class="carousel-item blue white-text" href="#four!">
+      <h2>Fourth Panel</h2>
+      <p class="white-text">This is your fourth panel</p>
+    </div>
+  </div>
+
+
+			<div class="carousel carousel-slider">
+			    <a class="carousel-item" href="#one!"><img src="image/a.jpg"></a>
+			    <a class="carousel-item" href="#two!"><img src="image/a.jpg"></a>
+			    <a class="carousel-item" href="#three!"><img src="image/a.jpg"></a>
+			    <a class="carousel-item" href="#four!"><img src="image/a.jpg"></a>
+			 </div>
+  
+
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.dropdown-submenu a.test').on("click", function(e) {
+				$(this).next('ul').toggle();
+				e.stopPropagation();
+				e.preventDefault();
+			});
+
+			$('.modal').modal();
+				
+			$('.carousel').carousel();
+			
+			$('.carousel.carousel-slider').carousel({
+			    fullWidth: true,
+			    indicators: true
+			  });
+		});
+		</script>
+ </body>
+
+</html>

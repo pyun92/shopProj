@@ -1,0 +1,290 @@
+@charset "UTF-8";
+
+.search-bar {
+	border: 5px solid #5a70df;
+	margin-top: 20px;
+}
+
+a.modal-trigger {
+	font-size: 10px;
+}
+
+#search input {
+	border: 0;
+}
+
+#search {
+	background-color: white;
+}
+
+.div-search.btn.col.s2.m2.l2 {
+	background-color: #5a70df;
+	padding: 0;
+	height: 55px;
+}
+
+hr {
+	padding: 0px;
+	margin: 0px;
+}
+
+footer {
+	float: left;
+	left: 0px;
+	bottom: 0px;
+	height: 80px;
+	width: 100%;
+	background: white;
+	margin-bottom: 0px;
+	border-top: 3px solid #dd5850;
+}
+
+.nav-fix {
+	color: black;
+	height: auto;
+	padding-left: 200px;
+	padding-right: 200px;
+	padding-top: 10px;
+	background-color: white;
+}
+
+.nav-fix.col.s12.m12.l12 .row {
+	margin-bottom: 0px;
+}
+
+.bucket-icon.col.s6.m6.l6 ul li a,.bucket-icon.col.s4.m4.l4 ul li a {
+	height: 67px;
+}
+
+.bucket-icon.col.s6.m6.l6 ul li,.bucket-icon.col.s4.m4.l4 ul li {
+	color: black;
+	width: 60px;
+	height: 30px;
+	font-size: 11px;
+	text-align: center;
+	padding-top: 10px;
+}
+.bucket-icon i{
+	color: gray;
+	
+}
+a.btn:hover {
+	background-color: white;
+}
+
+a.btn {
+	font-size: 10px;
+}
+
+.navbar-fixed {
+	height: auto;
+	padding-bottom: 180px;
+}
+
+#search, .serach {
+	height: 55px;
+	margin-bottom: 0px;
+}
+
+#bucket, #insert_member {
+	height: 90px;
+}
+
+#main_menu {
+	padding-bottom: 100px;
+	color: black;
+}
+
+#modal1 {
+	width: 600px;
+	height: 300px;
+}
+
+.buyBtn {
+	background: url(../images/buyBtn.png) no-repeat;
+	width: 97px;
+	height: 28px;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.buyBtn a {
+	color: black !important;
+	font-weight: normal !important;
+	text-decoration: none;
+	padding-left: 27px;
+	text-shadow: none !important;
+}
+
+.menu-nav-con {
+	width:100%;
+	padding-left:10% ;
+	background-color: white;
+	border-top:1px solid white;
+	border-bottom:4px solid #5a70df;
+	height:54px;	
+	z-index :999;
+}
+
+.menu-nav-con1 {
+	
+	height:54px;
+	background-color:white;
+	padding: 0;
+}
+
+
+
+
+/* Basic Style  */
+.mega-menu {
+	margin: 0;
+	padding: 20px 0;
+}
+
+.nav {
+	font-family: 'Orienta', sans-serif;
+	font-weight: 400; /* 400 thinner */
+	font-size: 13px;
+	line-height: 13px;
+	position: relative;
+	padding: 0 0 0 4px; /* Fix for inline-block spacing*/
+	margin: 0;
+}
+
+.nav a, .nav a:link, .nav a:visited, .nav a:hover, .nav a:focus, span {
+	color: black;
+	text-decoration: none;
+}
+
+.nav>li {
+	text-align: center;
+}
+
+
+.nav>li:hover>a {
+	color: white;
+}
+
+.nav>li:hover {
+	background-color: gray;
+}
+
+.nav>li>ul {
+	opacity: 0;
+	visibility: hidden;
+	top: auto;
+	background-color: white;
+	text-align: left;
+	margin-top: 30px;
+	padding: 0px;
+	z-index: 99;
+}
+
+.nav>li:hover>ul {
+	opacity: 1;
+	visibility: visible;
+	margin-top: 0px;
+}
+
+.nav li>ul li {
+	font-size: 11px;
+	position: relative;
+	display: block;
+}
+
+.nav>li>ul  li:hover {
+	background-color: gray;
+}
+
+.nav ul  li:hover>a {
+	color: black;
+}
+
+.nav>li>ul li ul li:hover {
+	background-color: gray;
+}
+
+input#mobile_menu {
+	display: none;
+}
+
+.nav>li>ul li ul li ul {
+	background-color: white;
+}
+
+.nav>li>ul li ul li ul li:hover {
+	background-color: white;
+}
+
+.nav>li>.fulldrop {
+	border:1px solid #5a70df;
+	border-top: 5px solid #5a70df;
+	opacity: 0;
+	width:auto;
+	visibility: hidden;
+	position: absolute;
+	list-style: none;
+	top: auto;
+	left: 0px;
+	background-color: white;
+	text-align: left;
+	margin-top: 3px;
+	padding: 0;
+	z-index: 99;
+	overflow: hidden;
+	
+}
+
+.nav>li:hover .fulldrop {
+	opacity: 1;
+	visibility: visible;
+	margin-top: 0px;
+}
+
+.nav>li:hover .coldrop {
+	opacity: 1;
+	visibility: visible;
+	margin-top: 0px;
+}
+
+.nav .column {
+	border-right:1px solid black;
+	width: 14.1%;
+	float: left;
+	color: white;
+	margin: 0 0 0 1%;
+}
+
+.nav .column ul {
+	display: block;
+	border-right: 1px solid black;
+}
+
+.nav .column ul li {
+	position: relative;
+	vertical-align: baseline;
+	padding: 0;
+	width: 100%;
+	font-size: 11px;
+}
+
+.nav .column h3 {
+	color:black;
+	font-size: 16px;
+	padding: 14px 0;
+	margin: 5px 0 5px 0;
+}
+
+.nav .column ul li a {
+	padding: 15px 15px 15px 15px;
+}
+
+.dropdown {
+	background-color:#5a70df;
+}
+
+.dropdown > a , .nav>li>a {
+	
+	padding: 16.5px 15px 19.5px 15px;
+}
