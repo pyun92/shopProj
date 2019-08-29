@@ -47,7 +47,7 @@ public class BoardController {
 		mav.addObject("procimgdetail",imgService.getDetailNum());
 		return mav;
 	}
-	
+
 	@RequestMapping("/mailgo")
 	@ResponseBody
 	public Map<Object, Object> mailgo(@RequestBody String data) {
