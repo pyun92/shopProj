@@ -1,0 +1,172 @@
+<th:block th:include="main.html"> </th:block>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+.label{
+vertical-align: top;
+font-size:30px;
+font-weight: bold;
+margin: 0px;
+}
+.content-body.col.s10.m10.l10 {
+
+padding:0 	 50px;
+}
+.order-title {
+padding-bottom: 8px;
+margin-bottom: 20px;
+border-bottom: 2px solid #555;
+}
+th{
+width:120px;
+padding:0 5px;
+color:#666;
+background-color: #EEE;
+font-size: 12px;
+
+}
+
+tr{
+border-bottom: 1px solid #ccc;
+border-top: 1px solid #ccc;
+}
+td{
+height: 48px;
+padding: 12px 7px;
+}
+.name-insert{
+margin-top: 5px;
+}
+.name-insert input {
+	margin-top: 20px;
+	border: 1px solid black;
+}
+
+.email-insert span,.phone-insert span{
+color: black;
+padding-right: 6px;
+}
+.mt10{
+width: 100%;
+}
+.new-email-btn,.email-check{
+background-color: white;
+border: 1px solid black;
+
+}
+[type="radio"]:not(:checked), [type="radio"]:checked {
+	width:18px;
+	height:18px;
+    position:relative;
+    opacity: 1;
+    pointer-events:fill;
+}
+
+.modify-submit{
+text-align: center;
+padding-top: 50px;
+}
+
+.modify-submit > button{
+color:white;
+height:32px;
+font-size:12px;
+border:0;
+border-radius:2px;
+background-color: #c8352e
+}
+
+</style>
+</head>
+<body>
+<!-- 개인 정보 관리 -->
+	<div class="container row" >
+	<th:block th:include="myinfoside.html" ></th:block>
+	
+	
+				
+	<div class="content-body col s10 m10 l10 ">
+		<div class="order-title">
+			<h2 class="label">회원 정보 관리</h2>
+		</div>
+		<table border="1" class="info-modify-item">
+		<tr>
+			<th>이름</th>
+			<td>
+				<div class="name-insert">
+					<input class="name-insert-input" type="text" style="width:200px; height: 35px; border: 1px solid #acacac;margin: 0;">
+				</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>이메일</th>
+			<td>
+				<div class="email-insert">
+				<span class="insert-email">email@email.com</span><button class="new-email-btn"> 변경하기 </button>
+				<div class="new-email" style="display: none;">
+					<p class="mt10">변경할 이메일을 주소로 입력해주세요</p>
+					<div class="name-insert">
+						<input class="name-insert-input" type="text" style="width:200px; height: 35px; border: 1px solid #acacac;margin: 0;">
+						<a href="#" class="email-check">변경하기</a>
+					</div>
+					
+				</div>
+				
+			</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>전화 번호</th>
+			<td>
+				<div class="phone-insert">
+				<span class="insert-phone"><th:block th:text="${session['data'].phone}"></th:block> </span><button class="new-phone-btn"> 변경하기 </button>
+				<p>주문, 배송시 등록된 번호로 SMS를 발송해 드립니다.</p>
+				<div class="new-phone" style="display: none;">
+					<p class="mt10">변경할 전화번호를 입력해주세요</p>
+					<div class="phone-insert">
+						<input class="name-insert-input" type="text" style="width:200px; height: 35px; border: 1px solid #acacac;margin: 0;">
+						<a href="#" class="phone-check">변경하기</a>
+					</div>
+					
+				</div>
+				
+			</div>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>성별</th>
+			<td>
+				<input type="radio" name="gender" value="여성" class="woman">여성
+				<input type="radio" name="gender" value="남성" class="man">남성
+			</td>
+		</tr>
+		
+		<tr>
+			<th>생일</th>
+			<td>
+				<input class="birth" type="text" style="width:150px; height: 35px; border: 1px solid #acacac;margin: 0;" placeholder="2000-01-01">
+			</td>
+		</tr>
+		
+		
+		</table>
+		
+		<div class="modify-submit">
+		<button type="submit"> 회원 정보 수정하기 </button>
+		</div>
+		
+	</div>
+	
+	
+	
+	</div>
+<th:block th:include="footer.html"></th:block>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 머티리얼 라이즈 css파일 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style type="text/css">
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: 나눔고딕;
+}
+
+html .pullheight {
+	margin-bottom: 60%;
+}
+
+.sidenav {
+	padding-bottom: 40px;
+	padding-top: 40px;
+}
+
+.user-view {
+	padding-bottom: 80px;
+}
+
+.border1 {
+	/* 	border: 1px solid; */
+	border-color: #90a4ae;
+	margin-bottom: 11px;
+}
+
+.list_img{
+	width: 200px;
+	height:auto;
+}
+
+img {
+	width:100%;
+}
+
+#getList_sj{
+	padding-left:20px;
+}
+
+th{
+	text-align:center;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+	<!-- 수정, 삭제 둘다 보여주는 창/ 수정->insert.html파일에 입력내용 그대로 가져가기, 삭제 모달창 띄워서 삭제하기 -->
+	<div class="row">
+	<!-- 배너  -->
+		<div class="col s3 pullheight grey lighten-5">
+				<ul id="slide-out" class=" center-align">
+					<li><div class="user-view">
+							<a href="#name"><span class="black-text name">감자탕 만드는
+									남자</span></a><br> <br> <a href="#user"><img class="circle"
+								src="image/a.jpg"></a><br> <br> <br>
+							<div>
+								<span class="black-text ">안녕하세요 감만남 <th:block th:text="${session['data'].userid}"></th:block> 입니다.</span>
+							</div>
+
+						</div></li>
+					<li class="border1"><a class="red-text bold" href="#!"><i
+							class="material-icons">favorite_border</i>내 단골 상점에 추가하기</a></li>
+					<li class="border1"><a class="black-text" href="#!">판매목록
+							보기</a></li>
+					<li class="border1"><a class="black-text" href="sjTimeLine.html">담벼락(공지사항)
+							보기</a></li>
+					<li class="border1"><a class="black-text" href="#!">후기남기기</a></li>
+					<li class="border1"><a class="black-text" href="#!">응원하기</a></li>
+					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
+					<li class="border1"><a class="black-text" href="product_insert">상품등록</a></li>
+					<li class="border1"><a class="black-text" href="product_getList_sj">상품관리</a></li>
+					<li><div class="divider paddingup200"></div></li>
+					<li><a class="subheader">감자탕을 만드는 남자</a></li>
+					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
+				</ul>
+		</div>
+	<div class="col s9" id="getList_sj">
+	
+	<table class="centered">
+		<tr>
+			<th>상품이미지</th>
+			<th>상품명</th>
+			<th>가격</th>
+			<th>재고수량</th><!--재고수량이 5개 이상일 경우 ->"재고수량이 5개이하입니다. 삭제하시겠습니까?" 추가 -->
+			<th>관리</th>
+		</tr>
+		
+		<tr th:each="proc:${proc}">
+				<th:block  th:each="procimg:${procimg}" th:if="${proc.productseq}==${procimg.imgnum}">
+				<td class="list_img">
+					<img th:src="@{/upload/}+${procimg.fileName}"> 
+				</td>
+				</th:block>
+			
+			<td th:text="${proc.name}"></td>
+			<td th:text="${proc.price}"></td>
+			<td id="sp" th:text="${proc.jaego}">10</td>
+			<td>
+				<p><a class="waves-effect waves-light btn" href="product_update">수정하기11</a></p>
+				<p><a class="waves-effect btn modal-trigger" href="#modal1">삭제하기</a></p>
+			</td>
+		</tr>
+	</table>
+	</div>
+	</div>
+	<!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+    	<p>상품명: 감자탕</p>
+    	<p id="remainsp">재고수량 : 10개</p>
+    	
+      	삭제하시겠습니까?
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+	</div>
+
+<th:block th:include="footer.html"></th:block>
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+<script>
+$(document).ready(function(){
+    $('.modal').modal();
+   
+    
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<th:block th:include="main.html"> </th:block>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.favor-list-profil{
+margin:0 ;
+width: 310px;
+display: inline;
+}
+.favor-list-image{
+width: 500px;
+margin: 0;
+display: inline;
+}
+.list-profil-image{
+width: 90%;
+height: 90%;
+}
+.txt{
+font-size: 21px;
+font-family:맑은고딕;
+color:black;
+margin-top: 0;
+}
+.recent-top {
+padding-bottom: 8px;
+margin-bottom: 20px;
+border-bottom: 2px solid #555;
+}
+.favormaker-list{
+margin-left: 30px;
+margin-top:50px;
+
+}
+.profil-detail.col.s6.m6.l6{
+padding:0;
+margin-left: 25px;
+}
+.list-profil-image.col.s5.m5.l5{
+padding: 0;
+}
+.favor-list-profil{
+padding: 0;
+}
+.favor-list-image.col.s8.m8.l8{
+text-align: center;
+}
+
+.favor-list-image.col.s7.m7.l7 img{
+width:30%; 
+height:30%; 
+}
+
+.profil-small{
+width: 46%; 
+font-size: 80%; 
+
+}
+.profil-large{
+width: 100%; 
+margin-top: 8px;
+}
+</style>
+</head>
+<body>
+<div class="container row" >
+		
+		<!-- 사이드바 불러오는 부분 -->
+		<th:block th:include="myinfoside.html"></th:block>
+		
+		<!-- 내정보 시작  -->
+		<div class="col s10 m10 l10 content">
+		
+		<div class="recent-top">
+			<h1 class="txt">좋아하는 작가</h1> 
+			</div>
+			<ul>
+				<li class="favormaker-list">
+					<div class="favor-list-profil col s5 m5 l5 row"> 
+						<div class="list-profil-image col s5 m5 l5">
+							<img alt="profil" src="image/a.jpg" class="list-profil-image">
+						</div>
+						<div class="profil-detail col s7 m7 l7">
+							<div class="profil-detail-txt">
+								<a href="#">작가 명</a>
+								<div>점수</div>
+								<div style="font-size: 90%;">작가 설명 맛있고 정성으 다하고 정직한 집에서 직접 만든 제품
+									작가 설명 맛있고 정성으 다하고 정직한 집에서 직접 만든 제품
+								</div>
+							</div>
+							<div >
+						<button  class="profil-small" style="margin-top:10%; margin-right : 5%;">작가</button ><button class="profil-small">작가홈</button>
+						<button class="profil-large">작가홈</button>
+						</div>
+						</div>
+					</div>
+					
+					<div class="favor-list-image col s7 m7 l7"> 
+						<img alt="" src="image/a.jpg" >
+						<img alt="" src="image/a.jpg">
+						<img alt="" src="image/a.jpg">
+					</div>
+				
+					
+				</li>
+				
+
+				
+			</ul>
+</div>
+</div>
+</body>
+</html>

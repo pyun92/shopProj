@@ -1,0 +1,273 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.usericon img{
+width: 32px;
+height:32px;
+border-radius: 50%;
+
+}
+.review-top{
+margin: 10px 0 0 0 ;
+padding:20px ;
+border: 1px solid black;
+}
+
+.usericon,.back-icon.col.s6.m6.l6,.usericon.col.s6.m6.l6 a{
+display: inline-block;
+text-align:right;
+vertical-align: middle;
+
+}
+.usericon strong, .back-icon a span,.usericon,.back-icon a{
+color:black;
+width: 100px;
+
+}
+.usericon-bg{
+width: 32px;
+height:32px;
+border-radius: 50%;
+
+}
+.review-info{
+width:100%;
+padding-top:50px;
+
+border-top:0; 
+margin-bottom:50px;
+}
+.review-item-info{
+display:table;
+padding-left: 30px;
+width: 50%;
+}
+.review-head{
+display: table;
+width: 100%;
+}
+.review-item-info .img{
+display: table-cell;
+width: 64px;
+height: 64px;
+background-image: url('image/a.jpg');
+}
+.review-text{
+text-align: center;
+}
+.review-text textarea{
+margin :10px 30px 20px 30px;
+height: auto;
+width: auto;
+}
+.review-item-info a{
+display: table-cell;
+color:black;
+padding-left:12px;
+vertical-align: middle;
+}
+.item-score{
+display: table-cell;
+}
+.review-upload{
+
+margin: 20px;
+}
+input[type=file] {
+display: none;
+ }
+ 
+ .txt{
+font-size: 21px;
+font-family:맑은고딕;
+color:black;
+margin-top: 0;
+}
+.recent-top {
+padding-bottom: 8px;
+margin-bottom: 20px;
+border-bottom: 2px solid #555;
+}
+.review-date{
+margin-left: 30px; 
+}
+.select-wrapper{
+width: 140px;
+text-align: right;
+display: inline-block;
+}
+.select-wrapper input.select-dropdown {
+
+}
+.item-score{
+text-align: right;
+display: block;
+}
+.imgs_wrap img {
+  max-width: 150px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+</style>
+</head>
+<body>
+
+	<div class="container row" >
+		<!-- 사이드바 불러오는 부분 -->
+		<th:block th:include="myinfoside.html"></th:block>
+		<!-- 내정보 시작  -->
+		<div class="col s10 m10 l10 content">
+			<div class="recent-top">
+				<h1 class="txt">구매 후기 작성</h1> 
+			</div>
+			<div class="back-icon col s6 m6 l6">
+			<a href="#"> 
+			
+			</a> 
+			</div>
+		<div class="usericon col s6 m6 l6" >
+			<a href="#">
+			<div class="usericon-bg col s1 m1 l1" style="background-image: url('image/ba.jpg'); width: 32px;" ></div>
+			<strong>금손이</strong>
+			</a>
+		</div>
+	
+	
+		<div class="review-info">
+			<div class="review-head">
+			<div class="review-item-info col s6 m6 l6">
+				<div class="img"></div> 
+				<a href="#">마당발</a>
+			</div>
+			
+			<div class="item-score col s6 m6 l6"> 
+			<select class="item-score-select">
+			<option>★</option>
+			<option>★★</option>
+			<option>★★★</option>
+			<option>★★★★</option>
+			<option>★★★★★</option>
+			</select>
+			</div>
+			
+			</div>
+			<h5 class="review-date"> 2019-08-20</h5>
+			
+			<div class="review-text"> 
+			<textarea rows="20" cols="100"></textarea> 
+			</div>
+			
+		  
+		        <div class="input_wrap" style="text-align: right;">
+		            <a href="javascript:" onclick="fileUploadAction();" class="btn">파일 업로드</a>
+		            <input type="file" id="input_imgs" multiple/>
+		        </div>
+		  
+		
+		    <div>
+		        <div class="imgs_wrap">
+		            <img id="img" />
+		        </div>
+		    </div>
+				  <a href="javascript:" class="btn" onclick="submitAction();">저장하기 </a>
+	</div>
+</div>
+
+
+<th:block th:include="footer.html"></th:block>
+
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript">
+
+	var sel_files = [];
+	 var index = 0;
+
+        $(document).ready(function() {
+            $("#input_imgs").on("change", handleImgFileSelect);
+        }); 
+
+        function fileUploadAction() {
+            console.log("fileUploadAction");
+            $("#input_imgs").trigger('click');
+        }
+
+        function handleImgFileSelect(e) {
+
+            // 이미지 정보들을 초기화
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+
+           
+            filesArr.forEach(function(f) {
+                if(!f.type.match("image.*")) {
+                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    return;
+                }
+                sel_files.push(f);
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var html = "<a href=\"javascript:void(0);\" onclick=\"deleteImageAction("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" data-file='"+f.name+"' class='selProductFile' title='Click to remove'></a>";
+                    $(".imgs_wrap").append(html);
+                    index++;
+
+                }
+                reader.readAsDataURL(f);
+                
+            });
+        }
+
+
+
+        function deleteImageAction(index) {
+            sel_files.splice(index, 1);
+            var img_id = "#img_id_"+index;
+            if(confirm("삭제 하시겠습니까?")== true ){
+            	$(img_id).remove(); 
+            }else{
+            	return;
+            }
+        }
+
+        function fileUploadAction() {
+            console.log("fileUploadAction");
+            $("#input_imgs").trigger('click');
+        }
+
+        function submitAction() {
+            console.log("업로드 파일 갯수 : "+sel_files.length);
+            var data = new FormData();
+
+            for(var i=0, len=sel_files.length; i<len; i++) {
+                var name = "image_"+i;
+                data.append(name, sel_files[i]);
+            }
+            data.append("image_count", sel_files.length);
+            
+            if(sel_files.length < 1) {
+                alert("한개이상의 파일을 선택해주세요.");
+                return;
+            }           
+
+            /* var xhr = new XMLHttpRequest();
+            xhr.open("POST","./study01_af.php");
+            xhr.onload = function(e) {
+                if(this.status == 200) {
+                    console.log("Result : "+e.currentTarget.responseText);
+                }
+            }
+
+            xhr.send(data); */
+
+        }
+
+	</script>
+</body>
+</html>

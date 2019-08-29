@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+.container.row{
+padding-top: 50px;
+}
+
+.col.s2.m2.l2.side{
+padding-right: 10px;
+}
+
+.my-card{
+padding-top: 16px;
+border: 1px solid #dd5850;
+}
+.my-card-image{
+text-align: center;
+}
+.my-card-image.container img{
+width: 90px; 
+height: 90px;
+padding: 5px;
+
+}
+.my-info{
+padding: 16px 0;
+}
+
+.my-info a span{
+color:black;
+}
+
+.my-rank{
+text-align: center;
+margin-bottom: 5px;
+}
+
+.my-name{
+text-align: center;
+
+}
+.my-name strong{
+font-size: 14px;
+font-weight: bold;
+}
+.my-menu{
+display:block;
+height: 850px;;
+}
+.my-menu > em{
+display:block;
+padding: 9px 16px;
+color: #fff;
+font-size: 13px;
+background-color:#dd5850; 
+}
+.menu-nav{
+height:100%;
+padding-top:12px;
+background-color: #fbfafa;
+}
+
+.menu-nav{
+padding: 0;
+}
+.menu-nav >ul li{
+margin-top: 8px;
+}
+.menu-nav>ul li a {
+font-size:80%;
+padding-left:32px;
+color: #666666;
+font-family: Georgia;
+}
+.menu-nav >ul li i{
+margin-right: 8px;
+}
+.list-head{
+font-size: 14px;
+font-weight: bold; 
+padding:8px 16px;	
+border-top: 1px  solid #efe8e6; 
+margin: 0;
+}
+
+</style>
+</head>
+<body>
+<!-- 개인 정보에서 사이드바 전체  -->
+
+		<div class="col s2 m2 l2 side">
+			<div class="my-card">
+				<div class="my-card-image container">
+					<img src="image/cat.png" class="circle responsive-img" >			      
+				</div>
+				
+				<div class="my-info">
+					<div class="my-rank">
+					<a href="#">
+					<span><i class="fas fa-medal"></i></span>
+					<span><th:block th:text="${session['data'].userid}"></span>
+					</a>					
+					</div>
+					<div class="my-name">
+					<strong> <th:block th:text="${session['data'].username}"></strong>
+					</div>
+				</div>
+				</div>
+				
+				<div class="my-menu">
+					<em>MY MENU</em>
+					<div class="menu-nav">
+					<ul style="margin-top: 0;">
+						<li class="list-head" style="border:0;"><i class="fas fa-th-list"></i>주문 배송</li>
+						<li><a href="jumoon">주문내역</a></li>
+						<li><a href="cancel">취소/환불내역</a></li>
+						
+					</ul>
+					
+					<ul >
+						<li class="list-head"><i class="far fa-comment-dots"></i>알림 및 메시지</li>
+						<li><a href="#">알림</a></li>
+						<li><a href="#">메시지</a></li>
+					</ul>
+					<ul >
+						<li class="list-head"><i class="fas fa-pencil-alt"></i>나의 구매후기</li>
+						<li><a href="#">구매후기 쓰기</a></li>
+						<li><a href="myreview">내가 쓴 구매후기</a></li>
+					</ul>
+					<ul>
+						<li class="list-head"><i class="fas fa-heart"></i>관심 리스트</li>
+						<li><a href="favoritem">즐겨 찾는(★)작품</a></li>
+						<li><a href="favormaker">좋아하는 (♥)작가</a></li>
+						<li><a href="recentitem">최근 본 작품</a></li>
+					</ul>
+					<ul >
+						<li class="list-head"><i class="far fa-gem"></i>할인 혜택</li>
+						<li><a href="#">적립금</a></li>
+						<li><a href="#">쿠폰함</a></li>
+						<li><a href="#">친구 초대 쿠폰</a></li>
+					</ul>
+					
+					<ul >
+						<li class="list-head"><i class="far fa-user"></i>내정보</li>
+						<li><a href="infomodify">회원 정보 관리</a></li>
+						<li><a href="account">카드 및 환불계좌 관리</a></li>
+						<li><a href="#">본인 인증</a></li>
+					</ul>
+					</div>
+				</div>	
+		</div>	
+</body>
+</html>

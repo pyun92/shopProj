@@ -1,0 +1,273 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 머티리얼 라이즈 css파일 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style type="text/css">
+/* html, body { height:100%; } */
+/* 썸네일 이미지 */
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: 나눔고딕;
+}
+
+html .pullheight {
+	margin-bottom: 60%;
+}
+
+.sidenav {
+	padding-bottom: 40px;
+	padding-top: 40px;
+}
+
+.user-view {
+	padding-bottom: 80px;
+}
+
+.border1 {
+	/* 	border: 1px solid; */
+	border-color: #90a4ae;
+	margin-bottom: 11px;
+}
+
+img {
+	height: 100%;
+	width: 100%;
+}
+/* insert.html의 css */
+.spimg{
+	overflow: hidden;
+	width:100%;
+	height:300px;
+}
+
+.sping img{
+	display: block;
+	max-width: 100%;
+	max-height: auto;
+	-ms-interpolation-mode: bicubic;
+}
+
+.spdetail{
+	width:100%;
+}
+
+.sp_add_img{
+	
+}
+
+/* 파일첨부 버튼 바꿈 */
+.file_btn{
+  display: inline-block;
+  padding: .5em .75em;
+  color: black;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: pink;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+}
+/* 파일명 숨기기 */
+.file_btn input[type="file"]{
+	position:absolute;
+	overflow:hidden;
+	clip:rect(0,0,0,0);
+}
+</style>
+</head>
+<body>
+	<div class="container">
+	<form>
+		<div class="row">
+		<!-- 배너  -->
+		<div class="col s3 pullheight grey lighten-5">
+				<ul id="slide-out" class=" center-align">
+					<li><div class="user-view">
+							<a href="#name"><span class="black-text name">감자탕 만드는
+									남자</span></a><br> <br> <a href="#user"><img class="circle"
+								src="image/a.jpg"></a><br> <br> <br>
+							<div>
+								<span class="black-text ">안녕하세요 감만남  <th:block th:text="${session['data'].userid}"> 입니다.</span>
+							</div>
+
+						</div></li>
+					<li class="border1"><a class="red-text bold" href="#!"><i
+							class="material-icons">favorite_border</i>내 단골 상점에 추가하기</a></li>
+					<li class="border1"><a class="black-text" href="#!">판매목록
+							보기</a></li>
+					<li class="border1"><a class="black-text" href="sjTimeLine.html">담벼락(공지사항)
+							보기</a></li>
+					<li class="border1"><a class="black-text" href="#!">후기남기기</a></li>
+					<li class="border1"><a class="black-text" href="#!">응원하기</a></li>
+					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
+					<li class="border1"><a class="black-text" href="product_insert.html">상품등록</a></li>
+					<li class="border1"><a class="black-text" href="product_getList_sj.html">상품관리</a></li>
+					<li><div class="divider paddingup200"></div></li>
+					<li><a class="subheader">감자탕을 만드는 남자</a></li>
+					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
+				</ul>
+		</div>
+		<!-- 상품 이미지 버튼 -->
+		<div class="col s9">
+			<h3>상품수정</h3>
+			<div class="row">
+				<div class="col s6">
+					<div class="spimg">
+				<!-- 사진추가할때 가져오는거 생각하기<input type="file" value="사진을 선택해주세요"> -->
+					<img src="image/a.jpg"><!-- 대표이미지는 있는 공간에 사진 들어가기 -->
+					</div>
+				</div>
+		<!-- 제품명,가격,판매수량,옵션 -->
+				<div class="col s6">
+					<span><label>제품명</label><input type="text" name="name"></span>
+					<span><label>제품가격</label><input type="text" name="price"></span>
+					<span><label>할인</label><input type="text" name="discount"></span>
+					<span><label>판매수량</label><input type="text" name="jaego"></span>
+					<label class="file_btn">대표이미지 업로드<input type="file" id="file_img"></label>
+					<label class="file_btn">제품이미지 추가<input type="file" id="file_add_img"></label>
+				</div>	
+			</div>	
+			<div class="divider"></div>
+		 
+		 	<!-- 이미지 추가시 div row 밑으로 들어감 -->
+				<p>제품이미지</p>
+				<div class="row" id="img_full">
+					<!-- 여기에 자바스크립트로 이름 들어감 -->
+				</div>
+		
+			<div class="divider"></div>
+		
+		<!-- 옵션 선택  :클릭시 사용자가 옵션을 추가할수 있도록-->
+			<p><input type="button" value="옵션추가하기" class="btn modal-trigger" href="#modal1"></p>
+    		<table>
+    			<tr>
+    				<td>옵션명</td>
+    				<td>옵션내용</td>
+    			</tr>
+    			<tr>
+    				<td><!-- 여기에 모달에서 작성한 내용 보여짐 --></td>
+    				<td><!-- 여기에 모달에서 작성한 내용 보여짐 --></td>
+    			</tr>
+    		</table>
+    	<!-- 옵션 추가 모달창 -->
+    	 <div id="modal1" class="modal">
+    		<div class="modal-content">
+    			<div class="row">
+    				<div class="col s12">옵션은 최대 5개까지 추가 가능합니다.</div>
+    			</div>
+      			<div class="row">
+      				<div class="col s6">옵션명</div>
+      				<div class="col s6">옵션내용</div>
+      			</div>
+      			<div class="row">
+      				<div class="col s6"><input type="text"></div>
+      				<div class="col s6">
+      				<input type="text">
+      				<input type="text">
+      				<input type="text">
+      				<input type="text">
+      				<input type="text">
+      				</div>
+      			</div>
+    		</div>
+    		<div class="modal-footer">
+      			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    		</div>
+  		</div>
+    	
+    	<p>상품분류</p>
+    	<table>
+    		<tr>
+    			<th>대분류</th>
+    			<th>소분류</th>
+    		</tr>
+    		<tr>
+    		<td><!-- 대분류-->
+    		<ul>
+    			<li class="divi">식품</li>
+    			<li class="divi">음료/주류</li>
+    			<li class="divi">인테리어소품</li>
+    			<li class="divi">의류</li>
+    			<li class="divi">악세사리</li>
+    		</ul>
+    		</td>
+    		<td><!-- 소분류 -->
+				<ul id="small">
+				
+				</ul>	
+    		</td>
+    		</tr>
+    	</table>
+		
+		<div class="divider"></div>
+		
+			<p>제품소개</p>
+			<textarea></textarea>
+			<div class="right-align">
+			<input type="submit" class="btn red lighten-1" name="product_submit" value="제출하기">
+			<input type="reset" class="btn red lighten-1" name="product_submit" value="취소하기">
+			</div>
+		</form>
+		</div>
+	</div>
+		<th:block th:include="footer.html"></th:block>
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
+<!--머티리얼 디자인 자바스크립트-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script> -->
+<script>
+$(function(){
+	$("#file_img").on("change",function(){//대표이미지 썸넬 
+		if(this.files && this.files[0]){
+			var reader=new FileReader();
+			reader.onload=function(e){
+				$(".spimg img").attr('src',e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		}	
+	});
+	
+	$("#file_add_img").on("change",function(){//이미지추가 썸넬 
+		if(this.files && this.files[0]){
+			var reader=new FileReader();
+			reader.onload=function(e){
+				//<div class="row">태그 밑에 <div class="col s4">태그 만들기
+				var div_img=document.createElement("img");
+				div_img.setAttribute('src',e.target.result);
+				div_img.setAttribute('width','100%');
+				div_img.setAttribute('height','100%');
+				/* div_img.attr('src',e.target.result); */
+				var div_col=document.createElement("div");
+				div_col.setAttribute("class","col s4");
+				var div_row=document.getElementById('img_full');
+				//<div>태그 안에 <img>태그 넣기
+				//col 태그 밑으로 넣기				
+				div_col.appendChild(div_img);
+				div_row.appendChild(div_col);
+			}
+			reader.readAsDataURL(this.files[0]);
+		}	
+	});
+	
+	
+	$('.modal').modal();
+});
+
+/* $(document).ready(function(){
+    $('.modal').modal();
+  }); */
+
+
+</script>
+</body>
+</html>

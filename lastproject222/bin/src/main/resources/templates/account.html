@@ -1,0 +1,366 @@
+	<th:block th:include="main.html" ></th:block>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.container.row{
+padding-top: 50px;
+}
+
+.label{
+vertical-align: top;
+font-size:30px;
+font-weight: bold;
+margin: 0px;
+}
+.content-body.col.s10.m10.l10 {
+
+padding:0 	 50px;
+}
+.account-title {
+padding-bottom: 8px;
+margin-bottom: 20px;
+border-bottom: 2px solid #555;
+}
+.card-manage-title{
+margin-top: 0;
+margin-bottom: 10px;
+font-size: 14px;
+font-weight: bold;
+color: #333333;
+}
+
+.card-table{
+border: 1px solid #ccc;
+}
+.card-table-title{
+text-align:center;
+background-color:#eee;
+color: #666;
+font-size: 12px;
+}
+
+#no-card-data{
+text-align:center;
+font-size: 13px;
+}
+.cd-pointer{
+text-align: center;
+padding-top: 50px;
+}
+
+
+.btn.new-register.modal-trigger, .btn.new-account.modal-trigger{
+padding:0 8px ;
+color:white;
+height:35px;
+font-size:12px;
+border:0;
+border-radius:2px;
+background-color: #c8352e;
+}
+
+.accountmodal{
+border-radius:5px;
+width:400px;
+height:400px;		
+margin-top: 100px;
+margin-bottom: 10px;
+font-size: 14px;
+font-weight: bold;
+color: #333333;
+}
+.cardmodal{
+border-radius:5px;
+width:450px;
+height:800px;		
+margin-top: 0;
+margin-bottom: 10px;
+font-size: 14px;
+font-weight: bold;
+color: #333333;
+
+}
+.card-modal-top{
+padding:20px 0;
+height:50px;
+margin: 0 30px;
+border-bottom: 2px solid #555;
+
+}
+.label-card.col.s6.m6.l6{
+padding:0;
+font-size:20px;
+font-weight: bold;
+text-align: left;
+
+}
+.modal-close.col.s6.m6.l6{
+padding:0;
+text-align: right;
+
+}
+
+.card-modal-body{
+margin:20px 15px;
+border:2px solid #757575;
+background-color: #f0f2f3;
+
+}
+.card-modal-body table tr{
+border: 0px;
+width: 65px;
+
+}
+.card-modal-body table tr th{
+text-align:center;
+font-size:13px;
+width: 80px;
+padding: 10px 5px;
+}
+.card-modal-body table tr td{
+padding: 10px 5px;
+}
+.card-modal-body table tr td input{
+margin-left: 20px;
+}
+[type="radio"]:not(:checked), [type="radio"]:checked {
+	width:18px;
+	height:18px;
+    position:relative;
+    opacity: 1;
+    pointer-events:fill;
+}
+
+input[type=text]:not(.browser-default).card-num{
+font-size:12px;
+margin:2px 2px;
+border-radius:2px;
+border: 1px solid #ccc;
+width: 50px;
+height: 30px;
+background-color: white;
+}
+input[type=text]:not(.browser-default).card-birth, input[type=text]:not(.browser-default).card-pass{
+font-size:17px;
+margin:5px 5px;
+border-radius:2px;
+border: 1px solid #ccc;
+width: 110px; 
+height: 35px;
+background-color: white;
+}
+
+input[type=text]:not(.browser-default).account-name,.account-name.browser-default{
+font-size:17px;
+margin:5px 5px;
+border-radius:2px;
+border: 1px solid #ccc; 
+width:80%;
+height: 35px;
+background-color: white;
+}
+span.card-name{
+padding: 0;	
+}
+[type="radio"]:checked + span::after,[type="radio"]:checked + span::before {
+content:none;
+background-color: white;
+border: 0;
+}
+.card-remove{
+text-align: right;
+}
+</style>
+</head>
+<body>
+	<div class="container row" >
+	<th:block th:include="myinfoside.html" ></th:block>
+				
+	<div class="content-body col s10 m10 l10 ">
+		<div class="account-title">
+			<h2 class="label">카드 및 환불 계좌 관리</h2>
+		</div>
+		<h2 class="card-manage-title"> 카드 관리</h2>
+		<div class="card-manage">
+			<table class="card-table">
+				<th class="card-table-title">카드정보 </th>
+				<tr>
+				<td id="no-card-data" style="display: none;">결제할 카드를 등록시 바로 결제 할수 있습니다</td>
+				<!-- 등록한 카드가있을시  -->
+				<td id="in-card-data" style="display: show;"> 
+				<div class="col s6 m6 l6">
+				<label style="width:800px;" >
+				<input type="radio" checked="checked"></input> 
+				<span class="card-name" style="color: black; padding: 0 20px;">국민 카드</span> 
+				<span style="color: black; padding: 0;">2424-****-****-2424</span>
+				</label>
+				</div>
+				<div class="card-remove col s6 m6 l6 ">
+				<button> 삭제 </button>		
+				</div>
+				</td>
+				</tr>
+			</table>
+			<div class="cd-pointer">
+			<a class="btn new-register modal-trigger" href="#new-register"> 신용카드 등록하기 </a>
+					 	<!-- 카드 등록 모달창 -->
+				 <div class="cardmodal modal fade" id="new-register" tabindex="-1" role="dialog" >
+				 	<div class="card-modal-top">
+						<h2 class="label-card col s6 m6 l6"> 카드 등록 </h2>
+						<a href="#" class="modal-close col s6 m6 l6">
+						<i class="far fa-times-circle" style="color: black;">
+						</i></a>
+				 	</div>
+		
+				 	<div class="card-modal-body">
+				 			<p>카드정보</p>
+				 			<table>
+				 			<tr>
+				 				<th>카드 종류</th>
+				 				<td><input type="radio" name="cards">개인 <input type="radio" name="cards">법인</td>
+				 			</tr>
+				 			
+				 			<tr>
+				 				<th>카드 번호</th>
+				 				<td><input type="text" numberOnly maxlength="4" class="card-num">-<input type="text" numberOnly maxlength="4" class="card-num">-
+				 				<input type="text" numberOnly maxlength="4" class="card-num">-<input type="text" numberOnly maxlength="4" class="card-num">
+				 				</td>
+				 			</tr>
+				 			
+				 			<tr>
+				 				<th>유효 기간</th>
+				 				<td><input type="text" numberOnly maxlength="2" class="card-num" placeholder="MM">/<input type="text" numberOnly maxlength="2" class="card-num" placeholder="YY">
+				 				</td>
+				 			</tr>
+				 			
+				 			<tr>
+				 				<th>생년월일</th>
+				 				<td><input type="text" numberOnly maxlength="6" class="card-birth" >6자리(ex.850825)
+				 				</td>
+				 			</tr>	
+				 			
+				 			<tr>
+				 				<th>비밀번호</th>
+				 				<td><input type="text" numberOnly maxlength="2" class="card-pass" >비밀번호 앞 두자리
+				 				</td>
+				 			</tr>	
+				 			
+				 		</table>
+				 		
+				 			<p style="text-align: left;">신용 카드 간편결제 약관</p>
+				 		    <p style="margin-bottom: 5px;">
+						      <label>
+						        <input type="checkbox" class="filled-in"/>
+						        <span style="color: black">*약관에 동의 합니다</span>
+						      </label>
+						    </p>
+						    
+				 	</div>
+				 	<form action="" method="">
+						    <button> 등록하기 </button>
+					</form>
+				 </div>
+				<!-- 카드 등록 모달 종료 -->
+			</div>
+		</div>
+		
+		
+		<h2 class="card-manage-title"> 계좌 관리</h2>
+		<div class="card-manage">
+			<table class="card-table">
+				<th class="card-table-title">카드정보 </th>
+				
+				<tr>
+				<td id="no-card-data" style="display: none;">계좌 이체 후 주문 취소할 경우 등록된 계좌로 환불해드립니다.</td>
+				<td id="in-card-data" style="display: show;"> 
+				<div class="col s6 m6 l6">
+				<label style="width:800px;" >
+				<input type="radio" checked="checked"></input> 
+				<span class="card-name" style="color: black; padding: 0 20px;">국민 은행</span> 
+				<span style="color: black; padding: 0;">24111-*****-2424</span>
+				</label>
+				</div>
+				<div class="card-remove col s6 m6 l6 ">
+				<button> 삭제 </button>		
+				</div>
+				</td>
+				</tr>
+			</table>
+			<div class="cd-pointer">
+			<a class="btn new-account modal-trigger" href="#new-account-register"> 환불계좌	 등록하기 </a>
+				<!-- 계좌 등록 -->
+				 <div class="accountmodal modal fade" id="new-account-register" tabindex="-1" role="dialog" >
+				 	<div class="card-modal-top">
+						<h2 class="label-card col s6 m6 l6"> 환불 계좌 관리 </h2>
+						<a href="#" class="modal-close col s6 m6 l6">
+						<i class="far fa-times-circle" style="color: black;">
+						</i></a>
+				 	</div>
+		
+				 	<div class="card-modal-body">
+				 			<table>
+				 			
+				 			<tr>
+				 				<th>예금주</th>
+				 				<td><input type="text"  class="account-name">
+				 				</td>
+				 			</tr>
+				 			
+				 			<tr>
+				 				<th>은행</th>
+				 				<td>
+								  <select class="account-name browser-default">
+								    <option value="" disabled selected>은행</option>
+								    <option value="1">산업 은행</option>
+								    <option value="2">국민 은행</option>
+								    <option value="3">기업 은행</option>
+								    <option value="4">수협 은행</option>
+								    <option value="5">농협 은행</option>
+								    <option value="6">우리 은행</option>
+								    <option value="7">SC제일 은행</option>
+								    <option value="8">씨티 은행</option>
+								    <option value="9">대구 은행</option>
+								    <option value="10">부산 은행</option>
+								    <option value="11">광주 은행</option>
+								    <option value="12">제주 은행</option>
+								    <option value="13">전북 은행</option>
+								    <option value="14">경남 은행</option>
+								    <option value="15">새마을 은행</option>
+								    <option value="16">신협 은행</option>
+								    <option value="17">상호 저축 은행</option>
+								    <option value="18">카카오 뱅크</option>
+								    <option value="19">하나 은행</option>
+								    <option value="20">신한 은행</option>
+								  </select>
+				 				</td>
+				 			</tr>
+				 			
+				 			<tr>
+				 				<th>계좌 번호</th>
+				 				<td><input type="text" numberOnly maxlength="15" class="account-name">
+				 				</td>
+				 			</tr>	
+
+				 		</table>
+				 		    <p style="margin-bottom: 5px;">
+						      <label>
+						        <input type="checkbox" class="filled-in"/>
+						        <span style="color: black">환불 계좌 수집 /설정에 동의 합니다</span>
+						      </label>
+						    </p>
+				 	</div>
+				 	<form action="" method="">
+						    <button> 등록하기 </button>
+					</form>
+				 </div>
+			
+			</div>
+		</div>
+	</div>
+	</div>
+		<th:block th:include="footer.html"></th:block>
+</body>
+</html>

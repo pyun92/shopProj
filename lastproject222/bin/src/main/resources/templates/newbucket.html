@@ -1,0 +1,324 @@
+<th:block th:include="main.html"> </th:block>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.bucket-talble{
+border-top: 4px solid black; 
+
+padding-top: 30px;
+}
+
+.item-img{
+width: 80px;
+height: 80px;
+}
+.bucket-item{
+margin: 0;
+}
+.inc ,.dec{
+background-color: white;
+border: 1px solid black;
+height: 22px;
+}
+.bucket-precnt{
+height: 22px;
+border-top:  1px solid black;
+border-bottom: 1px solid black;
+
+}
+input[type=text]:not(.browser-default){
+text-align:center;
+margin: 0;
+
+}
+.last-total-pay ul:not(.browser-default) li{
+margin: 10px 15px;
+display: list-item;
+overflow: hidden;
+line-height: 20px;
+}
+ul:not(.browser-default) strong{
+float: left;
+}
+
+ul:not(.browser-default) p{
+display: block;
+float: right;
+margin: 0;
+}
+.last-total-pay{
+background-color: #43ca26;
+}
+
+.last-total-pay2{
+background-color: #43ca26;
+padding: 10px;
+
+}
+
+.lastselect-btn{
+padding: 20px;
+margin: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+	<h3> 장 바 구니 </h3>
+
+	<table class="bucket-talble">
+		<tr class="totalColumn">
+		<th>
+		<form action="#">
+			<label>
+				<input type="checkbox" />
+				<span></span>
+			</label>
+   		 </form></th>
+		<th style="width: 521px;">상품 정보 </th>
+		<th style="width: 100px;">수량</th>
+		<th>상품 금액</th>
+		<th>할인 금액</th>
+		<th>배송비</th>
+		<th>판매자 명</th>
+		<th>주문 금액</th>
+		</tr>
+		<!-- 상품 시작 -->
+
+		<tr th:each="probucket:${probucket}">
+		<td>
+		<form action="#">
+			<label>
+				<input type="checkbox" />
+				<span></span>
+			</label>
+   		 </form></td>
+		<td>
+		<div class="row bucket-item">
+			<div class="col s3 m3 l3">
+				<a>
+<!-- 				<img src="image/a.jpg" > -->
+					<img th:src="@{../upload/}+${probucket.imgname}" class="item-img"> 
+				</a>
+			</div>
+			<div class="col s9 m9 l9">
+				<div>
+				추가 상품 	
+				</div>
+				<div>
+				건강한 식품
+				</div>			
+			</div>
+		</div>
+		</td>
+		<td>        			
+			<div class="bucket-option" >
+			<label >수량</label>	
+        				<div class="row">
+        					<button type="button" class="dec col s2 m2 l2">-</button>
+        						<div class="bucket-precnt col s4 m4 l4" style="padding: 0px;">
+        							<input type="text" th:value="${probucket.quantity}"  class="bucket-cnt" style="height: 21px; border: none;">
+        						</div>
+        					<button type="button" class="inc col s2 m2 l2">+</button>
+        				</div>
+        	</div>
+        </td>
+		<td th:text="(${probucket.price}*${probucket.quantity}+원)" class="total-price"></td>
+		<input type="hidden" class="item-price" th:value="${probucket.price}">
+		<input type="hidden" class="discount" th:value="${probucket.discount}" >
+		<input type="hidden" th:value="${probucket.deliveryfee}" class="delivery">
+		<input type="hidden" th:value="${probucket.bucketseq}" class="bucketseq">
+		
+		<td th:text="(${probucket.discount}*${probucket.quantity})+원" class="total-discount"></td>
+		<td th:text="${probucket.deliveryfee}" class="item-deliveryfee"></td>
+		<td th:text="${probucket.sellername}"></td>
+		<td class="cal-price" th:text="(${probucket.price}*${probucket.quantity}-${probucket.discount}+2500)+원"></div>
+		</td>
+		</tr>
+		
+		
+		<!--  마지막 줄 -->
+		<tr  style="border-bottom:0;" class="las-total-row">
+		<td Colspan="5">
+		</td>
+		<td colspan="3" class="last-total-pay">
+		<ul >
+			<li>
+			<strong>총 상품 금액</strong><p><em class="b-order-price"></em></p> 
+			</li>
+			
+			<li>
+			<strong>배송비</strong>
+			<p><em class="order-deliveryfee"></em></p> 
+			</li>
+			
+			<li><strong>할이율</strong><p><em class="order-discount"></em></p> </li>
+			<li></li>
+		</ul> 
+		</td>
+		</tr>
+		
+		<tr style="border-top:0;" class="las-total-row2">
+		<td Colspan="5">
+		</td>
+			<td Colspan="3" class="last-total-pay2">
+			<ul>
+			<li >
+			<strong>최종 가격</strong><p><em class="order-price">dasdas</em></p>
+			</li>
+			</ul> 
+		</td>
+		</tr>
+	</table>
+	
+	<div style="padding-top:20px; ">
+	<button>선택 삭제</button>
+	</div>
+	<div style="text-align: center;">
+	<a href="baesong" class="btn lastselect-btn">결제 하기</a><button class="lastselect-btn">쇼핑 계속</button>
+	</div>
+
+</div>
+
+
+<th:block th:include="footer.html" ></th:block>
+
+
+
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	
+	<script type="text/javascript">
+	
+	function orderprice(){
+		var btotals=0;
+		var totaldis=0;
+		var totals=0;
+		var totaldeliveryfee=0;
+        var $dataRows=$(".bucket-talble tr:not('.totalColumn, .las-total-row,.las-total-row2')");
+        $dataRows.each(function() {
+        	$(this).find('.total-discount').each(function(i){    
+        		totaldis+=parseInt( $(this).html());
+            }); 
+        	
+        	$(this).find('.total-price').each(function(i){    
+                btotals+=parseInt( $(this).html());
+            });
+        	
+            $(this).find('.cal-price').each(function(i){    
+                totals+=parseInt( $(this).html());
+                totaldeliveryfee+=2500;
+            });
+            
+        });
+        $(".bucket-talble em.order-price").each(function(i){  
+            $(this).html(totals);
+        });
+        
+        $(".bucket-talble em.order-deliveryfee").each(function(i){  
+            $(this).html(totaldeliveryfee);
+        });	
+        
+        $(".bucket-talble em.b-order-price").each(function(i){  
+            $(this).html(btotals);
+        });	
+        
+        $(".bucket-talble em.order-discount").each(function(i){  
+            $(this).html(totaldis);
+        });	
+	}
+	
+	function modifyquantity(){
+		alert("2222222222");
+		$.ajax({
+	        async: true,
+	        type : 'POST',
+	        data : bucketseq,
+	        url : "/modify",
+	        dataType : "json",
+	        contentType: "application/json; charset=UTF-8",
+	        success : function(data) {
+					alert("성공");            
+	            }
+	    });
+	}
+	
+	$(function(){
+		
+			orderprice();
+			//수량 증감  옵션
+			
+		  $('.inc').click(function(){ 
+		    var n = $('.inc').index(this);
+		    var num = $(".bucket-cnt:eq(" + n + ")").val();
+		    var cnt = $(".bucket-cnt:eq(" + n + ")").val(num*1+1);
+		    var price =$(".item-price:eq(" + n + ")").val();
+		    var discount =$(".discount:eq(" + n + ")").val();
+		    var delivery =$(".delivery:eq("+ n +")").val();
+		    var bucketseq =$(".bucketseq").val();
+		    var total=(num*1+1)*price;
+		  	  var cal=(total-discount*(num*1+1))+(delivery*1);
+		  		  $(".total-discount:eq(" + n + ")").html(discount*(num*1+1)+"원");
+			      $(".total-price:eq(" + n + ")").html(total+"원");
+				  $(".cal-price:eq(" + n + ")").html(cal+"원");
+					orderprice();
+					alert("1111111111");
+					modifyquantity();
+		  });
+		  
+		  
+		  
+		  $('.dec').click(function(){ 
+		    var n = $('.dec').index(this);
+		    var num = $(".bucket-cnt:eq(" + n + ")").val();
+			if(num*1-1>0){
+				var cnt = $(".bucket-cnt:eq(" + n + ")").val(num*1-1);
+				var price =$(".item-price:eq(" + n + ")").val();
+				var discount =$(".discount:eq(" + n + ")").val();
+				var delivery =$(".delivery:eq("+ n +")").val();
+				  var total=(num*1-1)*price;
+			  	  var cal=(total-(discount*(num*1-1)))+(delivery*1);
+			  		  $(".total-discount:eq(" + n + ")").html(discount*(num*1-1)+"원");
+				  	  $(".total-price:eq(" + n + ")").html(total+"원");
+					  $(".cal-price:eq(" + n + ")").html(cal+"원");
+					  orderprice();
+					  
+			}else if(num*1-1==0){
+				
+				var cnt = $(".bucket-cnt:eq(" + n + ")").val(0);
+				$(".total-discount:eq(" + n + ")").html(0+"원");
+				$(".total-price:eq(" + n + ")").html(0+"원");
+				$(".cal-price:eq(" + n + ")").html(0+"원");
+				orderprice();
+			}
+
+		  });
+		  //수량 직접 입력
+		  $(".bucket-cnt").keyup(function() { 
+			  var n = $('.bucket-cnt').index(this);
+			  var num = $(".bucket-cnt:eq(" + n + ")").val();
+			  var price =$(".item-price:eq(" + n + ")").val();
+			  var discount =$(".discount:eq(" + n + ")").val();
+			  var delivery =$(".delivery:eq("+ n +")").val();
+				  var total=((num*1)*price);
+				  var cal=(total-discount*(num*1-1))+(delivery*1);
+				  $(".total-discount:eq(" + n + ")").html(discount*(num*1)+"원");
+				  $(".total-price:eq(" + n + ")").html(total+"원");
+				  $(".cal-price:eq(" + n + ")").html(cal);
+				  orderprice();
+				 
+				});
+
+    });
+	
+			
+	
+	</script>
+</body>
+</html>

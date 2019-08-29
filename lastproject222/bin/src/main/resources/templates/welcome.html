@@ -1,0 +1,229 @@
+<th:block th:include="main.html"></th:block>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style type="text/css">
+html {
+	height: 100%;
+}
+
+.align1 {
+	height: 660px;
+}
+
+.carousel.carousel-slider {
+	width: 100%;
+	height: 90%;
+}
+
+.card {
+	height: 310px;
+	margin-bottom: 0;
+}
+
+.ww1 {
+	height: 140px;
+}
+
+.col .s6 img {
+	border: solid 1px grey;
+	height: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.card-image {
+	height: 60%;
+}
+
+.card-content {
+	
+}
+
+.card-image img {
+	width: 100%;
+	height: 100%;
+}
+
+.col .s6 {
+	align-items: center;
+	margin: 0px;
+	padding: 0px;
+}
+
+.col .s12 {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+.chart {
+	margin-top: 70px;
+	background-color: #fce4ec;
+}
+
+.chart1 {
+	margin-top: 10px;
+}
+
+.char_con {
+	height: 300px;
+}
+
+p {
+	font-size: 14px;
+	font-weight: bold;
+	border-bottom: 1px solid #9e9e9e;
+}
+
+#followquick {
+	position: absolute;
+	margin-top:180px;
+	top: 180px;
+	right: 45%;
+	margin-right: -670px;
+	visibility:hidden;
+}
+
+.s1 {
+	
+}
+
+/* 따라다니는 애 안보이게 맨 앞으로 둠 */
+/* #video_main{
+	z-index:1;
+} */
+
+.
+</style>
+</head>
+<body>
+
+	<div class="container row grey lighten-3">
+		<div class="col s3 align1">
+			<div class="col s12 ">
+				<div class="card center-align">
+					<div class="card-image">
+						<img src="image/a.jpg">
+					</div>
+					<div class="card-content center-align">
+						<p>안녕하세요 저는 개량한복을 파는 ~~라고 합니다.</p>
+					</div>
+
+				</div>
+			</div>
+			<div class="col s12">
+
+				<h5 class="center-align">
+					<i class="small material-icons">shopping_cart</i>영상 속 상점 들르기
+				</h5>
+			</div>
+			<!-- 편성표 -->
+			<div class="col s12 4d ww1" style="background-color:red;">
+			<span>편성표 보이는 곳입니다.</span>
+			</div>
+			
+			<!-- <div class="col s12 4d">
+				<div class="col s6 ww1">
+					<img src="image/han4.jpg">
+				</div>
+				<div class="col s6 ww1">
+					<img src="image/han2.png">
+				</div>
+				<div class="col s6 ww1">
+					<img src="image/han3.jpg">
+				</div>
+				<div class="col s6 ww1">
+					<img src="image/han4.jpg">
+				</div>
+			</div> -->
+		</div>
+
+
+		<div class="col s9 align1">
+			<div class="carousel carousel-slider" id="video_main">
+				<a class="carousel-item" href="#one!"> <iframe width="100%"
+						height="100%" src="https://www.youtube.com/embed/VfYC_mPfgd4"
+						frameborder="0"
+						allow="accelerometer;  encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe>
+				</a> <a class="carousel-item" href="#two!"> <iframe width="100%"
+						height="100%" src="https://www.youtube.com/embed/oLn3UURHunk"
+						frameborder="0"
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe></a> <a class="carousel-item" href="#three!">
+					<iframe width="100%" height="100%"
+						src="https://www.youtube.com/embed/WG9d3Toe7Dk" frameborder="0"
+						allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe>
+				</a> <a class="carousel-item" href="#four!"> <iframe width="100%"
+						height="100%" src="https://www.youtube.com/embed/no3K4M0PqRY"
+						frameborder="0"
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe>
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<th:block th:include="product_getList.html" ></th:block>
+
+	
+	<div class="container">
+			<!-- 사용자 스크롤 따라다니는 애 -->
+			<div id="followquick" class="col hide-on-small-only s1 m3 l2"
+				style="border: 1px solid grey">
+				<ul class="section table-of-contents">
+					<li><a href="#chart0">주간 인기 상품</a></li>
+					<li><a href="#chart1">주간 인기 작가</a></li>
+					<li><a href="#chart2">작가 추천!</a></li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+	</div>
+	<th:block th:include="footer.html"></th:block>
+	<!-- Compiled and minified CSS -->
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<!-- 제이쿼리 -->
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.carousel');
+			var instances = M.Carousel.init(elems, {
+				fullWidth : true,
+				indicators : true
+			});
+		});
+		$(document).ready(function() {
+			$('.scrollspy').scrollSpy();
+			
+		});
+		/* $(window).scroll(function(){
+			var scrollTop = $(document).scrollTop();
+			if (scrollTop < 180) {
+			 scrollTop = 180;
+			}
+			$("#followquick").show();
+			$("#followquick").stop();
+			$("#followquick").animate( { "top" : scrollTop+80 });
+			
+		}); */
+		$(window).scroll(function(){
+			var scrollTop=$(document).scrollTop();
+			
+			if(scrollTop>=690){
+				$("#followquick").css('visibility','visible');
+			}else{
+				$("#followquick").css('visibility','hidden');
+			}
+			$("#followquick").show();
+			$("#followquick").stop();
+			$("#followquick").animate({"top":scrollTop+50});
+		});
+	</script>
+</body>
+</html>

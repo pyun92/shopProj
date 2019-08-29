@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="main.html"></th:block>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+.bucket-container.container{
+text-align: left;
+width: 900px;
+}
+
+
+.bucket-list{
+align: center;
+}
+
+.bucket-list-image img{
+	max-height: 100%;
+	max-width: 100%;
+	
+}
+.bucket-list-top.row.col.s12.m12.l12{
+background-color: #dcf8f6;
+padding: 0px;
+height: 80px;
+margin: 0;
+}
+.bucket-list-top span{
+margin-top: 25px;
+font-size: 25px;
+margin-left: 10px;
+
+
+}
+.bucket-card.card{
+padding-left: 0px;
+padding-right: 0px;
+margin:0px;
+}
+
+.item-detail{
+font-size: 25px;
+}
+
+.items-option.col.s12.m12.l12{
+padding-left: 200px;
+padding-right: 30px;
+}
+
+textarea{
+height: 100px;
+color: black;
+}
+#decr ,#inc{
+background-color: white;
+border: 1px solid black;
+padding: 0px;
+height: 25px;
+}
+
+.bucket-cnt{
+text-align: center;
+}
+
+.bucket-option{
+margin-bottom: 10px;
+}
+.bucket-precnt{
+border-top: 1px solid black;
+border-bottom:1px solid black;
+height:25px;
+margin: 0px;
+padding: 0px;
+
+}
+input {
+	border: 0px;
+}
+
+.total-price{
+color: black;
+}
+
+.bucket-items.col.s12.m12.l12{
+
+padding-top: 20px;
+border-top:1px double gray;
+}
+
+.total-pay{
+padding-top:10px;
+border-top: 1px solid gray;
+
+}
+</style>
+<body>
+
+
+<div class="bucket-container container" >
+	<h3> 장 바 구니 </h3>
+<hr>
+  <div class="row col s12 m12 l12" >
+    <div class="col s12 m12" style="padding: 0;">
+      <div class="bucket-card card col s12 m12 l12" >
+        <div class="bucket-list-top row col s12 m12 l12" >
+          <form action="#">
+		      <label>
+		        <input type="checkbox" />
+		   			<span>전체 선택</span>
+		   			
+		      </label>
+   		  </form>
+        </div>
+        
+      <!-- 상품 목록 시작 -->    
+ 	<th:block th:each="num:${#numbers.sequence(1,3)}">       
+        <div class="bucket-items col s12 m12 l12">
+        	<div class="col s1 m1 l1">
+        		<form action="#">
+				      <label>
+				        <input type="checkbox" />
+				   			<span></span>
+				      </label>
+   		  		</form>
+        	</div>
+        	<div class="bucket-list-image col s2 m2 l2" >
+        		<img alt="item1" src="image/a.jpg" >
+        	</div>
+        	
+        	<div class="col s9 m9 l9 item-detail" >
+        		<p>직접 만든 청국장!!</p>
+        	</div>
+        </div>
+        
+        <!-- 요청사항 및 수량 조절 -->
+        <div class="items-option col s12 m12 l12" >
+        	<div class="row">
+        		<div>
+        			<div class="col s8 m8 l8 bucket-option" >
+        				<div  class="col s9 m9 l9">	option</div>
+        				<div class="col s3 m3 l3">
+	        				<label class="col s4 m4 l4">
+	        				수량
+	        				</label>
+        					<button type="button" id="decr" class="col s2 m2 l2">-</button>
+        						<div class="bucket-precnt col s4 m4 l4" style="padding: 0px;">
+        							<input type="text" value="1"  class="bucket-cnt" style="height: 21px; border: none;">
+        						</div>
+        					<button type="button" id="inc" class="col s2 m2 l2">+</button>
+        				</div>
+        			
+        			</div>
+        			<div class="col s3 m3 l3">
+        			<div>
+					<span class="total-price">10000원</span>	       			
+        			</div>
+        			</div>
+        		</div>
+        		<div>
+				  <textarea id="textarea" placeholder="요청사항을 적어 주세."></textarea>
+				</div>
+				<div style="text-align: left;" class="col s6 m6 l6">
+					배송비
+				</div>
+				<div style="text-align: right;" class="col s6 m6 l6">
+				1000원 
+				</div>
+        </div>
+      </div>
+
+      <!-- 목록끝 시작 -->
+ </th:block>   
+<!-- 장바구니 총 금액 -->
+
+
+</div>
+
+			
+		
+		</div> 
+	</div>
+				<div class="row" style="padding-top: 10px;">
+					 <div class="col s6 m6 l6">
+					토탈  액수 +(-배송비 )-(할인율) 
+					 </div>
+				  <div class="total col s6 m6 l6" style="text-align: right;">
+						  1000000  원
+				  </div>
+				</div>
+ <a href="baesong" class="btn">결제 하기</a>
+</div>
+
+
+<th:block th:include="footer.html" ></th:block>
+
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript">
+	$(function(){ 
+			//수량 증감  옵션
+		  $('#inc').click(function(){ 
+		    var n = $('#inc').index(this);
+		    var num = $(".bucket-cnt").val();
+		    var cnt = $(".bucket-cnt").val(num*1+1);
+		    	$(".total-price").html((num*1+1)*10000+"원");
+		  });
+		  
+		  $('#decr').click(function(){ 
+			
+		    var n = $('#decr').index(this);
+		    var num = $(".bucket-cnt").val();
+			if(num*1-1>=0){
+				var cnt = $(".bucket-cnt").val(num*1-1);
+				$(".total-price").html((num*1-1)*10000+"원");
+			}else{
+				var cnt = $(".bucket-cnt").val(0);
+			}
+
+		  });
+		  //수량 직접 입력
+		  $(".bucket-cnt").keyup(function() { 
+			  
+			  var num = $(".bucket-cnt").val();
+			  $(".total-price").html((num*1)*10000+"원");
+				});
+		  
+		}) 
+	</script>
+</body>
+</html>
