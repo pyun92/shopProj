@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 머티리얼 라이즈 css파일 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+	.nav-wrapper{
+		padding-left:10px;
+		padding-rigth:10px;
+	}
+	section{
+		margin-left:150px;
+	}
+	/* detail.html */
+	.broad{
+		height:100px;
+	}
+	
+</style>
+</head>
+<body>
+	<!-- 메뉴바 -->
+	<header>
+		<nav>
+    	<div class="nav-wrapper white">
+      		<a href="#" class="brand-logo center black-text">admin</a>
+      		<a href="#" data-target="sidenav-left" class="sidnav-trigger"><i class="material-icons black-text">menu</i></a>
+      		<!-- 메뉴 클릭했을때 안열림 & main 다 가리는거 수정하기 -->
+    		<ul id="sidenav-left" class="sidenav sidenav-fixed">
+        		<li><a th:href="@{/admin_sj}">상점관리</a></li>
+        		<li><a th:href="@{/admin_user}">회원관리</a></li>
+        		<li><a href="#">신고리스트</a></li>
+        		<li><a href="#">정지</a></li>
+        		
+      		</ul>
+    	</div>
+  		</nav>
+	</header>
+	<!-- 편성표 보여주기 : 관리자페이지에서 수정 가능-->
+	<section>
+	<div class="container">
+		<div class="row"><h2>편성표 관리</h2></div>
+		<!-- 현재 진행중인 채널, 편성표 추가 들어가기  -->
+		<div class="row">
+		<!-- 현재 진행중인 상점이름 -->
+			<div class="col s12">
+				<div class="card broad">
+					<span>현재방송중인 상점</span>
+					<h5>감자탕</h5>
+					<span>방송시간 10:00~10:30</span>
+				</div>
+			</div>
+			<!-- 편성표 추가 -->
+		</div>
+		<div class="row">
+			<div class="col s12">
+				<div class="card center">
+				<h5><span><i class="material-icons" style="float:left;">chevron_left</i></span>8월13일(화)<span><i class="material-icons" style="float:right;">chevron_right</i></span></h5>
+					<div class="divider"></div>
+					<table class="highlight">
+					<thead>
+						<tr>
+							<th>시간</th><th>방송상품</th><th>영상시간</th><th>상품URL</th><th>수정하기</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>10</td>
+							<td>
+								<p>20 생활한복</p>
+								<p>50 김치</p>
+							</td>
+							<td>3:00</td>
+							<td>
+								<p><a href="#">생활한복어쩌고</a></p>
+								<p><a href="#">갓김치</a></p>
+							</td>
+							<td>
+							<a href="#modal_update" class="waves-effect waves-light btn modal-trigger">수정하기</a>
+							</td>
+						</tr>
+						<tr>
+							<td>11</td>
+							<td>
+								<p>20 생활한복</p>
+								<p>50 김치</p>
+							</td>
+							<td>3:00</td>
+							<td>
+								<p><a href="#">생활한복어쩌고</a></p>
+								<p><a href="#">갓김치</a></p>
+							</td>
+							<td>
+							<a href="#modal_update" class="waves-effect waves-light btn modal-trigger">수정하기</a>
+							</td>
+						</tr>
+						<tr>
+							<td>12</td>
+							<td>
+								<p>20 생활한복</p>
+								<p>50 김치</p>
+							</td>
+							<td>3:00</td>
+							<td>
+								<p><a href="#">생활한복어쩌고</a></p>
+								<p><a href="#">갓김치</a></p>
+							</td>
+							<td>
+							<a href="#modal_update" class="waves-effect waves-light btn modal-trigger">수정하기</a>
+							</td>
+						</tr>
+						<tr>
+							<td>13</td>
+							<td>
+								<p>20 생활한복</p>
+								<p>50 김치</p>
+							</td>
+							<td>3:00</td>
+							<td>
+								<p><a href="#">생활한복어쩌고</a></p>
+								<p><a href="#">갓김치</a></p>
+							</td>
+							<td>
+							<a href="#modal_update" class="waves-effect waves-light btn modal-trigger">수정하기</a>
+							</td>
+						</tr>
+						</tbody>
+					</table>				
+				</div>
+				
+				<!-- 모달창 -->
+				<div id="modal_update" class="modal">
+    			<div class="modal-content">
+    				<table>
+    					<tr>
+    						<th>시</th><th>분</th><th>방송상품</th><th>상품URL</th>
+    					</tr>
+    					<tr>
+    						<td>10</td>
+    						<td>
+    							<p><input type="text"></p>
+    							<p><input type="text"></p>
+    						</td>
+    						<td>
+    							<p><input type="text"></p>
+    							<p><input type="text"></p>
+    						</td>
+    						<td>
+    							<p><input type="text"></p>
+    							<p><input type="text"></p>
+    						</td>
+    					</tr>
+    				</table>
+    			</div>
+    			<div class="modal-footer">
+      				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    			</div>
+  				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	</section>
+	
+<!-- 자바스크립트 -->
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('.modal').modal();
+  }); 
+</script>
+</body>
+</html>

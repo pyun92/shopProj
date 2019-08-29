@@ -22,8 +22,6 @@ import lombok.ToString;
 public class Store {
 
 	@Id
-	@SequenceGenerator(name = "STORE", sequenceName = "STORE_SEQ", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "STORE")
 	private Long storeseq;//주인아이디시퀀스들어감
 	
 	@Column(nullable = false)

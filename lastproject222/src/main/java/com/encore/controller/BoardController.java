@@ -152,10 +152,10 @@ public class BoardController {
 	
 	}
 
-	@GetMapping("/index")
-	public void index() {
-	
-	}
+//	@GetMapping("/index")
+//	public void index() {
+//	
+//	}
 	@GetMapping("/22222")
 	public void eeeee() {
 	

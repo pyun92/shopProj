@@ -21,6 +21,7 @@ public class LoginDataServiceImpl implements LoginDataService {
 
 	@Override
 	public void insertId(Userdata data) {
+		data.setManage_level(1L);
 		loginRepository.save(data);
  }
 	@Override
