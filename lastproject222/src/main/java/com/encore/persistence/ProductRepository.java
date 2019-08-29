@@ -14,4 +14,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
 	List<Product> findByStoreseq(Long searchKeyword);
 	
+
+	
 }

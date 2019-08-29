@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -171,14 +173,29 @@ public class ProductController {
 		return "newbucket";
 	}
 	
-	//수량 저장
-	@RequestMapping("/modify")
+	//수량 변경
+	@RequestMapping("/modifydata")
 	@ResponseBody
-	public String modify(@RequestBody Bucket data) {
-		System.out.println("121212121212121212121212");
-        //service.quantitymodify(data);
-       
-        return "map";
+	public Map<Object, Object>  modify(@RequestBody Map<String, String> params,HttpServletRequest request,Bucket  buc) {
+		Map<Object, Object> map = new HashMap<Object, Object>(); 
+		buc.setBucketseq(Long.parseLong(params.get("bucketseq")));
+		buc.setQuantity(Integer.parseInt(params.get("quantity")));
+        service.quantitymodify(buc);
+        return map;
 	}
+	
+	
+	//목록 삭제 
+	@RequestMapping("/removelist")
+	@ResponseBody
+	public Map<Object, Object>  removelist(@RequestBody Map<String, String> params,HttpServletRequest request,Bucket  buc) {
+		Map<Object, Object> map = new HashMap<Object, Object>(); 
+		buc.setBucketseq(Long.parseLong(params.get("bucketseq")));
+		buc.setQuantity(Integer.parseInt(params.get("quantity")));
+        service.delbucketlist(Long.parseLong(params.get("bucketseq")));
+        return map;
+	}
+	
+	
 }
 

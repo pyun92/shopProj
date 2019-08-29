@@ -1,6 +1,7 @@
 package com.encore.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,32 +49,26 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Bucket> findallbucket(Long userseq) {
-		
 		return (List<Bucket>)buc.findByUserseq(userseq);
+	}
+	
+	//장바구니 수량 수정시 저장
+	@Override
+	public void quantitymodify(Bucket data) {
+		Bucket bucketdata = buc.findById(data.getBucketseq()).get();
+		bucketdata.setQuantity(data.getQuantity());
+		buc.save(bucketdata);
+		
 	}
 
 	@Override
-	public void quantitymodify(Bucket data) {
-		// TODO Auto-generated method stub
+	public void delbucketlist(Long num) {
+		buc.deleteById(num);
 		
 	}
-
-	/*
-	 * @Override public void quantitymodify(Bucket data) { Bucket bucketq =
-	 * buc.findById(data.getBucketseq()).get();
-	 * 
-	 * bucketq.setQuantity(data.getQuantity()); buc.save(bucketq);
-	 * 
-	 * }
-	 */
 	
-//	@Override
-//	public void updateBoard(Board3 board) {
-//		Board3 findBoard = boardRepository.findById(board.getSeq()).get();
-//
-//		findBoard.setTitle(board.getTitle());
-//		findBoard.setContent(board.getContent());
-//		boardRepository.save(findBoard);
-//	}
+	
+
+
 
 }
