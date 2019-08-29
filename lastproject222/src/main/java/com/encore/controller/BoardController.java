@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.encore.domain.Product;
 import com.encore.service.EmailChkService;
 import com.encore.service.ProductImgService;
 import com.encore.service.ProductService;
@@ -24,12 +25,6 @@ import com.encore.service.ProductService;
 @Controller
 public class BoardController {
 	
-
-	/*
-	 * @GetMapping("/welcome") public void welcome() {
-	 * 
-	 * }
-	 */
 	@Autowired
 	private ProductService service;
 	
@@ -51,7 +46,6 @@ public class BoardController {
 	@RequestMapping("/mailgo")
 	@ResponseBody
 	public Map<Object, Object> mailgo(@RequestBody String data) {
-		System.out.println(data);
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		StringBuffer temp = new StringBuffer();
 		Random rnd = new Random();
@@ -152,10 +146,11 @@ public class BoardController {
 	
 	}
 
-	@GetMapping("/index")
-	public void index() {
+//	@GetMapping("/index")
+//	public void index() {
+//	
+//	}
 	
-	}
 	@GetMapping("/22222")
 	public void eeeee() {
 	
