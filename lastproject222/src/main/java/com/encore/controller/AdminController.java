@@ -53,6 +53,7 @@ public class AdminController {
 	}
 	
 	//입점완료메일--0830추가
+	//1212마지막으로
 	@RequestMapping("/approve")
 	@ResponseBody
 	public Map<Object, Object> approve(@RequestBody String email) {
