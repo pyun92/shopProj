@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.encore.domain.Store;
+import com.encore.domain.Userdata;
+import com.encore.persistence.LoginRepository;
 import com.encore.persistence.ShopRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private ShopRepository shopRepository;
 
+	@Autowired
+	private LoginRepository loginRepository;
+	
 	@Override
 	public List<Store> selectStore() {
 		return (List<Store>) shopRepository.findAll();
@@ -36,6 +41,22 @@ public class AdminServiceImpl implements AdminService{
 		nregisto.setStorename(oregisto.getStorename());//상점이름
 		nregisto.setStoretype(oregisto.getStoretype());//타입
 		shopRepository.save(nregisto);
+	}
+
+	@Override
+	public void updateLevel(Long seq) {
+		Userdata ouser=loginRepository.findById(seq).get();
+		Userdata nuser=new Userdata();
+		nuser.setAddress1(ouser.getAddress1());
+		nuser.setAddress2(ouser.getAddress2());
+		nuser.setBirthday(ouser.getBirthday());
+		nuser.setManage_level(1L);
+		nuser.setPassword(ouser.getPassword());
+		nuser.setPhone(ouser.getPhone());
+		nuser.setUserid(ouser.getUserid());
+		nuser.setUsername(ouser.getUsername());
+		nuser.setUserseq(ouser.getUserseq());
+		loginRepository.save(nuser);
 	}
 	
 	

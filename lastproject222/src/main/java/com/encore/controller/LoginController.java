@@ -41,6 +41,7 @@ public class LoginController {
 		
 		if (findMember != null && findMember.getPassword().equals(data.getPassword())) {
 			model.addAttribute("data", findMember);
+			System.out.println(findMember.getManage_level());
 			if(findMember.getManage_level()==2L) {//admin일때
 				System.out.println("매니저");
 				return "redirect:admin_main";

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.encore.domain.Store;
 import com.encore.service.AdminService;
 import com.encore.service.EmailChkService;
+import com.encore.service.LoginDataService;
 import com.encore.service.ShopService;
 
 @Controller
@@ -56,8 +57,8 @@ public class AdminController {
 	//1212마지막으로
 	@RequestMapping("/approve")
 	@ResponseBody
-	public Map<Object, Object> approve(@RequestBody String email) {
-		System.out.println("이메일 "+email);
+	public Map<Object, Object> approve(@RequestBody String email,@RequestBody Long seq) {
+		System.out.println("이메일 "+email+"시퀀스:"+seq);
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		try {
 			eService.send("uncleminsung@gmail.com", "ynecplvxakafokod", email, "", "장날 입점을 축하합니다.", 
@@ -70,6 +71,8 @@ public class AdminController {
 		
 		//현재 등록 날짜 수정
 		adminService.updateRegister(email);
+		//user의 매니지레벨 1로 
+		adminService.updateLevel(seq);
 		
 		map.put("email_ok",1);
 		map.put("store_update",1);
