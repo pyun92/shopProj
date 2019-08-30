@@ -52,6 +52,7 @@ public class AdminController {
 		return mav;
 	}
 	
+	//입점완료메일--0830추가
 	@RequestMapping("/approve")
 	@ResponseBody
 	public Map<Object, Object> approve(@RequestBody String email) {
