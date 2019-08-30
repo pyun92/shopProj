@@ -29,7 +29,7 @@ html {
 		<div class="col s12">
 		<th:block th:if="${storelist}!=null" th:each="store : ${storelist}">
 		</th:block>
-		<p th:if="${storelist}==null" th:text='해당 상점이 없습니다.'></p>
+		<p th:if="${storelist}==null">"검색한 단어와 관련된 상점이 없습니다."</p>
 		</div>
 <!-- <th:block th:each="prod : ${prodlist}"> -->
 		
@@ -41,12 +41,13 @@ html {
 		</div>
 
 		<div class="col s12">
-		<table>
+		<table th:if="${prodlist}!=null">
 		<tr th:each="prod : ${prodlist}">
 		<td th:text="${prod.name}"/>
 		</td>
 		</tr>
 		</table> 
+		<p th:if="${prodlist}==null">"검색한 단어와 관련된 상품이 없습니다."</p>
 		</div>
 	</div>
 
