@@ -25,6 +25,8 @@ public class Bucket {
 	
 	private String imgname;
 	
+	private Long productseq;
+	
 	private String bucketoption;
 	
 	private int quantity;

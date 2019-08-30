@@ -162,6 +162,7 @@ public class ProductController {
 		buc.setQuantity(Integer.parseInt(request.getParameter("quantity")));
 		buc.setSellername(request.getParameter("name"));   //나중에 스토에 이름으로 변경
 		buc.setUserseq(Long.parseLong(request.getParameter("owner")));
+		buc.setProductseq(Long.parseLong(request.getParameter("productseq")));
 		service.insertBucket(buc);
 		return "redirect:newbucketlist";
 		
@@ -186,15 +187,25 @@ public class ProductController {
 	
 	
 	//목록 삭제 
-	@RequestMapping("/removelist")
+	@RequestMapping("/removebucket")
 	@ResponseBody
-	public Map<Object, Object>  removelist(@RequestBody Map<String, String> params,HttpServletRequest request,Bucket  buc) {
-		Map<Object, Object> map = new HashMap<Object, Object>(); 
-		buc.setBucketseq(Long.parseLong(params.get("bucketseq")));
-		buc.setQuantity(Integer.parseInt(params.get("quantity")));
-        service.delbucketlist(Long.parseLong(params.get("bucketseq")));
+	public Map<Object, Object>  removebucket(@RequestBody Map<String, String> params,HttpServletRequest request,Bucket  buc) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		System.out.println(params.get("bucketseq"));
+		service.delbucketlist(Long.parseLong(params.get("bucketseq")));
+		System.out.println("11111111111");
         return map;
 	}
+	
+	//결제창 
+	@RequestMapping("/paymentwindow")
+	public String paymentwindow(HttpServletRequest request,Model model) {
+		System.out.println(request.getParameter("totalprice"));
+		System.out.println("ddddddd");
+		return "baesong";
+		
+	}
+	
 	
 	
 }
