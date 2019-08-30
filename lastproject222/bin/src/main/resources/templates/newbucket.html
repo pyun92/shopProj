@@ -74,7 +74,7 @@ margin: 10px;
 		<th>
 		<form action="#">
 			<label>
-				<input type="checkbox" />
+				<input type="checkbox" class="all-check"/>
 				<span></span>
 			</label>
    		 </form></th>
@@ -92,15 +92,13 @@ margin: 10px;
 		<td>
 		<form action="#">
 			<label>
-				<input type="checkbox" />
+				<input type="checkbox" class="item-check" name="item-check" th:value="${probucket.bucketseq}"/>
 				<span></span>
 			</label>
    		 </form></td>
 		<td>
 		<div class="row bucket-item">
 			<div class="col s3 m3 l3">
-				<a>
-<!-- 				<img src="image/a.jpg" > -->
 					<img th:src="@{../upload/}+${probucket.imgname}" class="item-img"> 
 				</a>
 			</div>
@@ -175,7 +173,7 @@ margin: 10px;
 	</table>
 	
 	<div style="padding-top:20px; ">
-	<button>선택 삭제</button>
+	<button class="selected-remove">선택 삭제</button>
 	</div>
 	<div style="text-align: center;">
 	<a href="baesong" class="btn lastselect-btn">결제 하기</a><button class="lastselect-btn">쇼핑 계속</button>
@@ -202,11 +200,12 @@ margin: 10px;
 		var totals=0;
 		var totaldeliveryfee=0;
         var $dataRows=$(".bucket-talble tr:not('.totalColumn, .las-total-row,.las-total-row2')");
-        $dataRows.each(function() {
-        	$(this).find('.total-discount').each(function(i){    
-        		totaldis+=parseInt( $(this).html());
-            }); 
+        $dataRows.each(function(i) {
         	
+          	if($('input:checkbox[name="item-check"]:eq('+i+')').is(":checked")){
+	       	$(this).find('.total-discount').each(function(i){ 
+	       	        totaldis+=parseInt( $(this).html());
+	       	 }); 
         	$(this).find('.total-price').each(function(i){    
                 btotals+=parseInt( $(this).html());
             });
@@ -215,8 +214,10 @@ margin: 10px;
                 totals+=parseInt( $(this).html());
                 totaldeliveryfee+=2500;
             });
-            
-        });
+          	};
+       });
+       
+        
         $(".bucket-talble em.order-price").each(function(i){  
             $(this).html(totals);
         });
@@ -234,20 +235,6 @@ margin: 10px;
         });	
 	}
 	
-	function modifyquantity(){
-		alert("2222222222");
-		$.ajax({
-	        async: true,
-	        type : 'POST',
-	        data : bucketseq,
-	        url : "/modify",
-	        dataType : "json",
-	        contentType: "application/json; charset=UTF-8",
-	        success : function(data) {
-					alert("성공");            
-	            }
-	    });
-	}
 	
 	$(function(){
 		
@@ -261,15 +248,24 @@ margin: 10px;
 		    var price =$(".item-price:eq(" + n + ")").val();
 		    var discount =$(".discount:eq(" + n + ")").val();
 		    var delivery =$(".delivery:eq("+ n +")").val();
-		    var bucketseq =$(".bucketseq").val();
+		    var bucketseq =$(".bucketseq:eq("+ n +")").val();
 		    var total=(num*1+1)*price;
-		  	  var cal=(total-discount*(num*1+1))+(delivery*1);
+		  	var cal=(total-discount*(num*1+1))+(delivery*1);
 		  		  $(".total-discount:eq(" + n + ")").html(discount*(num*1+1)+"원");
 			      $(".total-price:eq(" + n + ")").html(total+"원");
 				  $(".cal-price:eq(" + n + ")").html(cal+"원");
-					orderprice();
-					alert("1111111111");
-					modifyquantity();
+				  $.ajax({
+				        async: true,
+				        type : 'POST',
+				        data : JSON.stringify({"bucketseq":bucketseq,"quantity":(num*1+1)}),
+				        url : "/modifydata",
+				        dataType : "json",
+				        contentType: "application/json; charset=UTF-8",
+				        success : function(data) {
+								     
+				            }
+					});
+				orderprice();	
 		  });
 		  
 		  
@@ -282,11 +278,23 @@ margin: 10px;
 				var price =$(".item-price:eq(" + n + ")").val();
 				var discount =$(".discount:eq(" + n + ")").val();
 				var delivery =$(".delivery:eq("+ n +")").val();
+				 var bucketseq =$(".bucketseq:eq("+ n +")").val();
 				  var total=(num*1-1)*price;
 			  	  var cal=(total-(discount*(num*1-1)))+(delivery*1);
 			  		  $(".total-discount:eq(" + n + ")").html(discount*(num*1-1)+"원");
 				  	  $(".total-price:eq(" + n + ")").html(total+"원");
 					  $(".cal-price:eq(" + n + ")").html(cal+"원");
+					  $.ajax({
+					        async: true,
+					        type : 'POST',
+					        data : JSON.stringify({"bucketseq":bucketseq,"quantity":(num*1-1)}),
+					        url : "/modifydata",
+					        dataType : "json",
+					        contentType: "application/json; charset=UTF-8",
+					        success : function(data) {
+									     
+					            }
+						});
 					  orderprice();
 					  
 			}else if(num*1-1==0){
@@ -295,6 +303,17 @@ margin: 10px;
 				$(".total-discount:eq(" + n + ")").html(0+"원");
 				$(".total-price:eq(" + n + ")").html(0+"원");
 				$(".cal-price:eq(" + n + ")").html(0+"원");
+				$.ajax({
+			        async: true,
+			        type : 'POST',
+			        data : JSON.stringify({"bucketseq":bucketseq,"quantity":(0)}),
+			        url : "/modifydata",
+			        dataType : "json",
+			        contentType: "application/json; charset=UTF-8",
+			        success : function(data) {
+							     
+			            }
+				});
 				orderprice();
 			}
 
@@ -306,15 +325,61 @@ margin: 10px;
 			  var price =$(".item-price:eq(" + n + ")").val();
 			  var discount =$(".discount:eq(" + n + ")").val();
 			  var delivery =$(".delivery:eq("+ n +")").val();
+			  var bucketseq =$(".bucketseq:eq("+ n +")").val();
 				  var total=((num*1)*price);
 				  var cal=(total-discount*(num*1-1))+(delivery*1);
 				  $(".total-discount:eq(" + n + ")").html(discount*(num*1)+"원");
 				  $(".total-price:eq(" + n + ")").html(total+"원");
 				  $(".cal-price:eq(" + n + ")").html(cal);
+				  
+				  $.ajax({
+				        async: true,
+				        type : 'POST',
+				        data : JSON.stringify({"bucketseq":bucketseq,"quantity":(0)}),
+				        url : "/modifydata",
+				        dataType : "json",
+				        contentType: "application/json; charset=UTF-8",
+				        success : function(data) {
+								     
+				            }
+					});
 				  orderprice();
 				 
 				});
-
+		  
+		  $(".all-check").on('click',function(){
+			  $( '.item-check' ).prop( 'checked', this.checked );
+			  orderprice();
+		  });
+		  
+		 
+		  $( '.item-check' ).on( 'click', function(){
+			  var index =
+		  
+			  alert($(".item-check").val());
+			  orderprice();
+		  });
+		 
+		  $(".selected-remove").on("click",function(){
+			 	if($('input:checkbox[name="item-check"]').is(":checked")){
+			 	var bucketseq =$(".item-check").val();
+				alert(bucketseq);
+			 	}
+			 /*  $.ajax({
+			        async: true,
+			        type : 'POST',
+			        data : JSON.stringify({"bucketseq":bucketseq),
+			        url : "/modifydata",
+			        dataType : "json",
+			        contentType: "application/json; charset=UTF-8",
+			        success : function(data) {
+							     
+			            }
+				}); */
+			  
+			  
+			  orderprice();
+			});
     });
 	
 			

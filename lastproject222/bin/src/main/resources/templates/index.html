@@ -3,7 +3,7 @@
 <head>
 <th:block th:include="main.html">
 </th:block>
-<meta charset="UTF-8" >
+<meta charset="UTF-8">
 <title>연습용 페이지</title>
 
 <style type="text/css">
@@ -63,7 +63,6 @@ img {
 	height: 100%;
 	width: 100%;
 }
-
 </style>
 </head>
 
@@ -75,62 +74,80 @@ img {
 			<div class="col s3 pullheight grey lighten-5">
 				<ul id="slide-out" class=" center-align">
 					<li><div class="user-view">
-							<a href="#name"><span class="black-text name">감자탕 만드는
+							<a href="#name"><span class="black-text name"><th:block th:text="${store.storename}"></th:block>감자탕 만드는 
 									남자</span></a><br> <br> <a href="#user"><img class="circle"
-								src="image/a.jpg"></a><br> <br> <br>
+								src="image/a.jpg"></a><br> <br><br>
 							<div>
-								<span class="black-text ">안녕하세요 감만남  <th:block th:text="${session['data'].userid}"> 입니다.</span>
+								<span class="black-text "><th:block th:text="${store.storedetail}"></th:block>안녕하세요 감만남 <th:block
+										th:text="${session['data'].userid}"> 입니다.</span>
 							</div>
 
 						</div></li>
 					<li class="border1"><a class="red-text bold" href="#!"><i
 							class="material-icons">favorite_border</i>내 단골 상점에 추가하기</a></li>
-					<li class="border1"><a class="black-text" href="product_getList_sj">판매목록
-							보기</a></li>
-					<li class="border1"><a class="black-text" href="sjTimeLine.html">담벼락(공지사항)
-							보기</a></li>
+					<li class="border1"><a class="black-text"
+						href="product_getList_sj">판매목록 보기</a></li>
+					<li class="border1"><a class="black-text"
+						href="sjTimeLine.html">담벼락(공지사항) 보기</a></li>
 					<li class="border1"><a class="black-text" href="#!">후기남기기</a></li>
 					<li class="border1"><a class="black-text" href="#!">응원하기</a></li>
 					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
-					<li class="border1"><a class="black-text" href="product_insert">상품등록</a></li>
-					<li class="border1"><a class="black-text" href="product_getList_sj.html">상품관리</a></li>
+					<th:block th:if="${session['data'].userseq}==${store.storeseq}">
+					<li class="border1 hiddenSj"><a class="black-text"
+						href="product_insert">상품등록</a></li>
+					<li class="border1 hiddenSj"><a class="black-text"
+						href="product_getList_sj.html">상품관리</a></li>
+						</th:block>
 					<li><div class="divider paddingup200"></div></li>
-					<li><a class="subheader">감자탕을 만드는 남자</a></li>
+					<li><a class="subheader"><th:block th:text="${store.storename}"></th:block></a></li>
 					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
 				</ul>
-		</div>
+			</div>
 
 			<div class="col s9 sjheader valign-wrapper center-align ">
 				<img alt="banner" src="image/ban2.jpg">
 			</div>
 			<div
 				class="col s7 offset-s1 blue-grey darken-4 white-text sjvid valign-wrapper">
-				<iframe width="100%" height="100%"
-					src="https://www.youtube.com/embed/2Pdj9N9_0Yc" frameborder="0"
+				<iframe width="100%" height="100%" class="myFrame" src="image/a.jpg"
+					frameborder="0"
 					allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
 			</div>
 			<div class="col s9  black-text videos valign-wrapper">다른 영상
 				들어가는 곳</div>
 			<div class="col s9 light-green lighten-5 sjcontent  ">
 				<h5 class="left-align">
-					인기 상품보기<span class="new badge "data-badge-caption="">주간인기상품</span>
+					인기 상품보기<span class="new badge " data-badge-caption="">주간인기상품</span>
 				</h5>
 			</div>
 
-			</div>
 		</div>
+	</div>
+
+	<div class="carousel carousel-slider">
+		<a class="carousel-item" href="#one!"><img src="image/a.jpg"></a>
+		<a class="carousel-item" href="#two!"><img src="image/a.jpg"></a>
+		<a class="carousel-item" href="#three!"><img src="image/a.jpg"></a>
+		<a class="carousel-item" href="#four!"><img src="image/a.jpg"></a>
+	</div>
 
 
+	<th:block th:include="footer.html"></th:block>
 
-			<div class="carousel carousel-slider">
-			    <a class="carousel-item" href="#one!"><img src="image/a.jpg"></a>
-			    <a class="carousel-item" href="#two!"><img src="image/a.jpg"></a>
-			    <a class="carousel-item" href="#three!"><img src="image/a.jpg"></a>
-			    <a class="carousel-item" href="#four!"><img src="image/a.jpg"></a>
-			 </div>
-
-	
-<th:block th:include="footer.html"></th:block>
+	<script type="text/javascript">
+		$(function() {
+			$(".myFrame")
+					.on(
+							"load",
+							function() { //iframe 컨텐츠가 로드 된 후에 호출됩니다.
+								var frame = $(this);
+								var doc = (frame.contentDocument) ? frame.contentDocument
+										: frame.contentWindow.document;
+								$(this).height(doc.body.scrollHeight);
+								$(this).width(doc.body.scrollWidth);
+							});
+		});
+	</script>
 
 </body>
 </html>

@@ -5,6 +5,7 @@ drop sequence user_sequences;
 
 select *from userdata
 select *from BUCKET
+select * from STORE
 
 select * from PRODUCT_IMG
 select * from product

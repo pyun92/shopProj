@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+	html,body{
+		height:100%;
+		width:100%;
+	}
+	.nav-wrapper{
+		padding-left:10px;
+		padding-rigth:10px;
+	}
+	section{
+		margin-left:150px;
+		height:100%;
+		background-color:#e0e0e0;
+	}
+	/* report.html */
+	.repo_table{
+		/* margin-top:50px; */
+		padding-top:50px;
+	}
+</style>
+</head>
+<body>
+	<!-- 메뉴바 -->
+	<header>
+		<nav>
+    	<div class="nav-wrapper white">
+      		<a href="#" class="brand-logo center black-text">admin</a>
+      		<a href="#" data-target="sidenav-left" class="sidnav-trigger"><i class="material-icons black-text">menu</i></a>
+      		<!-- 메뉴 클릭했을때 안열림 & main 다 가리는거 수정하기 -->
+    		<ul id="sidenav-left" class="sidenav sidenav-fixed">
+        		<li><a href="admin_sj.html">상점관리</a></li>
+        		<li><a href="admin_user.html">회원관리</a></li>
+        		<li><a href="admin_report.html">신고리스트</a></li>
+        		<li><a href="#">정지</a>
+      		</ul>
+    	</div>
+  		</nav>
+	</header>
+	<section>
+	<div class="container">
+		<div class="row repo_table">
+			<div class="col s12 card">
+				<ul id="tabs-swipe-demo" class="tabs">
+					<li class="tab col s6"><a href="#index1">상점</a></li>
+					<li class="tab col s6"><a href="#index2">회원</a></li>
+					<li></li>
+				</ul>
+				<!-- 상점테이블 -->
+				<div id="index1" class="col s12 white">
+					<table>
+						<thead>
+							<tr><th>번호</th><th>상점</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>승인날짜</th></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>감자탕만드는남자</td>
+								<td>감자탕</td>
+								<td><a>허위광고</a></td>
+								<td>2019.08.14</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>감자탕만드는남자</td>
+								<td>감자탕</td>
+								<td><a>허위광고</a></td>
+								<td>2019.08.14</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>감자탕만드는남자</td>
+								<td>감자탕</td>
+								<td><a>허위광고</a></td>
+								<td>2019.08.14</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>감자탕만드는남자</td>
+								<td>감자탕</td>
+								<td><a>허위광고</a></td>
+								<td>2019.08.14</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<!-- 회원 -->
+				<div id="index2" class="col s12 white">
+					<table>
+						<thead>
+							<tr><th>번호</th><th>회원아이디</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>승인날짜</th></tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>abc1234</td>
+								<td>감자탕</td>
+								<td><a>악성댓글</a></td>
+								<td>2019.08.14</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>감자탕만드는남자</td>
+								<td>감자탕</td>
+								<td><a>악성댓글</a></td>
+								<td>2019.08.14</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>감자탕만드는남자</td>
+								<td>감자탕</td>
+								<td><a>악성댓글</a></td>
+								<td>2019.08.14</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>감자탕만드는남자</td>
+								<td>감자탕</td>
+								<td><a>악성댓글</a></td>
+								<td>2019.08.14</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	</section>
+	<!-- 푸터 들어가기  -->
+<!-- 자바스크립트 -->
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+$(document).ready(function(){
+	$(document).ready(function(){
+	    $('.tabs').tabs();
+	  });
+  }); 
+</script>
+</body>
+</html>

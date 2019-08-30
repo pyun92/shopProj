@@ -74,9 +74,9 @@
                   <div class="input-field">
 					 <select id="type" name="storetype">
       					<option value="" disabled selected>업종을 선택해주세요</option>
-      					<option value="type1">식품</option>
-      					<option value="type2">공예</option>
-      					<option value="type3">의류</option>
+      					<option value="식품">식품</option>
+      					<option value="공예">공예</option>
+      					<option value="의류">의류</option>
     				</select>                 
                   </div>
                </div>
@@ -129,7 +129,8 @@
     	
     	$('#type').on("change",function(){
     		type=$("#type option:selected").val();
-    		if(type==1){
+    		//alert(type);
+    		if(type==='식품'){
     			$('#fileaddbtn').attr("maxlength",2);
     		}else{
     			$('#fileaddbtn').attr("maxlength",1);
@@ -171,18 +172,20 @@
     	
     	//등록버튼
     	$("#submit_btn").on("click",function(){
-    		let form=$("#registerForm")[0];
-    		let form_data=new FormData(form);
-    		var name=$("#storename").val();
-    		var detail=$("#storedetail").val();
-    		var type=$("#type").val();
-    		var file=$("#storefile").val();
-    		var email=$("#storeemail").val();
-    		alert(name+" "+detail+" "+type+" "+file+" "+email);
-    		if(detail==""||type==""||file==""||email==""){
+    		var sname=$("#storename").val();
+    		var sdetail=$("#storedetail").val();
+    		var stype=$("#type").val();
+    		var sfile=$("#storefile").val();
+    		var semail=$("#storeemail").val();
+    		/* alert(name+" "+detail+" "+type+" "+file+" "+email); */
+    		
+    		if(sdetail==""||stype==""||sfile==""||semail==""){
     			alert("모든항목이 필수입니다!");
     			return;
-    			}
+    		}
+    		
+    		let form=$("#registerForm")[0];
+    		let form_data=new FormData(form);
     		
     		$.ajax({
     			url:'/insertShop',
