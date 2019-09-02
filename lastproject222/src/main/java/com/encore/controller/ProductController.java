@@ -163,6 +163,7 @@ public class ProductController {
 		buc.setSellername(request.getParameter("name"));   //나중에 스토에 이름으로 변경
 		buc.setUserseq(Long.parseLong(request.getParameter("owner")));
 		buc.setProductseq(Long.parseLong(request.getParameter("productseq")));
+		buc.setCondition("bucket");
 		service.insertBucket(buc);
 		return "redirect:newbucketlist";
 		
@@ -197,14 +198,15 @@ public class ProductController {
         return map;
 	}
 	
-	//결제창 
-	@RequestMapping("/paymentwindow")
-	public String paymentwindow(HttpServletRequest request,Model model) {
-		System.out.println(request.getParameter("totalprice"));
-		System.out.println("ddddddd");
-		return "baesong";
-		
-	}
+//	//결제창 
+//	@RequestMapping("/paymentwindow")
+//	public String paymentwindow(HttpServletRequest request,Model model) {
+//		System.out.println(request.getParameter("totalprice"));
+//		System.out.println(request.getParameter("bucketseq"));
+//		System.out.println("ddddddd");
+//		return "baesong";
+//		
+//	}
 	
 	
 	

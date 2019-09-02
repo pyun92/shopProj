@@ -39,8 +39,8 @@ public class Bucket {
 	
 	private String sellername;
 	
+	private String condition;
 	
-	
-	
+	private Long orderseq;
 	
 }

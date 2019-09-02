@@ -1,5 +1,7 @@
 package com.encore.domain;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,8 +30,35 @@ public class ProductOrder {
 	
 	private String orderdate;
 	
-	private String totalmoney;
-	
 	private String orderstate;
+	
+	//--------------------
+
+	
+	private String itemsname; 
+	
+	private String storename;
+	
+	private String addressnum;
+	
+	private String address1;
+	
+	private String address2;
+	
+	private int totalprice;
+	
+	private int delivery;
+	
+	private int totaldis;
+	
+	private int calprice;
+	
+	private Long producseq;
+	
+	private Date canceldate;
+	
+	private Date expectedtime;
+	
+	private int quantity;
 	
 }
