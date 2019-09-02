@@ -12,5 +12,9 @@ select * from product
 drop table logindata
 select * from options
 
-insert into userdata(userseq,brithday,manage_level,password,userid,username) 
-values(userseq.nextval ,'19910101',1L ,'1234' , 'admin' , '관리자')
+insert into userdata(userseq, birthday ,manage_level, password, userid, username)
+values(userdata_seq.nextval ,19910101, 2 ,'2' , '2' , 'ddd');
+
+
+delete from PRODUCT
+delete from userdata

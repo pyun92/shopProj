@@ -23,6 +23,13 @@
 		/* margin-top:50px; */
 		padding-top:50px;
 	}
+	
+	/* 모달크기 */
+	.modalsize{
+		width:80%;
+		height:80%;
+		align:center;
+	}
 </style>
 </head>
 <body>
@@ -46,10 +53,10 @@
 	<div class="container">
 		<div class="row repo_table">
 		<!-- 상점판매순위 -->
-			<div class="col s12 card">
-			<!-- 구글차트 -->
-			
+			<div id="charts" class="col s12 card">
+			<!-- 최고매출상점 -->
 			</div>
+			
 			<!-- 상점목록 -->
 			<div class="col s12 card">
 				<div id="index1" class="col s12 white">
@@ -58,56 +65,55 @@
 							<tr><th>상점이름</th><th>상점이메일</th><th>입점신청서</th><th>입점신청날짜</th><th>승인</th><th>승인날짜</th></tr>
 						</thead>
 						<tbody>
-							<tr th:each="list:${storelist}">
+							<tr class="rows" th:each="list:${storelist}">
 								<td th:class="name" th:text="${list.storename}"></td>
 								<td th:class="email" th:text="${list.storeemail}"></td>
-								<td><a href="javascript:;" data-toggle="modal" data-target="#shopdetail" class="detail_btn">상세보기</a></td>
+								<!-- <td><a  class="detail_btn modal-trigger">상세보기</a></td> -->
+								<td><a th:href="'#shopdetail'+${list.storeseq}" class="modal-trigger">상세보기</a></td>
 								<td th:text="${list.requestdate}"></td>
 								<td><label><input type="checkbox" name="approve"><span></span></label></td>
+								<td class="seq" th:text="${list.storeseq}" style="display:none;"></td>
 								<td th:class="confirmdate" th:text="${list.confirmdate}"></td>
-								<td th:hidden="${list.storeseq}"></td><!--6  -->
-								<td th:hidden="${list.storedetail}"></td>
-								<td th:hidden="${list.storetype}"></td>
-								<td th:hidden="${list.storefile}"></td>
+								<!-- 모달 -->
+								<th:block>
+									<div class="modal modalsize" th:id="shopdetail+${list.storeseq}">
+										<div class="modal-content">
+										<div class="container">
+										<h3>입점신청서</h3>
+										<div class="divider"></div>
+											<div class="row">
+											<h5>1. 등록하실 상점 이름을 입력해주세요</h5>
+											<p th:text="${list.storename}"></p>
+											</div>
+										<div class="row">
+											<h5>2.상점에 대한 설명을 작성해주세요</h5>
+											<p th:text="${list.storedetail}"></p>
+										</div>
+										<div class="row">
+											<h5>3.입점하려는 업종을 선택해주세요</h5>
+											<p th:text="${list.storetype}"></p>
+										</div>
+										<div class="row">
+											<h5>4.사업자 등록증을 추가해주세요</h5>
+											<div id="shop" th:text="${list.storefile}" style="display:none;"></div>
+											<div id="storefiles" style="width:100%; height:100%"></div>
+										</div>
+										<div class="row">
+											<h5>5.입점완료 메일을 받을 주소를 입력하세요</h5>
+											<p th:text="${list.storeemail}"></p>
+										</div>
+									</div>
+									<div class="modal-footer">
+									 <button type="reset" class="btn modal-close">닫기</button>
+									</div>
+									</div>
+								</div>
+						</th:block>
 							</tr>
 						</tbody>
 					</table>
 					
-					<!-- 모듈 -->
-					<th:block>
-						<div class="modal" id="shopdetail">
-							<div class="modal-content">
-								<div class="container">
-									<h3>입점신청서</h3>
-									<div class="divider"></div>
-									<div class="row">
-										<h5>1. 등록하실 상점 이름을 입력해주세요</h5>
-										<p id="storename"></p>
-									</div>
-									<div class="row">
-										<h5>2.상점에 대한 설명을 작성해주세요</h5>
-										<p id="storedetail"></p>
-									</div>
-									<div class="row">
-										<h5>3.입점하려는 업종을 선택해주세요</h5>
-										<p id="storetype"></p>
-									</div>
-									<div class="row">
-										<h5>4.사업자 등록증을 추가해주세요</h5>
-										<div id="shop" style="display:none;"></div>
-										<div id="storefiles" style="width:100%; height:100%"></div>
-									</div>
-									<div class="row">
-										<h5>5.입점완료 메일을 받을 주소를 입력하세요</h5>
-										<p id="storeemail"></p>
-									</div>
-								</div>
-								<div class="modal-footer">
-									 <button type="reset" class="btn modal-close">닫기</button>
-								</div>
-								</div>
-							</div>
-						</th:block>
+					
 				</div>
 			</div>
 		</div>
@@ -117,10 +123,32 @@
 <!-- 자바스크립트 -->
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script><!-- 구글차트 -->
 <script>
+function drawChart() {
+
+    var data = new google.visualization.DataTable();
+    /* 데이터 가져왔을때 이부분 수정 */
+    data.addColumn('string', 'Topping');
+    data.addColumn('number', 'Slices');
+    data.addRows([
+      ['Mushrooms', 3],
+      ['Onions', 1],
+      ['Olives', 1],
+      ['Zucchini', 1],
+      ['Pepperoni', 2]]);
+      /* 수정끝! */
+      var options = {'title':'최고매출상점',
+              'width':400,
+              'height':300};
+      var chart = new google.visualization.PieChart(document.getElementById('charts'));
+      chart.draw(data, options);
+}
 $(document).ready(function(){
 
-/* 	$('.tabs').tabs(); */
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+	
 	var tr,email,seq;
 	
 	//입점날짜 있으면 체크박스 체크
@@ -132,46 +160,53 @@ $(document).ready(function(){
 		}
 	});
 	
+	//상점상세보기
+	$('.modal').modal({
+		onOpenStart:function(){
+		$("#storefiles").empty();
+		 var files=$("#shop").html().split(',');
+		 for(var i in files){
+			$("#storefiles").append("<img src='storefiles/"+files[i]+"' style='width:50%; height:100%'>")
+		 }
+		}
+	});
+	var seq=new Array();
+	$('.seq').each(function(i){
+		seq[i]=$(this).text();
+	});
+	
 	//이거수정해야함!!-----------------------------------
-	$('.detail_btn').on("click",function(){
-		//상점상세보기
-		$('.modal').modal({
-			onOpenStart:function(){
-			 var files=$("#shop").html().split(',');
-			 for(var i in files){
-				$("#storefiles").append("<img src='storefiles/"+files[i]+"' style='width:50%; height:100%'>")
-			 }
+	//승인버튼 눌렀을때
+	$('.rows').each(function(i){
+		tr=$(this);
+		
+		$('input:checkbox[name="approve"]:eq('+i+')').on("change",function(){
+			email=tr.children().eq(1).text();
+			var result=confirm("입점신청을 승인하시겠습니까?");
+			if(result){
+				$.ajax({
+					type:'POST',
+					url:'/approve',
+					data:JSON.stringify({"email":email,"seq":seq[i]}),
+					dataType:'json',
+					contentType:"application/json; charset=UTF-8",
+					cache:false,
+					success:function(data){
+						if(data.email_ok==1&&data.store_update==1){
+							location.href = location.href;
+						}
+					},
+					error:function(data){
+						console.log(data);
+					}
+				});
+			}else{
+				$(this).prop("checked",false);
+				return;
 			}
 		});
 	});
 	
-	//승인버튼 눌렀을때
-	$("input:checkbox[name='approve']").on("change",function(){
-		tr=$(this).parent().parent().parent();
-		email=tr.children().eq(1).text();
-		seq=tr.children().eq(6).text();
-		var result=confirm("입점신청을 승인하시겠습니까?");
-		if(result){
-			$.ajax({
-				type:'POST',
-				url:'/approve',
-				data:"email="+email+"&seq="+seq,
-				contentType:false,
-				cache:false,
-				success:function(data){
-					if(data.email_ok==1&&data.store_update==1){
-						location.reload(true);
-					}
-				},
-				error:function(data){
-					console.log(data);
-				}
-			})
-		}else{
-			$(this).prop("checked",false);
-			return;
-		}
-	});
 	
 	
 	

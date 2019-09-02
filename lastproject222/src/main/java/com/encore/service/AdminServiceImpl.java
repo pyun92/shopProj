@@ -1,6 +1,7 @@
 package com.encore.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +9,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.encore.domain.Report;
 import com.encore.domain.Store;
 import com.encore.domain.Userdata;
 import com.encore.persistence.LoginRepository;
+import com.encore.persistence.ReportRepository;
 import com.encore.persistence.ShopRepository;
 
 @Service
@@ -22,15 +25,17 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	private LoginRepository loginRepository;
 	
+	@Autowired
+	private ReportRepository reportRepository;
+	
 	@Override
 	public List<Store> selectStore() {
 		return (List<Store>) shopRepository.findAll();
 	}
 
 	@Override
-	public void updateRegister(String email) {
-		Optional<Store> list=shopRepository.findByStoreemail(email);
-		Store oregisto=list.get();
+	public void updateRegister(Long seq) {
+		Store oregisto=shopRepository.findByStoreseq(seq);
 		Store nregisto=new Store();
 		nregisto.setStoreseq(oregisto.getStoreseq());//시퀀스
 		nregisto.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));//오늘날짜
@@ -57,6 +62,16 @@ public class AdminServiceImpl implements AdminService{
 		nuser.setUsername(ouser.getUsername());
 		nuser.setUserseq(ouser.getUserseq());
 		loginRepository.save(nuser);
+	}
+
+	@Override
+	public List<Userdata> selectUser() {
+		return (List<Userdata>)loginRepository.findAll();
+	}
+
+	@Override
+	public List<Report> selectReport(int num) {
+		return reportRepository.findByReportdivi(num);
 	}
 	
 	

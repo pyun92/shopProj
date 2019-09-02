@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.encore.domain.Report;
 import com.encore.domain.Store;
+import com.encore.domain.Userdata;
 import com.encore.service.AdminService;
 import com.encore.service.EmailChkService;
 import com.encore.service.LoginDataService;
@@ -41,9 +43,18 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/admin_user")
-	public void admin_user() {
-		
+	//신고페이지
+	@RequestMapping("/admin_report")
+	public ModelAndView admin_report(ModelAndView mav) {
+		mav.addObject("storelist",adminService.selectReport(1));//상점
+		mav.addObject("userlist",adminService.selectReport(0));//회원
+		return mav;
+	}
+	
+	@RequestMapping("/admin_user")
+	public ModelAndView admin_user(ModelAndView mav) {
+		mav.addObject("userlist",adminService.selectUser());
+		return mav;
 	}
 	
 	@GetMapping("/admin_sj")
@@ -57,8 +68,10 @@ public class AdminController {
 	//1212마지막으로
 	@RequestMapping("/approve")
 	@ResponseBody
-	public Map<Object, Object> approve(@RequestBody String email,@RequestBody Long seq) {
-		System.out.println("이메일 "+email+"시퀀스:"+seq);
+	public Map<Object, Object> approve(@RequestBody Map<String,Object> map1) {
+		System.out.println("이메일 "+map1.get("email")+"시퀀스:"+map1.get("seq"));
+		String email=(String)map1.get("email");
+		Long seq=Long.parseLong((String) map1.get("seq"));
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		try {
 			eService.send("uncleminsung@gmail.com", "ynecplvxakafokod", email, "", "장날 입점을 축하합니다.", 
@@ -70,7 +83,7 @@ public class AdminController {
 		}
 		
 		//현재 등록 날짜 수정
-		adminService.updateRegister(email);
+		adminService.updateRegister(seq);
 		//user의 매니지레벨 1로 
 		adminService.updateLevel(seq);
 		
