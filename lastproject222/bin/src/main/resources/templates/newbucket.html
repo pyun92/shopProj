@@ -69,15 +69,15 @@ margin: 10px;
 <div class="container">
 	<h3> 장 바 구니 </h3>
 
+	<form action="/paymentwindow" method="post" id="paymentwindow">
 	<table class="bucket-talble">
 		<tr class="totalColumn">
 		<th>
-		<form action="#">
 			<label>
 				<input type="checkbox" class="all-check"/>
 				<span></span>
 			</label>
-   		 </form></th>
+   		</th>
 		<th style="width: 521px;">상품 정보 </th>
 		<th style="width: 100px;">수량</th>
 		<th>상품 금액</th>
@@ -88,17 +88,18 @@ margin: 10px;
 		</tr>
 		<!-- 상품 시작 -->
 
-		<tr th:each="probucket:${probucket}">
+		<tr th:each="probucket:${probucket}" th:if="${probucket.condition}==bucket">
+		
 		<td>
-		<form action="#">
 			<label>
-				<input type="checkbox" class="item-check" name="item-check" th:value="${probucket.bucketseq}"/>
+				<input type="checkbox" class="item-check" name="item-check" th:value="${probucket.bucketseq}" checked="checked"/>
 				<span></span>
 			</label>
-   		 </form></td>
+   		</td>
 		<td>
 		<div class="row bucket-item">
 			<div class="col s3 m3 l3">
+				<a th:href="@{/product_getProduct2(productseq=${probucket.productseq})}">
 					<img th:src="@{../upload/}+${probucket.imgname}" class="item-img"> 
 				</a>
 			</div>
@@ -128,12 +129,12 @@ margin: 10px;
 		<input type="hidden" class="item-price" th:value="${probucket.price}">
 		<input type="hidden" class="discount" th:value="${probucket.discount}" >
 		<input type="hidden" th:value="${probucket.deliveryfee}" class="delivery">
-		<input type="hidden" th:value="${probucket.bucketseq}" class="bucketseq">
+		<input type="hidden" th:value="${probucket.bucketseq}" class="bucketseq" >
 		
 		<td th:text="(${probucket.discount}*${probucket.quantity})+원" class="total-discount"></td>
 		<td th:text="${probucket.deliveryfee}" class="item-deliveryfee"></td>
 		<td th:text="${probucket.sellername}"></td>
-		<td class="cal-price" th:text="(${probucket.price}*${probucket.quantity}-${probucket.discount}+2500)+원"></div>
+		<td class="cal-price" th:text="(${probucket.price}*${probucket.quantity}-${probucket.discount}+2500)+원" ></div>
 		</td>
 		</tr>
 		
@@ -145,15 +146,18 @@ margin: 10px;
 		<td colspan="3" class="last-total-pay">
 		<ul >
 			<li>
-			<strong>총 상품 금액</strong><p><em class="b-order-price"></em></p> 
+			<strong>총 상품 금액</strong><p><em class="b-order-price"  ></em></p> 
+			<input type="hidden" class="b-order-price" name="itemsprice">
 			</li>
 			
 			<li>
 			<strong>배송비</strong>
-			<p><em class="order-deliveryfee"></em></p> 
+			<p><em class="order-deliveryfee" ></em></p> 
+			<input type="hidden" class="order-price" name="deliveryfee">
 			</li>
 			
-			<li><strong>할이율</strong><p><em class="order-discount"></em></p> </li>
+			<li><strong>할이율</strong><p><em class="order-discount" ></em></p> </li>
+			<input type="hidden" class="order-discount"  name="discount">
 			<li></li>
 		</ul> 
 		</td>
@@ -165,20 +169,21 @@ margin: 10px;
 			<td Colspan="3" class="last-total-pay2">
 			<ul>
 			<li >
-			<strong>최종 가격</strong><p><em class="order-price">dasdas</em></p>
+			<strong>최종 가격</strong><p><em class="order-price" ></em></p>
+			<input type="hidden" class="order-price" name="calprice">
 			</li>
 			</ul> 
 		</td>
 		</tr>
 	</table>
-	
+
 	<div style="padding-top:20px; ">
 	<button class="selected-remove">선택 삭제</button>
 	</div>
 	<div style="text-align: center;">
-	<a href="baesong" class="btn lastselect-btn">결제 하기</a><button class="lastselect-btn">쇼핑 계속</button>
+		<a href="#" class="btn lastselect-btn">결제 하기</a><button class="lastselect-btn">쇼핑 계속</button>
 	</div>
-
+ </form>
 </div>
 
 
@@ -216,22 +221,27 @@ margin: 10px;
             });
           	};
        });
-       
         
-        $(".bucket-talble em.order-price").each(function(i){  
+        $(".bucket-talble .order-price").each(function(i){  
             $(this).html(totals);
+            $(this).val(totals);
+           
         });
         
-        $(".bucket-talble em.order-deliveryfee").each(function(i){  
+        $(".bucket-talble .order-deliveryfee").each(function(i){  
             $(this).html(totaldeliveryfee);
+            $(this).val(totaldeliveryfee);
         });	
         
-        $(".bucket-talble em.b-order-price").each(function(i){  
+        $(".bucket-talble .b-order-price").each(function(i){  
             $(this).html(btotals);
+            $(this).val(btotals);
+            
         });	
         
-        $(".bucket-talble em.order-discount").each(function(i){  
+        $(".bucket-talble .order-discount").each(function(i){  
             $(this).html(totaldis);
+            $(this).val(totaldis);
         });	
 	}
 	
@@ -354,32 +364,37 @@ margin: 10px;
 		  
 		 
 		  $( '.item-check' ).on( 'click', function(){
-			  var index =
-		  
-			  alert($(".item-check").val());
+			/*   var index = $('.item-check').index(this);
+		     alert(index); */
 			  orderprice();
 		  });
 		 
 		  $(".selected-remove").on("click",function(){
-			 	if($('input:checkbox[name="item-check"]').is(":checked")){
-			 	var bucketseq =$(".item-check").val();
-				alert(bucketseq);
-			 	}
-			 /*  $.ajax({
-			        async: true,
-			        type : 'POST',
-			        data : JSON.stringify({"bucketseq":bucketseq),
-			        url : "/modifydata",
-			        dataType : "json",
-			        contentType: "application/json; charset=UTF-8",
-			        success : function(data) {
-							     
-			            }
-				}); */
+			  var $data=$(".bucket-talble tr:not('.totalColumn, .las-total-row,.las-total-row2')");
 			  
-			  
+			  $data.each(function(i) {
+				  if($('input:checkbox[name="item-check"]:eq('+i+')').is(":checked")){
+					  var bucketseq =$(".bucketseq:eq("+ i +")").val();
+						 $.ajax({
+						        async: true,
+						        type : 'POST',
+						        data : JSON.stringify({"bucketseq":bucketseq}),
+						        url : "/removebucket",
+						        dataType : "json",
+						        contentType: "application/json; charset=UTF-8",
+						        success : function(data) {
+										location.reload(true);
+						            }
+							});
+				  }
+		        });
 			  orderprice();
 			});
+		  
+		  $(".lastselect-btn").on('click',function(){
+			  alert("ddd");
+			  $('#paymentwindow').submit();
+		  });
     });
 	
 			

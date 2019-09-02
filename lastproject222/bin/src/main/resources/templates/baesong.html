@@ -133,6 +133,8 @@ table {
 						</ul>
 					</div>
 				</div>
+				<form action="kakaoPay" method="post">
+				
 				<div class="col s5 border1">
 					<table>
 						<thead>
@@ -165,14 +167,15 @@ table {
 							<span class="g1">32,500원</span>
 						</div>
 						<div class="col s12 center-align">
-							<button class="waves-effect waves-light btn pink center-align  ">결제하기</button>
+							<button type="submit" id="btn_pay" class="waves-effect waves-light btn pink center-align  ">결제하기</button>
 						</div>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
-
+	
 	<th:block th:include="footer.html"></th:block>
 	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
@@ -241,7 +244,10 @@ table {
 			var instances = M.Dropdown.init(elems, {
 				constrainWidth : false
 			});
+			
+			
 		});
+		
 	</script>
 </body>
 </html>

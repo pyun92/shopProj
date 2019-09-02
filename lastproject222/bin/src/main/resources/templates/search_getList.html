@@ -1,0 +1,102 @@
+<th:block th:include="main.html"></th:block>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<style type="text/css">
+html {
+	height: 100%;
+}
+
+.img1 {
+	height: 250px;
+}
+
+.card1 {
+	height: 360px;
+}
+
+.imgdiv {
+	height: 185px;
+}
+
+.fontsize20px {
+	font-size: 20px;
+	font-family: fantasy;
+}
+
+.circle {
+	height: 100%;
+	width: 100%;
+}
+
+.marginbb{
+margin-bottom: 5px;
+}
+/* 따라다니는 애 안보이게 맨 앞으로 둠 */
+/* #video_main{
+	z-index:1;
+} */
+</style>
+</head>
+<body>
+
+	<div class="container row grey lighten-3">
+		<div class="col s12">
+			<p class="fontsize20px">상점 리스트 (검색 상품을 판매하는 상점입니다)</p>
+			<div class="col s12">
+				<th:block th:if="${storelist}!=null" th:each="store : ${storelist}">
+					<div class="col s12 l3">
+						<a th:href="@{/index(storeseq=${store.storeseq})}">
+							<div class="imgdiv">
+								<img th:src="@{../storefiles/}+${store.storefile}"
+									class="circle">
+							</div>
+					</div>
+					<div class="col s12 l3 ">
+						<div th:text="${store.storename}" class="center-align marginbb "></div>
+						<div th:text="${store.storedetail}" class="center-align marginbb "></div>
+						<div th:text="${store.storetype}" class="center-align"></div>
+					</div>
+					</a>
+				</th:block>
+				<p th:if="${storelist}==null">"검색한 단어와 관련된 상점이 없습니다."</p>
+			</div>
+			<div class="col s12">
+				<p class="fontsize20px">상품 리스트 (검색한 상품에 대한 결과, 일단은 전체가져옴. 나중에
+					인기순이나 히트순 관련 카테고리로)</p>
+
+
+				<div class="col s12 l3" th:each="prodlist : ${prodlist}">
+					<th:block th:each="prodimg : ${prodimglist}"
+						th:if="${prodlist.productseq}==${prodimg.imgnum}">
+						<div class="card card1">
+							<a
+								th:href="@{/product_getProduct2(productseq=${prodlist.productseq})}">
+								<div class="card-image">
+									<img th:src="@{../upload/}+${prodimg.fileName}" class="img1">
+								</div>
+								<div class="card-content center-align">
+									<p>
+										<th:block th:text="${prodlist.name}"></th:block>
+									</p>
+								</div>
+							</a>
+						</div>
+					</th:block>
+					<p th:if="${prodlist}==null">"검색한 단어와 관련된 상품이 없습니다."</p>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<th:block th:include="footer.html"></th:block>
+	<!-- Compiled and minified CSS -->
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<!-- 제이쿼리 -->
+</body>
+</html>

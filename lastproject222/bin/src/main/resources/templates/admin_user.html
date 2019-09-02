@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -47,62 +47,29 @@
     	</div>
   		</nav>
 	</header>
-	<!-- 편성표 보여주기 : 관리자페이지에서 수정 가능-->
 	<section>
 	<div class="container">
 		<div class="row">
 			<div class="col s12">
 				<div class="card">
-				<div class="">
 				<table class="highlight centered">
 				<thead>
 					<tr>
-					<th>번호</th><th>이름</th><th>아이디</th><th>전화번호</th><th>생년월일</th><th>가입일</th>
+					<th>이름</th><th>아이디</th><th>전화번호</th><th>생년월일</th><th>주소</th><th>분류</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
-					</tr>
-					<tr>
-						<td>1</td><td>김김김ㄱ</td><td>abc</td><td>010-9470-4037</td><td>1997.10.24</td><td>2019.08.13</td>
+					<tr th:each="list:${userlist}">
+						<td th:text="${list.username}"></td>
+						<td th:text="${list.userid}"></td>
+						<td th:text="${list.phone}"></td>
+						<td th:text="${list.birthday}"></td>
+						<td th:class="address" th:text="${list.address1}+${list.address2}"></td>
+						<td th:class="level" th:text="${list.manage_level}"></td>
 					</tr>
 				</tbody>
 				</table>
 				</div>
-				<div>
-					<div id="icon">
-						<a ><i class="material-icons"></i></a>
-						<a><i class="material-icons">navigate_before</i></a>
-						<a><i class="material-icons">navigate_next</i></a>
-						<a><i class="material-icons"></i></a>
-					</div>
-				</div>
-				</div>				
 			</div>
 		</div>
 	</div>
@@ -111,6 +78,28 @@
 <!-- 자바스크립트 -->
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+$(function(){
+	$(".address").each(function(i){
+		if($(this).text()=='nullnull'||$(this).text()=='null'){
+			$(this).text("");
+		}
+	});
+	
+	$(".level").each(function(i){
+		var level=$(this).html();
+		var gubun;
+		if(level==0){
+			gubun="일반회원";	
+		}else if(level==1){
+			gubun="상점";
+		}else{
+			gubun="관리자";
+		}
+		$(this).text(gubun);
+	});
+});
+</script>
 
 </body>
 </html>
