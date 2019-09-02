@@ -74,12 +74,10 @@ img {
 			<div class="col s3 pullheight grey lighten-5">
 				<ul id="slide-out" class=" center-align">
 					<li><div class="user-view">
-							<a href="#name"><span class="black-text name"><th:block th:text="${store.storename}"></th:block>감자탕 만드는 
-									남자</span></a><br> <br> <a href="#user"><img class="circle"
+							<a href="#name"><span class="black-text name"><th:block th:text="${store.storename}"></th:block></span></a><br> <br> <a href="#user"><img class="circle"
 								src="image/a.jpg"></a><br> <br><br>
 							<div>
-								<span class="black-text "><th:block th:text="${store.storedetail}"></th:block>안녕하세요 감만남 <th:block
-										th:text="${session['data'].userid}"> 입니다.</span>
+								<span class="black-text "><th:block th:text="${store.storedetail}"></th:block></span>
 							</div>
 
 						</div></li>
@@ -135,18 +133,18 @@ img {
 	<th:block th:include="footer.html"></th:block>
 
 	<script type="text/javascript">
-		$(function() {
-			$(".myFrame")
-					.on(
-							"load",
-							function() { //iframe 컨텐츠가 로드 된 후에 호출됩니다.
-								var frame = $(this);
-								var doc = (frame.contentDocument) ? frame.contentDocument
-										: frame.contentWindow.document;
-								$(this).height(doc.body.scrollHeight);
-								$(this).width(doc.body.scrollWidth);
-							});
-		});
+// 		$(function() {
+// 			$(".myFrame")
+// 					.on(
+// 							"load",
+// 							function() { //iframe 컨텐츠가 로드 된 후에 호출됩니다.
+// 								var frame = $(this);
+// 								var doc = (frame.contentDocument) ? frame.contentDocument
+// 										: frame.contentWindow.document;
+// 								$(this).height(doc.body.scrollHeight);
+// 								$(this).width(doc.body.scrollWidth);
+// 							});
+// 		});
 	</script>
 
 </body>
