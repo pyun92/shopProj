@@ -12,7 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.encore.domain.Product;
+import com.encore.domain.ProductImg;
 import com.encore.domain.Store;
+import com.encore.persistence.ProductImgRepository;
 import com.encore.persistence.SearchProductRepository;
 import com.encore.persistence.SearchStoreRepository;
 
@@ -24,14 +26,13 @@ public class SearchServiceImpl implements SearchService{
 	
 	@Autowired
 	private SearchStoreRepository shoprep;
-
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
 	public Page<Store> getStoreInPage(Integer pageNum){
 		PageRequest pageRequest = PageRequest.of(1, 5);
 		return shoprep.findAll(pageRequest);
-		
 	}
 	
 	@Override
@@ -50,13 +51,14 @@ public class SearchServiceImpl implements SearchService{
 		Query query = entityManager.createQuery(qstr).setParameter("pname", "%" +word+"%").setParameter("pcategorybig", "%" +word+"%").setParameter("pcategorysmall", "%" +word+"%");
 		list = query.getResultList();
 //		확인용 프린트ln
-		for(Product pp :list) { 
-			System.out.println(pp.getName());
-		}
+//		for(Product pp :list) { 
+//			System.out.println(pp.getName());
+//		}
 		
 		return list;
 		
 	}
+	
 	
 	
 
