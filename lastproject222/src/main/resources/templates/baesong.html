@@ -99,7 +99,7 @@ table {
 					</div>
 					<div class="col s12 border2 margin">
 						<p class="p1">받는 사람</p>
-						<input type="text" />
+						<input type="text" name="received" />
 						<p class="p1">연락받을 번호</p>
 						<input type="text" name="phone"/>
 						<p class="p1">주소</p>
@@ -107,7 +107,7 @@ table {
 						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br> 
 							<input type="text" id="sample6_address" placeholder="주소" name="address1"><br> 
 							<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="address2">
-						    <input type="text" id="sample6_extraAddress" placeholder="참고항목">
+						    <input type="text" id="sample6_extraAddress" placeholder="참고항목" name ="detail"> 
 					</div>
 					<div class="col s12 ">
 						<p class="p1"></p>
@@ -118,8 +118,9 @@ table {
 								<div class="collapsible-header z-depth-0">
 									<i class="material-icons">filter_drama</i>구매목록 확인하기
 								</div>
-								<div class="collapsible-body " th:each="item:${bucketinfo}" th:if="${item.condition}==bucket">
+								<div class="collapsible-body " th:each="item:${bucketinfo}" th:if="${item.condition=='bucket' && item.checked==1}">
 									<span th:text="${item.itemname}"></span>
+									<input type="hidden" th:value="${item.itemname}" name="itemname">
 								</div>
 							</li>
 					</div>
@@ -148,14 +149,17 @@ table {
 							<tr class="noborder">
 								<td>총 구매금액</td>
 								<td th:text="${order.totalprice}" ></td>
+								<input type="hidden" th:value="${order.totalprice}" name="totalprice">
 							</tr>
 							<tr class="noborder">
 								<td>배송비</td>
 								<td th:text="${order.delivery}"></td>
+								<input type="hidden" th:value="${order.delivery}" name="delivery">
 							</tr>
 							<tr class="noborder">
 								<td>총 할인금액</td>
 								<td th:text="${order.totaldis}"></td>
+								<input type="hidden" th:value="${order.totaldis}" name="discount">
 							</tr>
 						</tbody>
 					</table>
@@ -165,6 +169,7 @@ table {
 						</div>
 						<div class="col s6">
 							<span class="g1" th:text="${order.calprice}"></span>
+							<input type="hidden" th:value="${order.calprice}" name="calprice">
 						</div>
 						<div class="col s12 center-align">
 							<button type="submit" id="btn_pay" class="waves-effect waves-light btn pink center-align  ">결제하기</button>

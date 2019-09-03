@@ -1,14 +1,15 @@
 package com.encore.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.encore.domain.Bucket;
 import com.encore.domain.Product;
+import com.encore.domain.ProductOrder;
 import com.encore.persistence.BucketRepository;
+import com.encore.persistence.ProductOrderRepository;
 import com.encore.persistence.ProductRepository;
 
 
@@ -20,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	private BucketRepository buc;
+	
+	@Autowired
+	private ProductOrderRepository porder;
 	
 	@Override
 	public void insertProd(Product prod) {
@@ -60,10 +64,31 @@ public class ProductServiceImpl implements ProductService {
 		buc.save(bucketdata);
 		
 	}
-
+	
+	@Override
+	public void checked(Bucket data) {
+		Bucket bucketdata = buc.findById(data.getBucketseq()).get();
+		bucketdata.setChecked(data.getChecked());
+		buc.save(bucketdata);
+		
+	}
+	
 	@Override
 	public void delbucketlist(Long num) {
 		buc.deleteById(num);
+		
+	}
+
+	@Override
+	public void productorder(ProductOrder order) {
+		porder.save(order);
+	}
+
+	@Override
+	public void afterpaymnet(Long seq) {
+		System.out.println("111111111111111");
+		System.out.println(seq+"sadasdasdas");
+		buc.afterpayment(seq);
 		
 	}
 	

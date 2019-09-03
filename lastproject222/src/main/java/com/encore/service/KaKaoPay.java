@@ -15,6 +15,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.encore.domain.KaKao;
+import com.encore.domain.ProductOrder;
 
 import lombok.extern.java.Log;
  
@@ -24,7 +25,7 @@ public class KaKaoPay {
 	    
 	    private KaKao kakaoPayReadyVO;
 	    
-	    public String kakaoPayReady() {
+	    public String kakaoPayReady(ProductOrder order) {
 	 
 	        RestTemplate restTemplate = new RestTemplate();
 	 
@@ -39,9 +40,9 @@ public class KaKaoPay {
 	        params.add("cid", "TC0ONETIME");
 	        params.add("partner_order_id", "1001");
 	        params.add("partner_user_id", "gorany");
-	        params.add("item_name", "갤럭시S9");
+	        params.add("item_name", order.getItemname());
 	        params.add("quantity", "1");
-	        params.add("total_amount", "2100");
+	        params.add("total_amount", order.getCalprice());
 	        params.add("tax_free_amount", "100");
 	        params.add("approval_url", "http://localhost:8080/kakaoPaySuccess");
 	        params.add("cancel_url", "http://localhost:8080/kakaoPayCancel");

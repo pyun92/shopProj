@@ -37,6 +37,8 @@ public class Bucket {
 	
 	private int discount;
 	
+	private int checked;
+	
 	private int deliveryfee;
 	
 	private String sellername;

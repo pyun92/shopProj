@@ -32,6 +32,7 @@ import com.encore.domain.Userdata;
 import com.encore.service.OptionService;
 import com.encore.service.ProductImgService;
 import com.encore.service.ProductService;
+import com.encore.service.ReviewService;
 
 @SessionAttributes("data")
 @Controller
@@ -47,6 +48,9 @@ public class ProductController {
 	
 	@Autowired
 	private OptionService opService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@ModelAttribute("data")
 	public Userdata setMember() {
@@ -141,6 +145,7 @@ public class ProductController {
 		mav.setViewName("product_getProduct2");
 		mav.addObject("proDe", service.getProd(prod));
 		mav.addObject("proDeImg", imgService.getProdImg(prod));
+		mav.addObject("review",reviewService.findReview(prod));
 		return mav;
 	}
 	
@@ -160,10 +165,12 @@ public class ProductController {
 		buc.setUserseq(Long.parseLong(request.getParameter("owner")));
 		buc.setProductseq(Long.parseLong(request.getParameter("productseq")));
 		buc.setCondition("bucket");
+		buc.setChecked(1);
 		service.insertBucket(buc);
 		return "redirect:newbucketlist";
 		
 	}
+	
 	@RequestMapping("/newbucketlist")
 	public String bucketsession(@ModelAttribute("data") Userdata user,Model model) {
 		System.out.println("+++++++++++++++++++++++++++++++");
@@ -182,6 +189,16 @@ public class ProductController {
         return map;
 	}
 	
+	//장바구니 체크 박스 상태
+	@RequestMapping("/checked")
+	@ResponseBody
+	public Map<Object, Object> checked(@RequestBody Map<String, String> params,HttpServletRequest request,Bucket  buc) {
+		Map<Object, Object> map = new HashMap<Object, Object>(); 
+		buc.setBucketseq(Long.parseLong(params.get("bucketseq")));
+		buc.setChecked(Integer.parseInt(params.get("checkd")));
+       service.checked(buc);
+        return map;
+	}
 	
 	//목록 삭제 
 	@RequestMapping("/removebucket")
@@ -190,7 +207,6 @@ public class ProductController {
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		System.out.println(params.get("bucketseq"));
 		service.delbucketlist(Long.parseLong(params.get("bucketseq")));
-		System.out.println("11111111111");
         return map;
 	}
 	

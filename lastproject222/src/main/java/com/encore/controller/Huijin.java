@@ -1,11 +1,14 @@
 package com.encore.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import com.encore.domain.Bucket;
@@ -31,9 +34,11 @@ public class Huijin {
 	@RequestMapping("/paymentwindow")
 	public String paymentwindow(HttpServletRequest request,Model model,@ModelAttribute("data") Userdata user,Bucket bucket) {
 	ProductOrder order = new ProductOrder();
-	
-	System.out.println();
-	order.setTotaldis(Integer.parseInt(request.getParameter("bucketseq")));
+	String[] arrayParam = request.getParameterValues("bucketseq");
+	for (int i = 0; i < arrayParam.length; i++) {
+		System.out.println(arrayParam[i]+"111");
+		}
+	order.setTotaldis(Integer.parseInt(request.getParameter("discount")));
 	order.setDelivery(Integer.parseInt(request.getParameter("deliveryfee")));
 	order.setTotalprice(Integer.parseInt(request.getParameter("itemsprice")));
 	order.setCalprice(Integer.parseInt(request.getParameter("calprice")));

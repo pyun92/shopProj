@@ -1,10 +1,10 @@
 package com.encore.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.encore.domain.Bucket;
 import com.encore.domain.Product;
+import com.encore.domain.ProductOrder;
 
 public interface ProductService {
 	void insertProd(Product prod);
@@ -22,4 +22,10 @@ public interface ProductService {
 	List<Bucket> findallbucket(Long num);
 	
 	void quantitymodify(Bucket data);
+	
+	void checked(Bucket data);
+	
+	void productorder(ProductOrder order);
+	
+	void afterpaymnet(Long seq);
 }

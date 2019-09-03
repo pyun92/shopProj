@@ -37,6 +37,8 @@ public class ProductOrder {
 	
 	private String ordername;    //주문자 이름 으로 변경 하기 
 	
+	private String itemname;
+	
 	private String addressnum;
 	
 	private String address1;

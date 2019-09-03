@@ -92,7 +92,8 @@ margin: 10px;
 		
 		<td>
 			<label>
-				<input type="checkbox" class="item-check" name="item-check" th:value="${probucket.bucketseq}" checked="checked"/>
+				<input type="hidden" th:value="${probucket.checked}" class="checkednum"> 
+				<input type="checkbox" class="item-check" name="item-check" th:value="${probucket.bucketseq}" />
 				<span></span>
 			</label>
    		</td>
@@ -129,10 +130,12 @@ margin: 10px;
 		<input type="hidden" class="item-price" th:value="${probucket.price}">
 		<input type="hidden" class="discount" th:value="${probucket.discount}" >
 		<input type="hidden" th:value="${probucket.deliveryfee}" class="delivery">
-		<input type="hidden" th:value="${probucket.bucketseq}" class="bucketseq" name="bucketseq">
+		<input type="hidden" th:value="${probucket.bucketseq}" class="bucketseq">
 		<input type="hidden" th:value="${probucket.productseq}" name="productseq">
+		<input type="hidden"  th:value="${probucket.checked}" class="sendnum" name="bucketseq">
 		
-		<td th:text="(${probucket.discount}*${probucket.quantity})+원" class="total-discount"></td>
+		
+		<td th:text="(${probucket.discount}*${probucket.quantity})+원" class="total-discount"> </td>
 		<td th:text="${probucket.deliveryfee}" class="item-deliveryfee"></td>
 		<td th:text="${probucket.sellername}"></td>
 		<td class="cal-price" th:text="(${probucket.price}*${probucket.quantity}-${probucket.discount}+2500)+원" ></div>
@@ -207,6 +210,10 @@ margin: 10px;
 		var totaldeliveryfee=0;
         var $dataRows=$(".bucket-talble tr:not('.totalColumn, .las-total-row,.las-total-row2')");
         $dataRows.each(function(i) {
+        	if($(".checkednum:eq("+i+")").val()==1){
+        		   $('input:checkbox[name="item-check"]:eq('+i+')').attr("checked", true);
+        	}
+        	
         	
           	if($('input:checkbox[name="item-check"]:eq('+i+')').is(":checked")){
 	       	$(this).find('.total-discount').each(function(i){ 
@@ -365,14 +372,40 @@ margin: 10px;
 		  
 		 
 		  $( '.item-check' ).on( 'click', function(){
-			/*   var index = $('.item-check').index(this);
-		     alert(index); */
+			  var index =$( '.item-check').index(this);
+				  if($('input:checkbox[name="item-check"]:eq('+index+')').is(":checked")){
+					  var bucketseq =$(".bucketseq:eq("+ index +")").val();
+						 $.ajax({
+						        async: true,
+						        type : 'POST',
+						        data : JSON.stringify({"bucketseq":bucketseq,"checkd":1}),
+						        url : "/checked",
+						        dataType : "json",
+						        contentType: "application/json; charset=UTF-8",
+						        success : function(data) {
+									
+						            }
+							});
+				  }else if($('input:checkbox[name="item-check"]:eq('+index+')').is(":checked")==false){
+					  var bucketseq =$(".bucketseq:eq("+ index +")").val();
+					  $.ajax({
+					        async: true,
+					        type : 'POST',
+					        data : JSON.stringify({"bucketseq":bucketseq,"checkd":0}),
+					        url : "/checked",
+					        dataType : "json",
+					        contentType: "application/json; charset=UTF-8",
+					        success : function(data) {
+									
+					            }
+						});
+				  }
 			  orderprice();
 		  });
 		 
+		  
 		  $(".selected-remove").on("click",function(){
 			  var $data=$(".bucket-talble tr:not('.totalColumn, .las-total-row,.las-total-row2')");
-			  
 			  $data.each(function(i) {
 				  if($('input:checkbox[name="item-check"]:eq('+i+')').is(":checked")){
 					  var bucketseq =$(".bucketseq:eq("+ i +")").val();
@@ -395,6 +428,13 @@ margin: 10px;
 		  
 		  
 		  $(".lastselect-btn").on('click',function(){
+ 			var $data=$(".bucket-talble tr:not('.totalColumn, .las-total-row,.las-total-row2')");
+			  $data.each(function(i) {
+				  if($('input:checkbox[name="item-check"]:eq('+i+')').is(":checked")){
+					  var bucketseq =$(".bucketseq:eq("+ i +")").val();
+					  $(".sendnum").val(bucketseq);
+				  }
+		        });
 					  $('#paymentwindow').submit();
 		  });
 			  
