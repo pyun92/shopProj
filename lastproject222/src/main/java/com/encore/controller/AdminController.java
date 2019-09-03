@@ -91,4 +91,6 @@ public class AdminController {
 		map.put("store_update",1);
 		return map;
 	}
+	
+	
 }

@@ -38,8 +38,8 @@
     		<ul id="sidenav-left" class="sidenav sidenav-fixed">
         		<li><a href="admin_sj.html">상점관리</a></li>
         		<li><a href="admin_user.html">회원관리</a></li>
+        		<li><a href="#">광고관리</a>
         		<li><a href="admin_report.html">신고리스트</a></li>
-        		<li><a href="#">정지</a>
       		</ul>
     	</div>
   		</nav>
@@ -61,11 +61,12 @@
 							<tr><th>상점</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>승인날짜</th></tr>
 						</thead>
 						<tbody>
-							<tr class="storerows" th:each="list1:${storelist}">
+							<tr class="rows" th:each="list1:${storelist}">
+								<td th:class="seq" th:hidden="${list1.reportseq}">
 								<td th:text="${list1.reportname}"></td>
 								<td th:text="${list1.productseq}"></td>
-								<td><a href="#modal-report"><th:block th:text="${list1.reportsubject}"></th:block></a></td>
-								<td th:class="detail1" th:text="${list1.reportdetail}" style="display:none;"></td>
+								<td><a href="#modal-report" class="modal-trigger subject"><th:block th:text="${list1.reportsubject}"></th:block></a></td>
+								<td th:class="detail" th:text="${list1.reportdetail}" style="display:none;"></td>
 								<td th:text="${list1.reportdate}"></td>
 								<td th:text="${list1.confirmdate}"></td>
 							</tr>
@@ -80,12 +81,12 @@
 							<tr><th>회원아이디</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>승인날짜</th></tr>
 						</thead>
 						<tbody>
-							<tr th:each="list2:${userlist}">
-								<td th:text="${list2.reportseq}"></td>
+							<tr class="rows" th:each="list2:${userlist}">
+								<td th:class="seq" th:hidden="${list2.reportseq}">
 								<td th:text="${list2.reportname}"></td>
 								<td th:text="${list2.productseq}"></td>
-								<td><a href="javascript:void(0);" class="subject2"><th:block th:text="${list2.reportsubject}"></th:block></a></td>
-								<td th:class="detail2" th:hidden="${list2.reportdetail}" style="display:none;"></td>
+								<td><a href="#modal-report" class="modal-trigger subject"><th:block th:text="${list2.reportsubject}"></th:block></a></td>
+								<td th:class="detail" th:text="${list2.reportdetail}" style="display:none;"></td>
 								<td th:text="${list2.reportdate}"></td>
 								<td th:text="${list2.confirmdate}"></td>
 							</tr>
@@ -96,15 +97,16 @@
 			<!-- 모달창 신고내역 상세보기만 가능 -->
 			<div class="modal" id="modal-report">
 				<div class="modal-content">
-					<p>신고사유</p>
+					<h4>신고사유</h4>
 					<p id="mainsubject"></p>
-					<p>상세 내역</p>
+					<h4>상세 내역</h4>
 					<p id="detail"></p>
 				</div>
 				<div class="modal-footer">
 					<a href="#!" class="modal-close btn-flat">닫기</a>
 				</div>
 			</div>	
+			<!-- 모달끝 -->
 		</div>
 	</div>
 	</section>
@@ -117,30 +119,22 @@ $(document).ready(function(){
 	 $('.tabs').tabs();
 	 
 	 //모달창에 신고내용 보여주기
-	/* $('.subject1').each(function(i){
-		$(this).on("click",function(e){
+	 $('.rows').each(function(i){
+		$('.subject:eq('+i+')').on("click",function(e){
 			e.preventDefault();
-			$('#mainsubject').text($(this).html());
-			$('#detail').text($('.detail1').text());
-			$(this).attr('href','#modal');
-		});	 
-	 });*/
-	 
-	/*  $('.storerows').each(function(i){
-		$('.subject1:eq('+i+')').on("click",function(e){
-			e.preventDefault();
-			alert("모달?");
-			/* $('.modal').modal({
+			console.log($('.subject:eq('+i+')').html());
+			console.log($('.detail:eq('+i+')').text());
+			$('.modal').modal({
 				onOpenStart:function(){
-				alert("모달안열림...?");
-				$('#mainsubject').text($(this).html());
-				$('#detail').text($('.detail1:eq('+i+')').text());	
+					$('#mainsubject').html($('.subject:eq('+i+')').html());
+					$('#detail').html($('.detail:eq('+i+')').text());	
 				}
 			});
 		}); 
-	 }); */
+	 });
 	 
-	 $('.modal').modal();
+	 //징계처리
+	 
 	
 	 
 }); 
