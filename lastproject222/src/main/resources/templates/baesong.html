@@ -118,8 +118,8 @@ table {
 								<div class="collapsible-header z-depth-0">
 									<i class="material-icons">filter_drama</i>구매목록 확인하기
 								</div>
-								<div class="collapsible-body ">
-									<span>ㅇㅇㅇㅇ</span>
+								<div class="collapsible-body " th:each="item:${bucketinfo}" th:if="${item.condition}==bucket">
+									<span th:text="${item.itemname}"></span>
 								</div>
 							</li>
 					</div>

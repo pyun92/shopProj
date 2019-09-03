@@ -129,7 +129,7 @@ margin: 10px;
 		<input type="hidden" class="item-price" th:value="${probucket.price}">
 		<input type="hidden" class="discount" th:value="${probucket.discount}" >
 		<input type="hidden" th:value="${probucket.deliveryfee}" class="delivery">
-		<input type="hidden" th:value="${probucket.bucketseq}" class="bucketseq" >
+		<input type="hidden" th:value="${probucket.bucketseq}" class="bucketseq" name="bucketseq">
 		<input type="hidden" th:value="${probucket.productseq}" name="productseq">
 		
 		<td th:text="(${probucket.discount}*${probucket.quantity})+원" class="total-discount"></td>
@@ -392,10 +392,13 @@ margin: 10px;
 			  orderprice();
 			});
 		  
+		  
+		  
 		  $(".lastselect-btn").on('click',function(){
-			  alert("ddd");
-			  $('#paymentwindow').submit();
+					  $('#paymentwindow').submit();
 		  });
+			  
+			  
     });
 	
 			
