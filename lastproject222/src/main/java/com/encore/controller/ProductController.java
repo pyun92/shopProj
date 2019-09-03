@@ -160,6 +160,7 @@ public class ProductController {
 		buc.setImgname(request.getParameter("filename"));
 		buc.setPrice(Integer.parseInt(request.getParameter("price")));
 		buc.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+		buc.setItemname(request.getParameter("name"));
 		buc.setSellername(request.getParameter("name"));   //나중에 스토에 이름으로 변경
 		buc.setUserseq(Long.parseLong(request.getParameter("owner")));
 		buc.setProductseq(Long.parseLong(request.getParameter("productseq")));

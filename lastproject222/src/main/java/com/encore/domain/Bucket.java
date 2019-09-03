@@ -23,6 +23,8 @@ public class Bucket {
 
 	private Long userseq;
 	
+	private String itemname;
+	
 	private String imgname;
 	
 	private Long productseq;

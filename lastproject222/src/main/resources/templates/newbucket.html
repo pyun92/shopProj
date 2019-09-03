@@ -130,6 +130,7 @@ margin: 10px;
 		<input type="hidden" class="discount" th:value="${probucket.discount}" >
 		<input type="hidden" th:value="${probucket.deliveryfee}" class="delivery">
 		<input type="hidden" th:value="${probucket.bucketseq}" class="bucketseq" >
+		<input type="hidden" th:value="${probucket.productseq}" name="productseq">
 		
 		<td th:text="(${probucket.discount}*${probucket.quantity})+원" class="total-discount"></td>
 		<td th:text="${probucket.deliveryfee}" class="item-deliveryfee"></td>
@@ -153,7 +154,7 @@ margin: 10px;
 			<li>
 			<strong>배송비</strong>
 			<p><em class="order-deliveryfee" ></em></p> 
-			<input type="hidden" class="order-price" name="deliveryfee">
+			<input type="hidden" class="order-deliveryfee" name="deliveryfee">
 			</li>
 			
 			<li><strong>할이율</strong><p><em class="order-discount" ></em></p> </li>
