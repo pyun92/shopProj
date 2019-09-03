@@ -20,11 +20,11 @@ public class ProductOrder {
 	@Id
 	@SequenceGenerator(name = "PRODUCTORDER", sequenceName = "PRODUCTORDER_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "PRODUCTORDER")
-	private Long orderseq;
+	private Long orderseq; // 장바구니에서  사용 함
 	
 	private Long userseq;
 	
-	private Long productseq;
+	private Long productseq;   // 장바구니 넘버 사용 
 	
 	private String orderdetail;
 	
@@ -35,9 +35,7 @@ public class ProductOrder {
 	//--------------------
 
 	
-	private String itemsname; 
-	
-	private String storename;
+	private String ordername;    //주문자 이름 으로 변경 하기 
 	
 	private String addressnum;
 	
@@ -53,12 +51,12 @@ public class ProductOrder {
 	
 	private int calprice;
 	
-	private Long producseq;
-	
 	private Date canceldate;
 	
 	private Date expectedtime;
 	
-	private int quantity;
+	private int quantity; //필요 없을듯
+	
+	
 	
 }
