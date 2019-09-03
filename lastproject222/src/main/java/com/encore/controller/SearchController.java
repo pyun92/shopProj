@@ -22,6 +22,10 @@ public class SearchController {
 	@RequestMapping("/search_getList")
 	public String search_getList(@RequestParam ("searchword") String word, Model model) {
 		model.addAttribute("prodlist", service.searchProd(word).size()==0?null:service.searchProd(word));
+		System.out.println("service.searchProd(word)"+service.searchProd(word));
+		System.out.println("service.searchStore(word)"+service.searchStore(word));
+		model.addAttribute("pagesu", service.getTotalPage());
+		
 		model.addAttribute("prodimglist", imgservice.getDetailNum());
 		model.addAttribute("storelist", service.searchStore(word).size()==0?null:service.searchStore(word));
 		

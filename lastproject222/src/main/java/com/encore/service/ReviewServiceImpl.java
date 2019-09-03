@@ -16,12 +16,10 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewRepository rep;
 
 	
-	//mav.addObject("review",reviewService.findReview(prod)); 이거 컨트롤러에다가 붙이기
 	@Override
 	public List<Review> findReview(Product prod) {
 		List<Review> list=  rep.findByProductseq(prod.getProductseq());
-		
-		return list;
+		return list.size()==0?null:list;
 	}
 	
 	

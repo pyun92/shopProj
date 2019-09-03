@@ -1,5 +1,7 @@
 package com.encore.service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,47 +21,47 @@ import com.encore.persistence.SearchProductRepository;
 import com.encore.persistence.SearchStoreRepository;
 
 @Service
-public class SearchServiceImpl implements SearchService{
+public class SearchServiceImpl implements SearchService {
 
 	@Autowired
 	private SearchProductRepository prodrep;
-	
+
 	@Autowired
 	private SearchStoreRepository shoprep;
-	
+
 	@PersistenceContext
 	private EntityManager entityManager;
-	
-	public Page<Store> getStoreInPage(Integer pageNum){
-		PageRequest pageRequest = PageRequest.of(1, 5);
-		return shoprep.findAll(pageRequest);
-	}
-	
+
 	@Override
 	public List<Store> searchStore(String word) {
-		List<Store> list=null;
+		List<Store> list = null;
 		String qstr = "from Store WHERE STORENAME like :sname or storetype like :stype";
-		Query query = entityManager.createQuery(qstr).setParameter("sname", "%" +word+"%").setParameter("stype", "%" +word+"%");
+		Query query = entityManager.createQuery(qstr).setParameter("sname", "%" + word + "%").setParameter("stype",
+				"%" + word + "%");
 		list = query.getResultList();
 		return list;
 	}
 
 	@Override
 	public List<Product> searchProd(String word) {
-		List<Product> list=null;
+		List<Product> list = null;
 		String qstr = "from Product WHERE name like :pname or categorybig like :pcategorybig or categorysmall like :pcategorysmall";
-		Query query = entityManager.createQuery(qstr).setParameter("pname", "%" +word+"%").setParameter("pcategorybig", "%" +word+"%").setParameter("pcategorysmall", "%" +word+"%");
+		Query query = entityManager.createQuery(qstr).setParameter("pname", "%" + word + "%")
+				.setParameter("pcategorybig", "%" + word + "%").setParameter("pcategorysmall", "%" + word + "%");
 		list = query.getResultList();
 //		확인용 프린트ln
 //		for(Product pp :list) { 
 //			System.out.println(pp.getName());
 //		}
-		
-		return list;
-		
-	}
-	
-	
-	
 
+		return list;
+
+	}
+
+	@Override
+	public int getTotalPage() {
+		int n = shoprep.gettotalpage();
+		
+		return n;
+	}
 }

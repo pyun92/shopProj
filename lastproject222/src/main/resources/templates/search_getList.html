@@ -62,7 +62,7 @@ html {
 </style>
 </head>
 <body>
-
+	<div></div>
 	<div class="container row grey lighten-3">
 		<div class="col s12">
 			<p class="fontsize20px">상점 리스트 (검색 상품을 판매하는 상점입니다)</p>
@@ -83,36 +83,49 @@ html {
 					</div>
 				</th:block>
 				<p th:if="${storelist}==null">"검색한 단어와 관련된 상점이 없습니다."</p>
+				<div class="col s12 l12 center-align ">
+					<ul class="pagination">
+						<li class="disabled"><a href="#!"><i
+								class="material-icons">chevron_left</i></a></li>
+						<th:block th:if="${pagesu>=2}"
+							th:each="num: ${#numbers.sequence(1,{pagesu})}">
+							<li class="active"><a href="#!" th:text="${num}"></a></li>
+						</th:block>
+						<li class="waves-effect"><a href="#!"><i
+								class="material-icons">chevron_right</i></a></li>
+
+					</ul>
+				</div>
+
 			</div>
 			<div class="col s12">
-				<p class="fontsize20px">상품 리스트 (검색한 상품에 대한 결과, 일단은 전체가져옴. 나중에
-					인기순이나 히트순 관련 카테고리로)</p>
-
-
-				<div class="col s12 l3" th:each="prodlist : ${prodlist}">
+				<p class="fontsize20px">상품 리스트</p>
+				<div class="col s12 l3" th:each="prod : ${prodlist}">
 					<th:block th:each="prodimg : ${prodimglist}"
-						th:if="${prodlist.productseq}==${prodimg.imgnum}">
+						th:if="${prod.productseq}==${prodimg.imgnum}">
 						<div class="card card1">
 							<a
-								th:href="@{/product_getProduct2(productseq=${prodlist.productseq})}">
+								th:href="@{/product_getProduct2(productseq=${prod.productseq})}">
 								<div class="card-image">
 									<img th:src="@{../upload/}+${prodimg.fileName}" class="img2">
 								</div>
 								<div class="card-content align1 center-align">
 									<div>
-										<th:block th:text="${prodlist.categorysmall}" th:class="strcategorysmall"></th:block>
+										<th:block th:text="${prod.categorysmall}"
+											th:class="strcategorysmall"></th:block>
 									</div>
 									<div>
-										<th:block th:text="${prodlist.name}" th:class="stname"></th:block>
+										<th:block th:text="${prod.name}" th:class="stname"></th:block>
 									</div>
 									<div>
-										<th:block th:text="${prodlist.price} +원" th:class="stprice"></th:block>
+										<th:block th:text="${prod.price} +원" th:class="stprice"></th:block>
 									</div>
 								</div>
 							</a>
 						</div>
+
 					</th:block>
-					<p th:if="${prodlist}==null">"검색한 단어와 관련된 상품이 없습니다."</p>
+					<p th:if="${prodlist}==null" th:text="검색한 단어와 관련된 상품이 없습니다."></p>
 				</div>
 
 

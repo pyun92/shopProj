@@ -90,12 +90,16 @@ img {
 					<li class="border1"><a class="black-text" href="#!">후기남기기</a></li>
 					<li class="border1"><a class="black-text" href="#!">응원하기</a></li>
 					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
+					
+					<th:block th:if="${session['data']!=null}">
 					<th:block th:if="${session['data'].userseq}==${store.storeseq}">
 					<li class="border1 hiddenSj"><a class="black-text"
 						href="product_insert">상품등록</a></li>
 					<li class="border1 hiddenSj"><a class="black-text"
 						href="product_getList_sj.html">상품관리</a></li>
 						</th:block>
+						</th:block>
+						
 					<li><div class="divider paddingup200"></div></li>
 					<li><a class="subheader"><th:block th:text="${store.storename}"></th:block></a></li>
 					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
