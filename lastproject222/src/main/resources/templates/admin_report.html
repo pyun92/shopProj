@@ -44,6 +44,7 @@
     	</div>
   		</nav>
 	</header>
+	
 	<section>
 	<div class="container">
 		<div class="row repo_table">
@@ -60,11 +61,11 @@
 							<tr><th>상점</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>승인날짜</th></tr>
 						</thead>
 						<tbody>
-							<tr th:each="list1:${storelist}">
+							<tr class="storerows" th:each="list1:${storelist}">
 								<td th:text="${list1.reportname}"></td>
 								<td th:text="${list1.productseq}"></td>
-								<td><a href="${list1.reportseq}"><th:block th:text="${list1.reportsubject}"></th:block></a></td>
-								<td th:class="detail1" th:hidden="${list1.reportdetail}"></td>
+								<td><a href="#modal-report"><th:block th:text="${list1.reportsubject}"></th:block></a></td>
+								<td th:class="detail1" th:text="${list1.reportdetail}" style="display:none;"></td>
 								<td th:text="${list1.reportdate}"></td>
 								<td th:text="${list1.confirmdate}"></td>
 							</tr>
@@ -83,8 +84,8 @@
 								<td th:text="${list2.reportseq}"></td>
 								<td th:text="${list2.reportname}"></td>
 								<td th:text="${list2.productseq}"></td>
-								<td><a href="${list2.reportseq}"><th:block th:text="${list2.reportsubject}"></th:block></a></td>
-								<td th:class="detail2" th:hidden="${list2.reportdetail}"></td>
+								<td><a href="javascript:void(0);" class="subject2"><th:block th:text="${list2.reportsubject}"></th:block></a></td>
+								<td th:class="detail2" th:hidden="${list2.reportdetail}" style="display:none;"></td>
 								<td th:text="${list2.reportdate}"></td>
 								<td th:text="${list2.confirmdate}"></td>
 							</tr>
@@ -93,9 +94,17 @@
 				</div>
 			</div>
 			<!-- 모달창 신고내역 상세보기만 가능 -->
-			<div class="modal" id="">
-				
-			</div>
+			<div class="modal" id="modal-report">
+				<div class="modal-content">
+					<p>신고사유</p>
+					<p id="mainsubject"></p>
+					<p>상세 내역</p>
+					<p id="detail"></p>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-close btn-flat">닫기</a>
+				</div>
+			</div>	
 		</div>
 	</div>
 	</section>
@@ -108,6 +117,31 @@ $(document).ready(function(){
 	 $('.tabs').tabs();
 	 
 	 //모달창에 신고내용 보여주기
+	/* $('.subject1').each(function(i){
+		$(this).on("click",function(e){
+			e.preventDefault();
+			$('#mainsubject').text($(this).html());
+			$('#detail').text($('.detail1').text());
+			$(this).attr('href','#modal');
+		});	 
+	 });*/
+	 
+	/*  $('.storerows').each(function(i){
+		$('.subject1:eq('+i+')').on("click",function(e){
+			e.preventDefault();
+			alert("모달?");
+			/* $('.modal').modal({
+				onOpenStart:function(){
+				alert("모달안열림...?");
+				$('#mainsubject').text($(this).html());
+				$('#detail').text($('.detail1:eq('+i+')').text());	
+				}
+			});
+		}); 
+	 }); */
+	 
+	 $('.modal').modal();
+	
 	 
 }); 
 </script>
