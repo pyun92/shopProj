@@ -47,7 +47,12 @@
 	
 	<section>
 	<div class="container">
+		
 		<div class="row repo_table">
+			<div>
+				<button class="btn red accent-1" id="stop_15">15일 정지</button>
+				<button class="btn red accent-1" id="stop_30">30일 정지</button>
+			</div>
 			<div class="col s12 card">
 				<ul id="tabs-swipe-demo" class="tabs">
 					<li class="tab col s6"><a href="#index1">상점</a></li>
@@ -58,17 +63,18 @@
 				<div id="index1" class="col s12 white">
 					<table>
 						<thead>
-							<tr><th>상점</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>승인날짜</th></tr>
+							<tr><th></th><th>상점</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>경고해제날짜</th></tr>
 						</thead>
 						<tbody>
 							<tr class="rows" th:each="list1:${storelist}">
-								<td th:class="seq" th:hidden="${list1.reportseq}">
+								<td><label><input type="checkbox" class="reportitem"/><span></span></label></td>
+								<td th:hidden="seq"><input type="hidden" name="seq" th:value="${list1.reportseq}"></td>
 								<td th:text="${list1.reportname}"></td>
 								<td th:text="${list1.productseq}"></td>
 								<td><a href="#modal-report" class="modal-trigger subject"><th:block th:text="${list1.reportsubject}"></th:block></a></td>
 								<td th:class="detail" th:text="${list1.reportdetail}" style="display:none;"></td>
 								<td th:text="${list1.reportdate}"></td>
-								<td th:text="${list1.confirmdate}"></td>
+								<td class="confirmdate" th:text="${list1.confirmdate}"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -78,17 +84,18 @@
 				<div id="index2" class="col s12 white">
 					<table>
 						<thead>
-							<tr><th>회원아이디</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>승인날짜</th></tr>
+							<tr><th></th><th>회원아이디</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>경고해제날짜</th></tr>
 						</thead>
 						<tbody>
 							<tr class="rows" th:each="list2:${userlist}">
-								<td th:class="seq" th:hidden="${list2.reportseq}">
+								<td><label><input type="checkbox" class="reportitem"/><span></span></label></td>
+								<td th:hidden="seq"><input type="hidden" name="seq" th:value="${list2.reportseq}"></td>
 								<td th:text="${list2.reportname}"></td>
 								<td th:text="${list2.productseq}"></td>
 								<td><a href="#modal-report" class="modal-trigger subject"><th:block th:text="${list2.reportsubject}"></th:block></a></td>
 								<td th:class="detail" th:text="${list2.reportdetail}" style="display:none;"></td>
 								<td th:text="${list2.reportdate}"></td>
-								<td th:text="${list2.confirmdate}"></td>
+								<td class="confirmdate" th:text="${list2.confirmdate}"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -115,9 +122,56 @@
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
+//15일,30일징계 공통부분
+function stop(day){
+	var seqArray=new Array();
+	var sta;
+	$('.reportitem').each(function(i){
+		sta=true;
+		if($(this).attr("disabled")){
+			sta=false;			
+		}
+		if($(this).is(":checked")&&sta==true){
+			//console.log($('input:hidden[name="seq"]:eq('+i+')').val());
+			console.log(i+"값");
+			seqArray.push($('input:hidden[name="seq"]:eq('+i+')').val());
+		}
+	});
+	alert(day+"일 정지"+ seqArray);
+	//ajax로 controller에 seq 보내기
+	 $.ajax({
+		type:'POST',
+		url:'report_confirm',
+		data:JSON.stringify({"day":day,"seq":seqArray}),
+		dataType:'json',
+		contentType:"application/json; charset=UTF-8",
+		cache:false,
+		success:function(data){
+			if(data.confirm==1){
+				history.go(0);
+				alert("처리되었습니다.");
+				//체크박스 체크되게
+			}
+		},
+		error:function(data){
+			console.log(data);
+		}
+	})
+}
+
 $(document).ready(function(){
+	//탭하고 넘어갈때 
 	 $('.tabs').tabs();
-	 
+	
+	//체크되기
+	$('.confirmdate').each(function(index,item){
+		var check=$(this).parent().children().eq(0).children().children();
+		if($(this).text()!=""){
+			check.prop("checked",true);
+			check.attr("disabled",true);
+		}
+	});
+	
 	 //모달창에 신고내용 보여주기--커밋
 	 $('.rows').each(function(i){
 		$('.subject:eq('+i+')').on("click",function(e){
@@ -134,10 +188,17 @@ $(document).ready(function(){
 	 });
 	 
 	 //징계처리
-	 
+	//15일
+	$('#stop_15').on("click",function(){
+		stop(15);		
+	});
 	
+	 $('#stop_30').on("click",function(){
+		stop(30); 
+	 });
 	 
 }); 
 </script>
+
 </body>
 </html>

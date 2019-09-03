@@ -1,7 +1,7 @@
 package com.encore.service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +73,42 @@ public class AdminServiceImpl implements AdminService{
 	public List<Report> selectReport(int num) {
 		return reportRepository.findByReportdivi(num);
 	}
-	
-	
-	
+
+	//신고처리하고 날짜 변경하는거
+	@Override
+	public int updateConfirm(Long seq, int day) {
+		Report re=reportRepository.findById(seq).get();
+		Report newre=new Report();
+		newre.setReportseq(re.getReportseq());//시퀀스
+		newre.setReportdate(re.getReportdate());//접수날짜
+		newre.setReportdetail(re.getReportdetail());//상세내용
+		newre.setReportdivi(re.getReportdivi());//구분
+		newre.setReportname(re.getReportname());//상점인지사람인지
+		newre.setReportsubject(re.getReportsubject());//주제
+		newre.setProductseq(re.getProductseq());//상품시퀀스
+		//날짜계산
+		Calendar c=Calendar.getInstance();
+		c.setTime(new Date());
+		if(day==15) {
+			c.add(Calendar.DATE,15);
+			newre.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(c.getTime()));
+		}else {
+			c.add(Calendar.DATE,30);
+			newre.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(c.getTime()));
+		}
+		return (reportRepository.save(newre).getReportseq()!=null)?1:0;
+	}
+
+	@Override
+	public Report selectReportuser(String name, int divi) {
+		System.out.println("받아온 이름"+name+",구분값:"+divi);
+		Optional<Report> r=reportRepository.findByReportnameAndReportdivi(name, divi);
+		if(r.isPresent()) {
+			System.out.println("객체존재o");
+			return r.get();
+		}
+		return null;
+		
+	}
+
 }

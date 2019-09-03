@@ -11,5 +11,7 @@ public interface AdminService {
 	void updateRegister(Long seq); 
 	void updateLevel(Long seq);
 	List<Userdata> selectUser();
-	List<Report> selectReport(int num);
+	List<Report> selectReport(int num);//회원,상점 구분하는거
+	int updateConfirm(Long seq,int day);
+	Report selectReportuser(String name,int divi);//사용자가 신고테이블에 있는지
 }

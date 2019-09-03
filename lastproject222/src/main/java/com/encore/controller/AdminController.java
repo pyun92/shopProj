@@ -1,4 +1,5 @@
 package com.encore.controller;
+import java.util.ArrayList;
 //민성테스트  asdfasdfasdf
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,28 @@ public class AdminController {
 		mav.addObject("storelist",adminService.selectReport(1));//상점
 		mav.addObject("userlist",adminService.selectReport(0));//회원
 		return mav;
+	}
+	
+	//신고할데이터 넘어올때
+	@RequestMapping("/report_confirm")
+	@ResponseBody
+	public Map<Object,Object> report_confirm(@RequestBody Map<String,Object> map){
+		Map<Object,Object> map1=new HashMap<Object, Object>();
+		System.out.println("날짜"+map.get("day")+"시퀀스:"+map.get("seq"));
+		List<String>s=(List<String>) map.get("seq");
+		List<Long>seq=new ArrayList<Long>();
+		for(int i=0;i<s.size();i++) {
+			seq.add(Long.parseLong(s.get(i)));
+			System.out.println("시퀀스 "+seq.get(i));
+		}
+		System.out.println("시퀀스:"+seq.size());
+		int day=(int)(map.get("day"));
+		int n=0;
+		for(Long i:seq) {
+			n=adminService.updateConfirm(i, day);
+		}
+		map1.put("confirm",n);
+		return map1;
 	}
 	
 	@RequestMapping("/admin_user")
