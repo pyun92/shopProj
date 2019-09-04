@@ -68,7 +68,7 @@ public class ProductController {
 		return null;
 	}
 */
-	
+	//
 	//상품 등록
 	@RequestMapping("/insertProc" )
     public String requestupload2(MultipartHttpServletRequest mtfRequest,@ModelAttribute("data") Userdata userdata ) {

@@ -13,7 +13,7 @@ public interface AdminService {
 	void updateLevel(Long seq);
 	List<Userdata> selectUser();
 	List<Report> selectReport();
-	List<Product> selectProductseq();
+	List<Product> selectProductseq();//이걸로 받아온값 저장하기
 	int updateConfirm(Long seq,int day);
 	Report selectReportuser(String name);//사용자가 신고테이블에 있는지
 	

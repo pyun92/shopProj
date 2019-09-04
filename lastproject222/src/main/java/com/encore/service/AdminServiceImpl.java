@@ -118,7 +118,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<Product> selectProductseq() {
+	public List<Product> selectProductseq() {//여기추가
 		List<Report> list=selectReport();
 		List<Product> products=new ArrayList<Product>();
 		for(int i=0;i<list.size();i++) {

@@ -43,7 +43,7 @@ public class AdminController {
 	public void admin_main() {
 		
 	}
-	
+	//
 	//신고페이지
 	@RequestMapping("/admin_report")
 	public ModelAndView admin_report(ModelAndView mav) {

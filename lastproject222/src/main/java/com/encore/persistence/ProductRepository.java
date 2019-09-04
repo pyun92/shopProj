@@ -15,7 +15,7 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
 	List<Product> findByStoreseq(Long searchKeyword);
 	
-	Optional<Product> findByProductseq(Long productseq);
+	Optional<Product> findByProductseq(Long productseq);//상품시퀀스로 하나씩받아오기
 
 	
 }

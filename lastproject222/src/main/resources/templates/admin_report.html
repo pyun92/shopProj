@@ -67,7 +67,7 @@
 						</thead>
 						<tbody>
 							<tr class="rows" th:each="list1:${storelist}">
-								
+								<!-- 상품번호가져오기 -->
 								<td><label><input type="checkbox" class="reportitem"/><span></span></label></td>
 								<td th:hidden="seq"><input type="hidden" name="seq" th:value="${list1.reportseq}"></td>
 								<td th:text="${list1.reportname}"></td>

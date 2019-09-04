@@ -22,7 +22,7 @@ public class Report {
 	
 	private String reportname;//상점 or 회원아이디
 	
-	private Long productseq;
+	private Long productseq;//
 
 	private String reportsubject;//신고사유
 	

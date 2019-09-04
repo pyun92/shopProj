@@ -20,7 +20,7 @@ public class OptionImplService implements OptionService {
 	}
 
 	@Override
-	public List<Option> selectOption(Long seq) {
+	public List<Option> selectOption(Long seq) {//
 		return rep.findByProductseq(seq);
 	}
 	
