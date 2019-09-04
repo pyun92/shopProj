@@ -359,13 +359,14 @@ $(function(){
 		//클릭한 li의 위치 얻어오기
 		var big=$(this).text();
 		var small='';
-		var li_list=['식품','음료/주류','인테리어소품','의류','악세사리'];
+		var li_list=['식품','음료/주류','인테리어소품','의류','악세사리','기타'];
 		var small_list=new Array();
-		small_list[0]=new Array('전통장','떡','김치','그외 먹거리');
+		small_list[0]=new Array('전통발효식품','장','떡','김치','그외 먹거리');
 		small_list[1]=new Array('전통음료','전통주');
-		small_list[2]=new Array('공예제품','도자기');
-		small_list[3]=new Array('생활한복');
+		small_list[2]=new Array('공예제품','도자기','유기그릇','그외 소품');
+		small_list[3]=new Array('한복','전통신발','그 외 의류');
 		small_list[4]=new Array('반지','팔찌','헤어소품');
+		small_list[5]=new Array('기타상품');
 		
 		for(var i=0;i<li_list.length;i++){
 			if(big==li_list[i]){
