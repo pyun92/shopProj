@@ -71,7 +71,7 @@ public class KaKaoController {
 	        order.setOrdername(request.getParameter("received"));
 	      
 	        service.productorder(order);
-	        Long oseq=(order.getOrderseq()); service.afterpaymnet(oseq);
+	        Long oseq=(order.getOrderseq()); service.afterpaymnet(oseq,user.getUserseq());
 	        
 	        return "redirect:" + kakaopay.kakaoPayReady(order);
 	 

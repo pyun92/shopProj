@@ -27,5 +27,5 @@ public interface ProductService {
 	
 	void productorder(ProductOrder order);
 	
-	void afterpaymnet(Long seq);
+	void afterpaymnet(Long seq,Long idnum);
 }

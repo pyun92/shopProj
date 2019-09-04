@@ -25,4 +25,10 @@ public class MyinfoController {
 	model.addAttribute("jumoonlist",myinfoservice.orderlist(user.getUserseq()));	
 		return "jumoon";
 	}
+	@GetMapping("/cancellist")
+	public String cancellist(@ModelAttribute("data") Userdata user,Model model) {
+			
+	model.addAttribute("jumoonlist",myinfoservice.orderlist(user.getUserseq()));	
+		return "cancel";
+	}
 }

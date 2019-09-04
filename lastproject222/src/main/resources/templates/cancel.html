@@ -44,38 +44,28 @@ html {
 				<div class="col s12 jhead">취소 내역</div>
 
 				<ul class="collection">
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 3 <br> 33,000원
+					<li class="collection-item avatar" th:each="jumoon:${jumoonlist}" th:if=" ${jumoon.orderstate=='주문취소'}">
+					<a th:href="@{/jumoondetail(orderseq=${jumoon.orderseq})}">
+					상세보기
+					</a>
+						<p th:text="${jumoon.itemname}">
 						</p>
-						<p class="baesongchk">
-							취소<br>(취소일 : 2019.08.15)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 1 <br> 11,000원
+						<p th:text="${jumoon.calprice}+원">
 						</p>
-						<p class="baesongchk">
-							취소<br>(취소일 : 2019.08.15)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 4 <br> 44,000원
-						</p>
-						<p class="baesongchk">
-							취소<br>(취소일 : 2019.08.15)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 5 <br> 55,000원
-						</p>
-						<p class="baesongchk">
-							취소<br>(2019.07.11)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
+						<div>
+						<div class="baesongchk">
+						<p >
+						주문 취소 날짜
+						</p> 
+						<p th:text="${jumoon.canceldate}">
+						</p> 
+						</div>
+						</div>
+						<div  style="text-align: right;">
+						
+						</div>
+					</li>
+					
 				</ul>
 			<div class="col s12 center-align">
 				<ul class="pagination">
