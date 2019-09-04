@@ -60,8 +60,7 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public int getTotalPage() {
-		int n = shoprep.gettotalpage();
-		
+		int n = shoprep.gettotalpage()==null?0:shoprep.gettotalpage();
 		return n;
 	}
 

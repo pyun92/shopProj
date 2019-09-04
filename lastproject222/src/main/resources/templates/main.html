@@ -157,16 +157,26 @@
 					<!-- 회원 가입 모달창 끝 -->
 
 
-
-					<div class="bucket-icon col s4 m4 l4">
-						<a href="newbucketlist">
-							<ul>
-								<li><i class="fas fa-shopping-cart fa-3x"></i></li>
-								<li style="padding: 0;">장바구니</li>
-							</ul>
-						</a>
-					</div>
-
+					<th:block th:if="${session['data']==null}">
+						<div class="bucket-icon col s4 m4 l4">
+							<a href="#loginModal" class="modal-trigger">
+								<ul>
+									<li><i class="fas fa-shopping-cart fa-3x"></i></li>
+									<li style="padding: 0;">장바구니</li>
+								</ul>
+							</a>
+						</div>
+					</th:block>
+					<th:block th:if="${session['data']!=null}">
+						<div class="bucket-icon col s4 m4 l4">
+							<a href="newbucketlist">
+								<ul>
+									<li><i class="fas fa-shopping-cart fa-3x"></i></li>
+									<li style="padding: 0;">장바구니</li>
+								</ul>
+							</a>
+						</div>
+					</th:block>
 				</div>
 			</div>
 	</div>
@@ -262,10 +272,11 @@
 						</div>
 					</div></li>
 				<li><a href="#" onclick="already()"> LifeStyle</a></li>
-				<li><a href="#" onclick="already()"> About</a></li>
+				
 
 				<th:block
 					th:if="${session['data']!=null && session['data'].manage_level==1}">
+					<li><a href="/advertisereg">광고신청하기</a></li>
 					<li><a th:href="@{/index(storeseq=${session['data'].userseq})}"> 개인
 							상점</a></li>
 				</th:block>
