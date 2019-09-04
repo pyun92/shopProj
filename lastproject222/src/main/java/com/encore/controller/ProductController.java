@@ -80,7 +80,10 @@ public class ProductController {
         prod.setJaego(Integer.parseInt(mtfRequest.getParameter("jaego")));
         prod.setPrice(Integer.parseInt(mtfRequest.getParameter("price")));
         prod.setDiscount(Integer.parseInt(mtfRequest.getParameter("discount")));
-        prod.setEditor("ddd");  //나중에 변경
+      //  prod.setEditor("ddd");  //나중에 변경
+        prod.setEditor(mtfRequest.getParameter("editor"));
+        prod.setCategorybig(mtfRequest.getParameter("categorybig"));
+        prod.setCategorysmall(mtfRequest.getParameter("categorysmall"));
         prod.setStoreseq(userdata.getUserseq());
         service.insertProd(prod); //게시글 insert
         Long detailNum= (long) 0.0;
@@ -114,8 +117,7 @@ public class ProductController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                
-            	
+
         }
         String[] optionContent = mtfRequest.getParameterValues("optionContent");
 		String[] optionName = mtfRequest.getParameterValues("optionName");
@@ -145,13 +147,13 @@ public class ProductController {
 	}
 
 	
-	
 	@GetMapping("/product_getProduct2")
 	public ModelAndView product_getProduct(ModelAndView mav,Product prod) {
 		System.out.println("번호 :"+prod.getProductseq());
 		mav.setViewName("product_getProduct2");
 		mav.addObject("proDe", service.getProd(prod));
 		mav.addObject("proDeImg", imgService.getProdImg(prod));
+		mav.addObject("proOption",opService.selectOption(prod.getProductseq()));
 		mav.addObject("review",reviewService.findReview(prod));
 		return mav;
 	}

@@ -54,34 +54,38 @@
 				<button class="btn red accent-1" id="stop_30">30일 정지</button>
 			</div>
 			<div class="col s12 card">
-				<ul id="tabs-swipe-demo" class="tabs">
+				<!-- <ul id="tabs-swipe-demo" class="tabs">
 					<li class="tab col s6"><a href="#index1">상점</a></li>
 					<li class="tab col s6"><a href="#index2">회원</a></li>
 					<li></li>
-				</ul>
+				</ul> -->
 				<!-- 상점테이블 -->
-				<div id="index1" class="col s12 white">
+				<!-- <div id="index1" class="col s12 white"> -->
 					<table>
 						<thead>
 							<tr><th></th><th>상점</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>경고해제날짜</th></tr>
 						</thead>
 						<tbody>
 							<tr class="rows" th:each="list1:${storelist}">
+								
 								<td><label><input type="checkbox" class="reportitem"/><span></span></label></td>
 								<td th:hidden="seq"><input type="hidden" name="seq" th:value="${list1.reportseq}"></td>
 								<td th:text="${list1.reportname}"></td>
-								<td th:text="${list1.productseq}"></td>
+								<th:block th:each="pro,index:${product}" th:if="${index.index}==${list1.productseq}">
+								<td><a><th:block th:text="${pro.name}"></th:block></a></td>
+								</th:block>
 								<td><a href="#modal-report" class="modal-trigger subject"><th:block th:text="${list1.reportsubject}"></th:block></a></td>
 								<td th:class="detail" th:text="${list1.reportdetail}" style="display:none;"></td>
 								<td th:text="${list1.reportdate}"></td>
 								<td class="confirmdate" th:text="${list1.confirmdate}"></td>
+								
 							</tr>
 						</tbody>
 					</table>
-				</div>
+				<!-- </div> -->
 				
 				<!-- 회원 -->
-				<div id="index2" class="col s12 white">
+				<!-- <div id="index2" class="col s12 white">
 					<table>
 						<thead>
 							<tr><th></th><th>회원아이디</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>경고해제날짜</th></tr>
@@ -99,7 +103,7 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>
+				</div> -->
 			</div>
 			<!-- 모달창 신고내역 상세보기만 가능 -->
 			<div class="modal" id="modal-report">
@@ -161,7 +165,7 @@ function stop(day){
 
 $(document).ready(function(){
 	//탭하고 넘어갈때 
-	 $('.tabs').tabs();
+	/*  $('.tabs').tabs(); */
 	
 	//체크되기
 	$('.confirmdate').each(function(index,item){

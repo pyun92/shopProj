@@ -24,8 +24,6 @@ public class Report {
 	
 	private Long productseq;
 
-	private int reportdivi;//회원인지 상점인지 구분
-	
 	private String reportsubject;//신고사유
 	
 	private String reportdetail;//신고내용

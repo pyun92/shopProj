@@ -47,8 +47,9 @@ public class AdminController {
 	//신고페이지
 	@RequestMapping("/admin_report")
 	public ModelAndView admin_report(ModelAndView mav) {
-		mav.addObject("storelist",adminService.selectReport(1));//상점
-		mav.addObject("userlist",adminService.selectReport(0));//회원
+		mav.addObject("storelist",adminService.selectReport());//상점
+		mav.addObject("product",adminService.selectProductseq());
+		//mav.addObject("userlist",adminService.selectReport(0));//회원
 		return mav;
 	}
 	
@@ -77,6 +78,7 @@ public class AdminController {
 	@RequestMapping("/admin_user")
 	public ModelAndView admin_user(ModelAndView mav) {
 		mav.addObject("userlist",adminService.selectUser());
+		
 		return mav;
 	}
 	

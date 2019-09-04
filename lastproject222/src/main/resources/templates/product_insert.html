@@ -82,6 +82,10 @@ html .pullheight {
 	clip:rect(0,0,0,0);
 }
 
+.category{
+	background-color: #e0e0e0;
+}
+
 </style>
 </head>
 <body>
@@ -225,11 +229,12 @@ var img_Files=[];
 //0번 고정, 나머지1부터
 
 $(function(){
-	if("${session['data'].userid}"!= null){
+/* 	if("${session['data'].userid}"!= null){
 			$(".product_detail").html("${session['data'].userid}");
-	}
+	} */
 	htmliframe.document.designMode='On';
 	var iframe=$("#htmlframe").contents();
+	
 	//에디터에 이미지 추가 눌렀을때
 	/*
 	$('#editorImage').on("change",function(){
@@ -272,6 +277,7 @@ $(function(){
 		for(var i=0;i<img_Files.length;i++){
 			formData.append("files",img_Files[i],img_Files[i].name);
 		}
+		console.log("카테고리 1"+big+"카테고리2"+small);
 		//카테고리추가
 		formData.append("categorybig",big);
 		formData.append("categorysmall",small);
@@ -296,22 +302,22 @@ $(function(){
 	});
 	
 	$('#option_add').on("click",function() {
-				var eleCount = $('.opcount').length;
-				if (eleCount >= 6) {
-					alert("옵션은 6개까지 추가 가능합니다.");
-				} else {
-					var innerHtml = '<tr class="opcount"><td><input type="text" name="optionContent"></td>'
+		var eleCount = $('.opcount').length;
+		if (eleCount >= 6) {
+			alert("옵션은 6개까지 추가 가능합니다.");
+		} else {
+			var innerHtml = '<tr class="opcount"><td><input type="text" name="optionContent"></td>'
 							+ '<td><input type="text" name="optionName"></td>'
 							+ '<td><input type="text" name="optionPrice"></td>'
 							+ '<td><input type="button" class="removeBtn btn" value="삭제"></td></tr>'
-					$('#optiontable> tbody:last').append(
+			$('#optiontable> tbody:last').append(
 							innerHtml);
-				}//td만들어줌
+		}//td만들어줌
 
-				$('.removeBtn').on("click", function() {
-					$(this).parent().parent().remove();//td
-				});
-			});
+		$('.removeBtn').on("click", function() {
+			$(this).parent().parent().remove();//td
+		});
+	});
 	
 	$('input:radio[name="option"]').on("click",function(){
 		var value=$('input:radio[name="option"]:checked').val();
@@ -350,15 +356,20 @@ $(function(){
 		}
 	});
 	
-	$()
-	
 	$('.modal').modal();
-	
+	var small='';
+	var big='';
+	//li태그 선택시 
 	$('#big').find('li').on('click',function(){
+		$('#big').find('li').each(function(i){
+			$(this).removeClass('category');
+		})
+		
 		$('#small').empty();
 		//클릭한 li의 위치 얻어오기
-		var big=$(this).text();
-		var small='';
+		big=$(this).html();
+		$(this).addClass('category');
+		
 		var li_list=['식품','음료/주류','인테리어소품','의류','악세사리','기타'];
 		var small_list=new Array();
 		small_list[0]=new Array('전통발효식품','장','떡','김치','그외 먹거리');
@@ -377,9 +388,11 @@ $(function(){
 		}
 		
 		$('#small').find('li').on('click',function(i){
-			small=$(this).text();
+			small=$(this).html();
+			$(this).addClass('category');
+			console.log(small+" "+big);
 		});
-	})
+	});
 	
 });
 //제품이미지파일리더

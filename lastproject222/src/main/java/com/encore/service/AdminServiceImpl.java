@@ -1,6 +1,7 @@
 package com.encore.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -9,10 +10,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.encore.domain.Product;
 import com.encore.domain.Report;
 import com.encore.domain.Store;
 import com.encore.domain.Userdata;
 import com.encore.persistence.LoginRepository;
+import com.encore.persistence.ProductRepository;
 import com.encore.persistence.ReportRepository;
 import com.encore.persistence.ShopRepository;
 
@@ -27,6 +30,9 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired
 	private ReportRepository reportRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
 	
 	@Override
 	public List<Store> selectStore() {
@@ -69,10 +75,6 @@ public class AdminServiceImpl implements AdminService{
 		return (List<Userdata>)loginRepository.findAll();
 	}
 
-	@Override
-	public List<Report> selectReport(int num) {
-		return reportRepository.findByReportdivi(num);
-	}
 
 	//신고처리하고 날짜 변경하는거
 	@Override
@@ -82,7 +84,6 @@ public class AdminServiceImpl implements AdminService{
 		newre.setReportseq(re.getReportseq());//시퀀스
 		newre.setReportdate(re.getReportdate());//접수날짜
 		newre.setReportdetail(re.getReportdetail());//상세내용
-		newre.setReportdivi(re.getReportdivi());//구분
 		newre.setReportname(re.getReportname());//상점인지사람인지
 		newre.setReportsubject(re.getReportsubject());//주제
 		newre.setProductseq(re.getProductseq());//상품시퀀스
@@ -100,9 +101,9 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public Report selectReportuser(String name, int divi) {
-		System.out.println("받아온 이름"+name+",구분값:"+divi);
-		Optional<Report> r=reportRepository.findByReportnameAndReportdivi(name, divi);
+	public Report selectReportuser(String name) {
+		System.out.println("받아온 이름"+name);
+		Optional<Report> r=reportRepository.findByReportname(name);
 		if(r.isPresent()) {
 			System.out.println("객체존재o");
 			return r.get();
@@ -111,4 +112,21 @@ public class AdminServiceImpl implements AdminService{
 		
 	}
 
+	@Override
+	public List<Report> selectReport() {
+		return (List<Report>) reportRepository.findAll();
+	}
+
+	@Override
+	public List<Product> selectProductseq() {
+		List<Report> list=selectReport();
+		List<Product> products=new ArrayList<Product>();
+		for(int i=0;i<list.size();i++) {
+			products.add(productRepository.findByProductseq(list.get(i).getProductseq()).get());
+		}
+		return products;
+	}
+
+
+	
 }
