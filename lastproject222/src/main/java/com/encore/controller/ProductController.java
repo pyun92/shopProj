@@ -57,7 +57,17 @@ public class ProductController {
 		return new Userdata();
 	}
 	
-
+	//에디터 이미지 등록
+/*	@RequestMapping("/editorImage")
+	public Map<String,Object> editorImage(MultipartHttpServletRequest mtfRequest,@ModelAttribute("data") Userdata user){
+		Map<String,Object> map=new HashMap<String, Object>();
+		String fileName=
+		
+		String fileExtends=mtfRequest.getFile("uploadfile").getOriginalFilename()
+		
+		return null;
+	}
+*/
 	
 	//상품 등록
 	@RequestMapping("/insertProc" )
@@ -93,9 +103,6 @@ public class ProductController {
             	prodImg.setFileUrl(uploadFileDir);
                 prodImg.setDetailnum(detailNum);
                 imgService.insertProdImg(prodImg); //file insert
-                
-                
-                
                 try {
 					mf.transferTo(destinationFile);
 					detailNum++;

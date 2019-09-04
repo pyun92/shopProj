@@ -1,6 +1,6 @@
 <th:block th:include="main.html"></th:block>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -98,7 +98,7 @@ html .pullheight {
 									남자</span></a><br> <br> <a href="#user"><img class="img circle"
 								src="image/a.jpg"></a><br> <br> <br>
 							<div>
-								<span class="black-text ">안녕하세요 감만남  <th:block th:text="${session['data'].userid}"> 입니다.</span>
+								<span class="black-text">안녕하세요 <label id="editorname" th:text="${session['data'].userid}"></label>니다.</span>
 							</div>
 
 						</div></li>
@@ -197,14 +197,13 @@ html .pullheight {
 					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifyleft')"><i class="material-icons" >format_align_left</i></a></label>
 					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifycenter')"><i class="material-icons">format_align_center</i></a></label>
 					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifyright')"><i class="material-icons">format_align_right</i></a></label>
-					<!-- <label class="file_btn"><i class="material-icons">image</i><input type="file" id="editorImage" accept="image/*"></label> -->
+					<label class="file_btn"><i class="material-icons">image</i><input type="file" id="editorImage" name="editorImage" accept="image/*"></label>
 				</td>
 				</tr>
 				<tr>
 					<td>
 						<textarea id="product_detail" name="editor" style="display:none;"></textarea>
          				<iframe id="htmlframe" name="htmliframe" width="100%" height="400px"></iframe>
-						</div>
 					</td>
 				</tr>
 			</table>
@@ -212,8 +211,8 @@ html .pullheight {
 			<!-- 상점인덱스 -->
 			<!-- <input type="hidden" name="shopSeq" value="1"> -->
 			<div class="right-align">
-			<a href="" class="waves-effect waves-light btn red lighten-1" id="product_submit" name="product_submit">제출하기</a>
-			<a href="" class="waves-effect waves-light btn red lighten-1" name="product_reset" > 취소하기</a>
+			<input type="button" class="waves-effect waves-light btn red lighten-1" value="제출하기" id="product_submit">
+			<input type="button" class="waves-effect waves-light btn red lighten-1" value="취소하기" name="product_reset">
 			</div>
 		</form>
 		</div>
@@ -221,21 +220,44 @@ html .pullheight {
 		
 		<th:block th:include="footer.html"></th:block>
 		
-	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
-<!--머티리얼 디자인 자바스크립트-->
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script> -->
 <script>
 var index=1;//이미지추가시 인덱스
 var img_Files=[];
 //0번 고정, 나머지1부터
 
 $(function(){
-		if("${session['data'].userid}"!= null){
+	if("${session['data'].userid}"!= null){
 			$(".product_detail").html("${session['data'].userid}");
-		}
+	}
 	htmliframe.document.designMode='On';
 	var iframe=$("#htmlframe").contents();
+	//에디터에 이미지 추가 눌렀을때
+	/*
+	$('#editorImage').on("change",function(){
+		//파일 얻어와서 업로드
+		var formData=new FormData();
+		formData.append("uploadfile",$("input[name='editorImage']")[0].files[0]);
+		alert($("#editorname").text());
+		$.ajax({
+			url:'/editorImage',
+			type:'POST',
+			contentType:false,
+			processData:false,
+			enctype:'multipart/form-data',
+			data:formData,
+			success:function(data){
+				alert("성공");
+				//성공시, 파일의 위치를 받아옴
+				//div태그 만들어서 뿌려줌
+			},
+			error:function(data){
+				console.log(data);
+			}
+		});
+	});*/
+	
 	//제출버튼 눌렀을때
 	$('#product_submit').on("click",function(){
 		 event.preventDefault();
@@ -253,6 +275,9 @@ $(function(){
 		for(var i=0;i<img_Files.length;i++){
 			formData.append("files",img_Files[i],img_Files[i].name);
 		}
+		//카테고리추가
+		formData.append("categorybig",big);
+		formData.append("categorysmall",small);
 		
 		 $.ajax({
              url:'insertProc',
@@ -328,12 +353,15 @@ $(function(){
 		}
 	});
 	
+	$()
+	
 	$('.modal').modal();
 	
 	$('#big').find('li').on('click',function(){
 		$('#small').empty();
 		//클릭한 li의 위치 얻어오기
-		var li=$(this).text();
+		var big=$(this).text();
+		var small='';
 		var li_list=['식품','음료/주류','인테리어소품','의류','악세사리'];
 		var small_list=new Array();
 		small_list[0]=new Array('전통장','떡','김치','그외 먹거리');
@@ -343,17 +371,16 @@ $(function(){
 		small_list[4]=new Array('반지','팔찌','헤어소품');
 		
 		for(var i=0;i<li_list.length;i++){
-			if(li==li_list[i]){
-				//ul 소분류 밑에 만들어주기
+			if(big==li_list[i]){
 				for(var j=0;j<small_list[i].length;j++){
-					var li_ele=document.createElement('li');
-					var txt=document.createTextNode(small_list[i][j]);
-					li_ele.appendChild(txt);
-					$('#small').append(li_ele);
+					$('#small').append("<li>"+small_list[i][j]+"</li>");
 				}
 			}
 		}
-		//alert(list);
+		
+		$('#small').find('li').on('click',function(i){
+			small=$(this).text();
+		});
 	})
 	
 });
