@@ -1,5 +1,6 @@
 package com.encore.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.encore.domain.Bucket;
 import com.encore.domain.ProductOrder;
 import com.encore.domain.Userdata;
+import com.encore.service.MyinfoServiceImpl;
 import com.encore.service.OptionService;
 import com.encore.service.ProductImgService;
 import com.encore.service.ProductService;
@@ -25,10 +27,9 @@ public class Huijin {
 	private ProductService service;
 	
 	@Autowired
-	private ProductImgService imgService;
+	private MyinfoServiceImpl myinfo;
 	
-	@Autowired
-	private OptionService opService;
+	
 	
 	//결제창 
 	@RequestMapping("/paymentwindow")
@@ -47,4 +48,22 @@ public class Huijin {
 		return "baesong";
 		
 	}
+	
+	
+	@RequestMapping("/jumoondetail")
+	public String jumoondetail(ProductOrder porder,Model model) {
+		System.out.println("111111111111111111111111111");
+		List<Bucket> jumoondetail =myinfo.jumoondetail(porder.getOrderseq());
+		model.addAttribute("jumoondetail",jumoondetail);
+		
+		return "jumoondetail";
+	}
+	
+	@RequestMapping("/jumooncancel")
+	public String jumooncancel(ProductOrder order) {
+		myinfo.cancel(order.getOrderseq());
+		return "redirect:jumoon";
+		
+	}
+	
 }

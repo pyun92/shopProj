@@ -87,7 +87,7 @@ html {
 					<ul class="pagination">
 						<li class="disabled"><a href="#!"><i
 								class="material-icons">chevron_left</i></a></li>
-						<th:block th:if="${pagesu>=2}"
+						<th:block th:if="${pagesu>0}"
 							th:each="num: ${#numbers.sequence(1,{pagesu})}">
 							<li class="active"><a href="#!" th:text="${num}"></a></li>
 						</th:block>

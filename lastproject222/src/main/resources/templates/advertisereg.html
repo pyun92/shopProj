@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!--     <link href="https://cdn.materialdesignicons.com/1.1.34/" rel="stylesheet"> -->
+<link type="text/css" media="screen,projection" rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<style>
+html, body {
+	width: 100%;
+	height: 100%;
+	background-color: #e3f2fd;
+}
+
+.container {
+	position: relative;
+	display: table;
+	height: 100%;
+	max-width: 700px;
+}
+
+.card-panel {
+	margin-top: 100px;
+}
+
+.forminput {
+	padding: 0px 20px;
+}
+
+.threedetail { /* 회색글씨 */
+	color: #bdbdbd;
+}
+
+.maindetail { /* 빨간글씨 */
+	color: red;
+}
+.smallgl{
+font-size: 15px;
+}
+
+.btn_style {
+	margin: 5px;
+	align: center;
+}
+</style>
+<body>
+	<div class="section container">
+		<div class="card-panel">
+			<h3>[광고신청하기]</h3>
+			<p>
+				안녕하세요 전통적인 물품 판매 서비스 장날입니다.<br> 아래에 상점/상품 정보를 작성해주시면 운영진 검토후,
+				광고 신청완료 메일을 보내드리겠습니다.
+			</p>
+			<span class="maindetail">*는 필수항목입니다.</span>
+			<div class="divider"></div>
+			<form id="registerForm" method="post" enctype="multipart/form-data">
+				<div class="row forminput">
+					<div class="input-field">
+						<h5>
+							1. 신청하실 광고의 종류를 선택해주세요<span class="maindetail">*</span><span class="smallgl">(복수선택가능)</span>
+						</h5>
+						
+						<div class="row">
+							<div class="col s6">
+								<p>
+									<label><input type="checkbox" value="대문광고" class="chek1" /> <span>대문광고</span></label>
+								</p>
+								<p>(상품과 상점이 홈페이지 대문에 크게 노출됩니다.)</p>
+								<input type="hidden" class="ad1" name="ad1">
+							</div>
+							
+							<div class="col s6">
+							<p>
+								<label><input type="checkbox" value="추천상품광고" class="chek2"/> <span>추천상품
+										광고</span></label>
+							</p>
+							<p>(판매상품이 메인화면의 상위 추천상품 리스트에 노출됩니다.)</p>
+							<input type="hidden" class="ad2" name="ad2">
+							</div >
+							
+						</div>
+					</div>
+				</div>
+				<div class="row forminput">
+					<div class="input-field">
+						<h5>
+							2.상점이나 상품에 대한 설명을 작성해주세요<span class="maindetail">*</span>
+						</h5>
+						<span class="threedetail">광고에 들어갈 상점 소개문구를 작성해주세요(30자내외)</span>
+						<textarea id="storedetail" name="storedetail"
+							class="materialize-textarea" data-length="30"></textarea>
+					</div>
+				</div>
+				<div class="row forminput">
+					<h5>
+						3.대문광고에 쓸 영상을 업로드 하거나 유튜브 url주소를 입력해주세요<span class="maindetail">(대문광고에 한해 필수)</span>
+					</h5>
+					<div class="file-field input-field">
+						<div class="btn">
+							<span>File</span> <input type="file" id="fileaddbtn"
+								name="storefile" maxlength="1" accept="image/*|video/*" multiple>
+						</div>
+						<div class="file-path-wrapper">
+							<input type="text" class="file-path validate">
+						</div>
+						
+					</div>
+					<input type="text" class="validate" name="vidurl"
+							id="vidurl" placeholder="url은 이곳에 작성해주세요">
+				</div>
+				<!-- 항목 4 -->
+				<div class="row forminput">
+					<h5>
+						4.광고에 사용될 제품을 선택해주세요(제품의 이미지는 현재 등록된 이미지가 사용됩니다.)<span class="maindetail">*</span>
+					</h5>
+					<div class="file-field input-field">
+						<div class="btn">
+							<span>File</span> <input type="file" id="fileaddbtn"
+								name="storefile" maxlength="1" accept="image/*|video/*" multiple>
+						</div>
+						<div class="file-path-wrapper">
+							<input type="text" class="file-path validate">
+						</div>
+					</div>
+				</div>
+				<!-- 항목 5 -->
+				<div class="row forminput">
+					<div class="input-field">
+						<h5>
+							5.광고 신청완료 메일을 받을 주소를 입력하세요<span class="maindetail">*</span>
+						</h5>
+						<!-- 아이디 입력했을때 일치하지 않으면 일치하지 않습니다. 띄우도록 -->
+						<input type="email" class="validate" name="storeemail"
+							id="storeemail">
+					</div>
+				</div>
+				<div class="row forminput btn_style">
+					<input type="button" class="btn" id="submit" value="제출하기"> <input
+						type="reset" class="btn" value="취소하기">
+				</div>
+			</form>
+		</div>
+	</div>
+	<footer> </footer>
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$('#submit').click(function(){
+			if($("input:checkbox[class='chek1']").is(":checked")){
+				$('.ad1').val(1);
+			}else{
+				$('.ad1').val(0);
+			}
+			
+			var a = $('.ad1').val();
+			alert(a);
+			
+		});
+		
+		
+	});
+	</script>
+</body>
+</html>
