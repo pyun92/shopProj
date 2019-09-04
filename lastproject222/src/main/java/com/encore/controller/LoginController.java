@@ -47,7 +47,7 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(Userdata data, Model model, HttpServletResponse response) {
 		Userdata findMember = logindata.login(data);
-		Report r= adminservice.selectReportuser(findMember.getUserid(), findMember.getManage_level().intValue());
+		Report r= adminservice.selectReportuser(findMember.getUserid());
 		
 		if (findMember != null && findMember.getPassword().equals(data.getPassword())) {
 			System.out.println(findMember.getManage_level());
@@ -57,7 +57,7 @@ public class LoginController {
 				return "redirect:admin_main";
 			}
 			//신고게시판에 이름이 있을때
-			if(r!=null) {
+			if(r!=null && findMember.getManage_level()==1L) {
 				try {
 					SimpleDateFormat format=new SimpleDateFormat("yyyy/mm/dd");
 					Date today=format.parse(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
