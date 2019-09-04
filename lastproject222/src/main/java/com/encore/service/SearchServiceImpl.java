@@ -64,4 +64,22 @@ public class SearchServiceImpl implements SearchService {
 		
 		return n;
 	}
+
+	@Override
+	public List<Store> searchStorebycate(String word) {
+		List<Store> list = null;
+		String qstr = "from Store WHERE storetype = :stype";
+		Query query = entityManager.createQuery(qstr).setParameter("stype", word );
+		list = query.getResultList();
+		return list;
+	}
+
+	@Override
+	public List<Product> searchProdbycate(String word) {
+		List<Product> list = null;
+		String qstr = "from Product WHERE categorybig = :pcategorybig or categorysmall = :pcategorysmall";
+		Query query = entityManager.createQuery(qstr).setParameter("pcategorybig",  word ).setParameter("pcategorysmall",  word );
+		list = query.getResultList();
+		return list;
+	}
 }

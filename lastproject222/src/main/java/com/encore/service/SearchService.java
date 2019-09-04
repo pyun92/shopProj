@@ -10,5 +10,7 @@ import com.encore.domain.Store;
 public interface SearchService{
 	List<Store> searchStore(String word);
 	List<Product> searchProd(String word);
+	List<Store> searchStorebycate(String word);
+	List<Product> searchProdbycate(String word);
 	int getTotalPage();
 }

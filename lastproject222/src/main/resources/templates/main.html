@@ -56,7 +56,8 @@
 				<div class="col s6 m6 l6 search-bar" style="padding: 0;">
 					<form action="/search_getList" method="get">
 						<div class="col s10 m10 l10" id="search">
-							<input type="text" class="search" name="searchword" placeholder="검색어 입력">
+							<input type="text" class="search" name="searchword"
+								placeholder="검색어 입력">
 						</div>
 
 						<!--검색 버튼-->
@@ -179,59 +180,86 @@
 			<!-- 매뉴 목록 -->
 			<ul class="nav">
 				<!----- Full Drop Down Name ---->
-				<li class="dropdown"><a href="#">메인 메뉴</a> <!----- Full Drop Down Name Ends Here ---->
+				<li class="dropdown"><a href="#">카테고리</a> <!----- Full Drop Down Name Ends Here ---->
 
 					<!----- Full Drop Down Contents  Starts Here---->
 					<div class="fulldrop">
 						<div class="column">
-							<h3>식품</h3>
 							<ul>
-								<li><a href="getList/" id="food1">주류</a></li>
-								<li><a href="#" id="food2">간식</a></li>
-								<li><a href="#" id="food3">발효 식품</a></li>
-								<li><a href="#" id="food4">김치</a></li>
-								<li><a href="#" id="food5">김치</a></li>
-								<li><a href="#" id="food6">김치</a></li>
-								<li><a href="#" id="food7">김치</a></li>
-								<li><a href="#"></a></li>
+								<li>
+									<p>
+										<a href="/search_getLists?category=식품">식품</a>
+									</p>
+								</li>
+
+								<li><a href="/search_getLists?category=전통발효식품" id="food1">전통
+										발효식품(장)</a></li>
+								<li><a href="/search_getLists?category=떡" id="food2">떡</a></li>
+								<li><a href="/search_getLists?category=김치" id="food3">김치</a></li>
+								<li><a href="/search_getLists?category=음료/주류" id="food4">음료/주류</a></li>
+								<li><a href="/search_getLists?category=그외먹거리" id="food5">그외
+										먹거리</a></li>
 							</ul>
 						</div>
 
 
 
 						<div class="column">
-							<h3>옷</h3>
+
 							<ul>
-								<li><a href="#" id="dress1">전통 한복</a></li>
-								<li><a href="#" id="dress2">계량 한복</a></li>
-								<li><a href="#" id="dress3">신</a></li>
-								<li><a href="#"></a></li>
+								<li><p>
+										<a href="/search_getLists?category=의류">의류</a>
+									</p></li>
+								<li><a href="/search_getLists?category=전통한복" id="dress1">전통
+										한복</a></li>
+								<li><a href="/search_getLists?category=계량한복" id="dress2">계량
+										한복</a></li>
+								<li><a href="/search_getLists?category=전통신발" id="dress3">전통
+										신발</a></li>
+								<li><a href="/search_getLists?category=그외의류" id="dress4">그외
+										의류</a></li>
+								<li>a asdasd</li>
 							</ul>
 						</div>
 
 
 						<div class="column">
-							<h3>식품</h3>
 							<ul>
-								<li><a href="#">주류</a></li>
-								<li><a href="#">간식</a></li>
-								<li><a href="#">발효 식품</a></li>
-								<li><a href="#">김치</a></li>
-								<li><a href="#"></a></li>
+								<li><p>
+										<a href="/search_getLists?category=인테리어소품">인테리어 소품</a>
+									</p></li>
+								<li><a href="/search_getLists?category=공예품">공예품</a></li>
+								<li><a href="/search_getLists?category=그외소품">그외 소품</a></li>
+								<li></li>
+								<li></li>
 							</ul>
 						</div>
 
+						<div class="column">
+							<ul>
+								<li><p>
+										<a href="/search_getLists?category=악세사리">악세사리</a>
+									</p></li>
+							</ul>
+						</div>
+
+						<div class="column">
+							<ul>
+								<li><p>
+										<a href="/search_getLists?category=기타">기타</a>
+									<p></li>
+							</ul>
+						</div>
 					</div></li>
 
 
 
-				<li><a href="#"> LifeStyle</a></li>
-				<li><a href="#"> About</a></li>
+				<li><a href="#" onclick="already()"> LifeStyle</a></li>
+				<li><a href="#" onclick="already()"> About</a></li>
 
 				<th:block
 					th:if="${session['data']!=null && session['data'].manage_level==1}">
-					<li><a
-						th:href="@{/index(storeseq=${session['data'].userseq})}"> 개인
+					<li><a th:href="@{/index(storeseq=${session['data'].userseq})}"> 개인
 							상점</a></li>
 				</th:block>
 
@@ -248,13 +276,18 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script type="text/javascript">
+		function already() {
+			alert("준비중입니다.");
+
+		}
+
 		$(document).ready(
 				function() {
 
-					$("#food1").on('click', function() {
-						var food = $("#food1").val();
-						alert(food);
-					});
+					// 					$("#food1").on('click', function() {
+					// 						var food = $("#food1").val();
+					// 						alert(food);
+					// 					});
 
 					$(".zeta-menu ul li:has(ul)").find("a:first").append(
 							"<p style='float:right;margin:-3px'>&#9656;</p>");

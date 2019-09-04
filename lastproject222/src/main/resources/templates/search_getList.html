@@ -100,7 +100,7 @@ html {
 			</div>
 			<div class="col s12">
 				<p class="fontsize20px">상품 리스트</p>
-				<div class="col s12 l3" th:each="prod : ${prodlist}">
+				<div class="col s12 l3" th:if="${prodlist}!=null" th:each="prod : ${prodlist}">
 					<th:block th:each="prodimg : ${prodimglist}"
 						th:if="${prod.productseq}==${prodimg.imgnum}">
 						<div class="card card1">
@@ -123,11 +123,9 @@ html {
 								</div>
 							</a>
 						</div>
-
 					</th:block>
-					<p th:if="${prodlist}==null" th:text="검색한 단어와 관련된 상품이 없습니다."></p>
 				</div>
-
+				<p th:if="${prodlist}==null">"검색한 단어와 관련된 상품이 없습니다."</p>
 
 			</div>
 		</div>
