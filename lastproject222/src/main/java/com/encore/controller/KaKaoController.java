@@ -34,7 +34,7 @@ public class KaKaoController {
 		@Autowired
 		private ProductService service;
 	
-	  @Setter(onMethod_ = @Autowired)
+	    @Autowired
 	    private KaKaoPay kakaopay;
 	    
 	    
@@ -49,12 +49,16 @@ public class KaKaoController {
 	        StringBuilder sb = new StringBuilder();
 	        
 	    	for (int i = 0; i < arrayParam.length; i++) {
-	    		sb.append(arrayParam[i]+",");
+	    		if(i<arrayParam.length-1) {
+		    		sb.append(arrayParam[i]+",");
+	    		}else if(i==arrayParam.length-1) {
+		    			sb.append(arrayParam[i]);
+		    		}
 	    		}
 	    	
 	    	order.setItemname(sb.toString());
-	        order.setOrderdate("2019-0-03");
-	        order.setOrderstate("발송 준비중");
+	        order.setOrderdate("2019-09-03");
+	        order.setOrderstate("배송 준비중");
 	        order.setUserseq(user.getUserseq());
 	        order.setTotalprice(Integer.parseInt(request.getParameter("totalprice")));
 	        order.setTotaldis(Integer.parseInt(request.getParameter("discount")));
@@ -77,8 +81,7 @@ public class KaKaoController {
 	    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
 	    	
 	    	
-	        log.info("kakaoPaySuccess get............................................");
-	        log.info("kakaoPaySuccess pg_token : " + pg_token);
+	       
 			return "redirect:welcome";
 	        
 	        

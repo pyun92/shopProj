@@ -130,10 +130,12 @@ public class BoardController {
 	public void product_update() {
 	
 	}
-	@GetMapping("/jumoon")
-	public void jumoon() {
 
-	}
+	/*
+	 * @GetMapping("/jumoon") public void jumoon() {
+	 * 
+	 * }
+	 */
 	@GetMapping("/account")
 	public void account() {
 	

@@ -54,30 +54,17 @@ html {
 				<div class="col s12 jhead">주문내역</div>
 
 				<ul class="collection">
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 3 <br> 33,000원
+					<li class="collection-item avatar" th:each="jumoon:${jumoonlist}">
+					<img src="image/a.jpg" alt="" class="circle"> 
+						<p th:text="${jumoon.itemname}">
 						</p>
-						<p class="baesongchk">
-							배송대기<br>(도착예정일 : 2019.08.15)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 1 <br> 11,000원
+						<p th:text="${jumoon.calprice}+원">
 						</p>
-						<p class="baesongchk">
-							배송완료<br>(2019.08.01)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 4 <br> 44,000원
-						</p>
-						<p class="baesongchk">
-							배송완료<br>(2019.07.17)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
+						<p class="baesongchk" th:text="${jumoon.orderstate}">
+							<br>(도착예정일 : 2019.08.15)
+						</p> <a href="#!" class="secondary-content">장바구니에 담기</a>
+					</li>
+					
 					<li class="collection-item avatar"><img src="image/a.jpg"
 						alt="" class="circle"> <span class="title">감만남</span>
 						<p>

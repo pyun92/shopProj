@@ -28,7 +28,7 @@ public class ProductOrder {
 	
 	private String orderdetail;
 	
-	private String orderdate;
+	private String orderdate;  //타입 DATA로 변경 하기
 	
 	private String orderstate;
 	
@@ -37,9 +37,9 @@ public class ProductOrder {
 	
 	private String ordername;    //주문자 이름 으로 변경 하기 
 	
-	private String itemname;
+	private String itemname;     //상품 이름 한줄로 입력
 	
-	private String addressnum;
+	private String addressnum;   
 	
 	private String address1;
 	
