@@ -28,11 +28,13 @@ import com.encore.domain.Bucket;
 import com.encore.domain.Option;
 import com.encore.domain.Product;
 import com.encore.domain.ProductImg;
+import com.encore.domain.Store;
 import com.encore.domain.Userdata;
 import com.encore.service.OptionService;
 import com.encore.service.ProductImgService;
 import com.encore.service.ProductService;
 import com.encore.service.ReviewService;
+import com.encore.service.ShopService;
 
 @SessionAttributes("data")
 @Controller
@@ -51,6 +53,11 @@ public class ProductController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private ShopService shopservice;
+	
+	
 	
 	@ModelAttribute("data")
 	public Userdata setMember() {
@@ -180,33 +187,41 @@ public class ProductController {
 	}
 	
 	//장바구니 추가
-	@RequestMapping("/bucketsession")
-	public String bucketsession(HttpServletRequest request,Model model) {
-		System.out.println("=======================================");
-		Bucket buc= new Bucket();
+			@RequestMapping("/bucketsession")
+			public String bucketsession(HttpServletRequest request,Model model,@ModelAttribute("data") Userdata user) {
+				System.out.println("=======================================");
+				Bucket buc= new Bucket();
+				Store store = shopservice.findbyid(Long.parseLong(request.getParameter("storeseq")));
+				
+				buc.setDeliveryfee(2500);
+				buc.setDiscount(Integer.parseInt(request.getParameter("discount")));
+				buc.setImgname(request.getParameter("filename"));
+				buc.setPrice(Integer.parseInt(request.getParameter("price")));
+				buc.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+				buc.setItemname(request.getParameter("name"));
+				buc.setSellername(store.getStorename());   //나중에 스토에 이름으로 변경
+				buc.setUserseq(user.getUserseq());
+				buc.setStoreseq(Long.parseLong(request.getParameter("storeseq")));
+				buc.setProductseq(Long.parseLong(request.getParameter("productseq")));
+				//buc.setBucketoption(option.getOptioncontent()+"   "+option.getOptionname()+"  (+"+option.getOptionprice()+"원)");
+				buc.setOptionseq(Long.parseLong(request.getParameter("optionseq")));
+				buc.setCondition("bucket");
+				buc.setChecked(1);
+				service.insertBucket(buc);
+				
+				return "redirect:newbucketlist?optionseq="+request.getParameter("optionseq");
+				
+			}
 
-		buc.setDeliveryfee(2500);
-		buc.setDiscount(Integer.parseInt(request.getParameter("discount")));
-		buc.setImgname(request.getParameter("filename"));
-		buc.setPrice(Integer.parseInt(request.getParameter("price")));
-		buc.setQuantity(Integer.parseInt(request.getParameter("quantity")));
-		buc.setItemname(request.getParameter("name"));
-		buc.setSellername(request.getParameter("name"));   //나중에 스토에 이름으로 변경
-		buc.setUserseq(Long.parseLong(request.getParameter("owner")));
-		buc.setProductseq(Long.parseLong(request.getParameter("productseq")));
-		buc.setCondition("bucket");
-		buc.setChecked(1);
-		service.insertBucket(buc);
-		return "redirect:newbucketlist";
-		
-	}
-	
-	@RequestMapping("/newbucketlist")
-	public String bucketsession(@ModelAttribute("data") Userdata user,Model model) {
-		System.out.println("+++++++++++++++++++++++++++++++");
-		model.addAttribute("probucket",service.findallbucket(user.getUserseq()));
-		return "newbucket";
-	}
+			@RequestMapping("/newbucketlist")
+			public String bucketsession1(@ModelAttribute("data") Userdata user,Model model) {
+				System.out.println("+++++++++++++++++++++++++++++++");
+			
+				model.addAttribute("options",opService.findoption());
+			
+				model.addAttribute("probucket",service.findallbucket(user.getUserseq()));
+				return "newbucket";
+			}
 	
 	//수량 변경
 	@RequestMapping("/modifydata")

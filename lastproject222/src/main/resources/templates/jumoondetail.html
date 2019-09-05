@@ -59,6 +59,16 @@ padding: 10px;
 padding: 20px;
 margin: 10px;
 }
+
+/* 중복되는 css */
+.bucketoption1 ,.bucketoption2{ 
+text-align: center;
+font-size: 110%; 
+}
+.bucketoption1{
+font-weight: bold;
+}
+/* ----------------- */
 </style>
 </head>
 <body>
@@ -98,12 +108,10 @@ margin: 10px;
 				</a>
 			</div>
 			<div class="col s9 m9 l9">
-				<div>
-				추가 상품 	
-				</div>
-				<div>
-				건강한 식품
-				</div>			
+				<div th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}">
+				<p th:text="${jude.itemname}" class="bucketoption1"></p> 
+				<p class="bucketoption2" th:text="${option.optioncontent}  + ${option.optionname}+'(+'+${option.optionprice}+'원)'"></p>
+				</div>		
 			</div>
 		</div>
 		</td>
@@ -116,7 +124,10 @@ margin: 10px;
         				</div>
         	</div>
         </td>
-		<td th:text="(${jude.price}*${jude.quantity}+원)" class="total-price"></td>
+        <td th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}">
+			<p th:text="(${jude.price}*${jude.quantity}+원)"  class="total-price"></p>
+			<p th:text="'옵션'+'('+${option.optionprice}+'원)'"> </p>
+		</td>
 		<td th:text="(${jude.discount}*${jude.quantity})+원" class="total-discount"> </td>
 		<td th:text="${jude.deliveryfee}" class="item-deliveryfee"></td>
 		<td th:text="${jude.sellername}"></td>

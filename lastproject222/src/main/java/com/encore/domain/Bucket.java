@@ -29,7 +29,9 @@ public class Bucket {
 	
 	private Long productseq;
 	
-	private String bucketoption;
+	private Long optionseq;   //선택 옵션 시퀀스
+	
+	private String bucketoption;   //선택 옵션 내용	
 	
 	private int quantity;
 	
@@ -37,14 +39,16 @@ public class Bucket {
 	
 	private int discount;
 	
-	private int checked;
+	private int checked;        //장바구니 체크여부 
 	
 	private int deliveryfee;
 	
-	private String sellername;
+	private String sellername;   //상점 이름
 	
-	private String condition;
+	private Long storeseq;        //상점 시퀀스 
 	
-	private Long orderseq;
+	private String condition;     //결제,배송 상태 표시 
+	
+	private Long orderseq;       
 	
 }

@@ -13,4 +13,7 @@ public interface MyinfoService {
 	
 	void cancel(Long seq);
 	
+	List<Bucket> jumoonmanager(Long num);
+	
+	
 }

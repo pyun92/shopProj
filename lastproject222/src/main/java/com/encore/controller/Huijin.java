@@ -2,6 +2,7 @@ package com.encore.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,14 +12,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import com.encore.domain.Bucket;
+import com.encore.domain.Option;
+import com.encore.domain.Product;
 import com.encore.domain.ProductOrder;
+import com.encore.domain.Store;
 import com.encore.domain.Userdata;
 import com.encore.service.MyinfoServiceImpl;
 import com.encore.service.OptionService;
 import com.encore.service.ProductImgService;
 import com.encore.service.ProductService;
+import com.encore.service.ShopService;
 
 @SessionAttributes("data")
 @Controller
@@ -29,7 +35,11 @@ public class Huijin {
 	@Autowired
 	private MyinfoServiceImpl myinfo;
 	
+	@Autowired
+	private ShopService shopservice;
 	
+	@Autowired
+	private OptionService optionservice;
 	
 	//결제창 
 	@RequestMapping("/paymentwindow")
@@ -49,21 +59,62 @@ public class Huijin {
 		
 	}
 	
-	
-	@RequestMapping("/jumoondetail")
-	public String jumoondetail(ProductOrder porder,Model model) {
-		System.out.println("111111111111111111111111111");
-		List<Bucket> jumoondetail =myinfo.jumoondetail(porder.getOrderseq());
-		model.addAttribute("jumoondetail",jumoondetail);
+	@RequestMapping("baesong_sj")
+	public String beasongsj(@ModelAttribute("data") Userdata user,Model model) {
 		
-		return "jumoondetail";
-	}
-	
-	@RequestMapping("/jumooncancel")
-	public String jumooncancel(ProductOrder order) {
-		myinfo.cancel(order.getOrderseq());
-		return "redirect:jumoon";
+		List<Bucket> listjumoon= myinfo.jumoonmanager(user.getUserseq());
+		model.addAttribute("options",optionservice.findoption());
+		model.addAttribute("list", listjumoon);
+		
+		return "baesong_sj";
 		
 	}
+	
+	//장바구니 추가
+		@RequestMapping("/bucketsession")
+		public String bucketsession(HttpServletRequest request,Model model,@ModelAttribute("data") Userdata user) {
+			System.out.println("=======================================");
+			Bucket buc= new Bucket();
+			Store store = shopservice.findbyid(Long.parseLong(request.getParameter("storeseq")));
+			
+			buc.setDeliveryfee(2500);
+			buc.setDiscount(Integer.parseInt(request.getParameter("discount")));
+			buc.setImgname(request.getParameter("filename"));
+			buc.setPrice(Integer.parseInt(request.getParameter("price")));
+			buc.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+			buc.setItemname(request.getParameter("name"));
+			buc.setSellername(store.getStorename());   //나중에 스토에 이름으로 변경
+			buc.setUserseq(user.getUserseq());
+			buc.setStoreseq(Long.parseLong(request.getParameter("storeseq")));
+			buc.setProductseq(Long.parseLong(request.getParameter("productseq")));
+			//buc.setBucketoption(option.getOptioncontent()+"   "+option.getOptionname()+"  (+"+option.getOptionprice()+"원)");
+			buc.setOptionseq(Long.parseLong(request.getParameter("optionseq")));
+			buc.setCondition("bucket");
+			buc.setChecked(1);
+			service.insertBucket(buc);
+			
+			return "redirect:newbucketlist?optionseq="+request.getParameter("optionseq");
+			
+		}
+
+		@RequestMapping("/newbucketlist")
+		public String bucketsession1(@ModelAttribute("data") Userdata user,Model model) {
+			System.out.println("+++++++++++++++++++++++++++++++");
+		
+			model.addAttribute("options",optionservice.findoption());
+		
+			model.addAttribute("probucket",service.findallbucket(user.getUserseq()));
+			return "newbucket";
+		}
+			
+		@RequestMapping("/buccondition")
+		@ResponseBody
+		public void buccondition(@RequestBody Long seq) {
+			System.out.println("sadasdasdasdasd");
+			System.out.println(seq);
+			myinfo.cancel(seq);
+		}
+		
+		
 	
 }

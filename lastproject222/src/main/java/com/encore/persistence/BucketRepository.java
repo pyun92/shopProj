@@ -33,4 +33,6 @@ public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	@Transactional
 	@Query(value ="update bucket set condition='cancel' where orderseq=?1",nativeQuery = true)
 	void cancelbucket(Long num);
+	
+	List<Bucket> findByStoreseq(Long seq);
 }

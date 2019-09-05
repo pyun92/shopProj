@@ -70,6 +70,7 @@ height: 100%;
 			<input type="hidden" th:value="${proDe.name}" name="name">
 			<input type="hidden" th:value="${proDe.discount}" name="discount">
 			<input type="hidden" th:value="${proDe.price}" name="price">
+			<input type="hidden" th:value="${proDe.storeseq}" name="storeseq">
 			<!-- <th:block th:if="${{session['data']!=null}"><input type="hidden" th:value="${session['data'].userseq}" name="owner"></th:block> -->
 			<h2 th:text="${proDe.name}"></h2>
 			<h5 th:text="할인  + ${proDe.discount}"></h5>
@@ -77,10 +78,14 @@ height: 100%;
 			<label><span >판매수량</span></label> 
 			<th:block th:text="${proDe.jaego}+개"></th:block>
 			<p>
-			<select>
-				<option value=''>옵션을 선택해주세요</option>
-				<option th:each="option:${proOption}"><th:block th:text="${option.optioncontent}+' '+${option.optionname}+' (추가금액 : '+${option.optionprice}+')'"></th:block></option>
+			<select id="options">
+				<option value='1' >옵션을 선택해주세요</option>
+				<option th:each="option:${proOption}" th:value="${option.optionseq}" >
+				<th:block th:text="${option.optioncontent}+' '+${option.optionname}+' (추가금액 : '+${option.optionprice}+')'">
+				</th:block></option>
+				
 			</select>
+			<input type="hidden" id="optionseq" name="optionseq"> 
 			</p>
 			<p><div class="col s3">수량</div><input class="col s9" type="number" value="1" min="1" max="10" name="quantity"></p><!-- 수량 추가 버튼 -->
 			<p>
@@ -200,6 +205,7 @@ $(document).ready(function(){
     
     $('.modal').modal();
     
+    
     $("#bucket-btn").on('click' ,function(){
     	
     	document.getElementById("item-detail-bucket").submit();
@@ -207,6 +213,14 @@ $(document).ready(function(){
     
    // alert($('#editor').html());
     $('#content').append($('#editor').text());
+    
+    $("#options").on('change' ,function(){
+    	var index = $("#options option:selected").val();
+    	$("#optionseq").val(index);
+    	alert($("#optionseq").val(index));
+    	
+    });
+    
  });
       
 </script>

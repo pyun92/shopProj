@@ -141,10 +141,10 @@ public class BoardController {
 	
 	}
 	
-	@GetMapping("/baesong_sj")
-	public void baesongsj() {
-	
-	}
+//	@GetMapping("/baesong_sj")
+//	public void baesongsj() {
+//	
+//	}
 	@GetMapping("/main")
 	public void main() {
 	

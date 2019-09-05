@@ -1,6 +1,6 @@
 <th:block th:include="main.html"></th:block>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -100,84 +100,47 @@ th {
 						<!--재고수량이 5개 이상일 경우 ->"재고수량이 5개이하입니다. 삭제하시겠습니까?" 추가 -->
 						<th>배송확인</th>
 					</tr>
-					<tr>
-						<td>5050-2211</td>
-						<td>감자탕</td>
-						<td>15000원</td>
+					<tr th:each="list:${list}">
+						<th:block th:each="option:${options}" th:if="${option.optionseq}==${list.optionseq}">
+						<td th:text="${list.bucketseq}"></td>
+						<td th:text="${list.itemname}"></td>
+						<td th:text="(${list.price}*${list.quantity}+
+						${option.optionprice}*${list.quantity}-${list.discount}*${list.quantity}+2500+'원')"></td>
+						
 						<td>2018-03-04</td>
 						<td>
-							<p>
-								<a class="waves-effect waves-light btn modal-trigger"
-									href="#modal1">주문취소(개별통보필수)</a>
+						<input type="hidden" th:value="${list.orderseq}" class="orderseq">
+					
+							<p th:if="${list.condition}=='cancel'">
+								<a class="waves-effect waves-light btn modal-trigger cancelbtn"
+									href="#">주문취소(개별통보필수)</a>
 							</p>
-							<p>
-								<a class="waves-effect btn modal-trigger" href="#">배송완료</a>
+							<p th:if="${list.condition}=='cancel'">
+								취소된 상품
 							</p>
-						</td>
-					</tr>
-					<tr>
-						<td>5050-2211</td>
-						<td>감자탕</td>
-						<td>15000원</td>
-						<td>2018-03-04</td>
-						<td>
+							
 							<p>
-								<a class="waves-effect waves-light btn modal-trigger"
-									href="#modal1">주문취소(개별통보필수)</a>
-							</p>
-							<p>
-								<a class="waves-effect btn modal-trigger" href="#">배송완료</a>
+								<a class="waves-effect btn modal-trigger baesongbtn" href="#">배송완료</a>
 							</p>
 						</td>
+						</th:block>
 					</tr>
-					<tr>
-						<td>5050-2211</td>
-						<td>감자탕</td>
-						<td>15000원</td>
-						<td>2018-03-04</td>
-						<td>
-							<p>주문취소(2019-11-22)</p>
-						</td>
-					</tr>
-					<tr>
-						<td>5050-2211</td>
-						<td>감자탕</td>
-						<td>15000원</td>
-						<td>2018-03-04</td>
-						<td>
-							<p>배송 완료(2019-11-22)</p>
-						</td>
-					</tr>
-					<tr>
-						<td>5050-2211</td>
-						<td>감자탕</td>
-						<td>15000원</td>
-						<td>2018-03-04</td>
-						<td>
-							<p>
-								<a class="waves-effect waves-light btn modal-trigger"
-									href="#modal1">주문취소(개별통보필수)</a>
-							</p>
-							<p>
-								<a class="waves-effect btn modal-trigger" href="#">배송완료</a>
-							</p>
-						</td>
-					</tr>
+					
 				</table>
 			</div>
 		</div>
 		<!-- Modal Structure -->
-		<div id="modal1" class="modal">
-			<div class="modal-content">
-				<p>주문번호 :5050-2211</p>
-				<p id="remainsp"></p>
+<!-- 		<DIV ID="MODAL1" CLASS="MODAL"> -->
+<!-- 			<DIV CLASS="MODAL-CONTENT"> -->
+<!-- 				<P>주문번호 :5050-2211</P> -->
+<!-- 				<P ID="REMAINSP"></P> -->
 
-				주문을 취소하시겠습니까? (개별통보를 필수적으로 해야합니다.)
-			</div>
-			<div class="modal-footer">
-				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-			</div>
-		</div>
+<!-- 				주문을 취소하시겠습니까? (개별통보를 필수적으로 해야합니다.) -->
+<!-- 			</DIV> -->
+<!-- 			<DIV CLASS="MODAL-FOOTER"> -->
+<!-- 				<A HREF="#!" CLASS="MODAL-CLOSE WAVES-EFFECT WAVES-GREEN BTN-FLAT CANCELMO">AGREE</A> -->
+<!-- 			</DIV> -->
+<!-- 		</DIV> -->
 	</div>
 
 	<th:block th:include="footer.html"></th:block>
@@ -189,6 +152,30 @@ th {
 	<script>
 		$(document).ready(function() {
 			$('.modal').modal();
+			
+		
+			
+		});
+		
+		$(".cancelbtn").click(function(){
+			
+			var index=$(".cancelbtn").index(this);
+			var seq=$(".orderseq:eq("+index+")").val();
+			var choose=confirm("주문을 취소 하시겠습니까?");	
+			if(choose){
+	 			$.ajax({
+				async:true,
+				type:'POST',
+				data:JSON.stringify(seq),
+				url:"/buccondition",
+				dataType : 'json',
+				contentType: "application/json; charset=UTF-8",
+				success : function(data){
+					alert("성공");
+				}
+				
+			});
+			}
 
 		});
 	</script>

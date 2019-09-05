@@ -41,6 +41,14 @@ public class MyinfoServiceImpl implements MyinfoService{
 		
 		
 	}
+
+	@Override
+	public List<Bucket> jumoonmanager(Long num) {
+		List<Bucket> list = buc.findByStoreseq(num);
+		return list;
+	}
+	
+
 	
 	
 
