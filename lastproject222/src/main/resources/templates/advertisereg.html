@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -40,8 +40,9 @@ html, body {
 .maindetail { /* 빨간글씨 */
 	color: red;
 }
-.smallgl{
-font-size: 15px;
+
+.smallgl {
+	font-size: 15px;
 }
 
 .btn_style {
@@ -63,27 +64,29 @@ font-size: 15px;
 				<div class="row forminput">
 					<div class="input-field">
 						<h5>
-							1. 신청하실 광고의 종류를 선택해주세요<span class="maindetail">*</span><span class="smallgl">(복수선택가능)</span>
+							1. 신청하실 광고의 종류를 선택해주세요<span class="maindetail">*</span><span
+								class="smallgl">(복수선택가능)</span>
 						</h5>
-						
+
 						<div class="row">
 							<div class="col s6">
 								<p>
-									<label><input type="checkbox" value="대문광고" class="chek1" /> <span>대문광고</span></label>
+									<label><input type="checkbox" value="대문광고"
+										class="chek1" /> <span>대문광고</span></label>
 								</p>
 								<p>(상품과 상점이 홈페이지 대문에 크게 노출됩니다.)</p>
 								<input type="hidden" class="ad1" name="ad1">
 							</div>
-							
+
 							<div class="col s6">
-							<p>
-								<label><input type="checkbox" value="추천상품광고" class="chek2"/> <span>추천상품
-										광고</span></label>
-							</p>
-							<p>(판매상품이 메인화면의 상위 추천상품 리스트에 노출됩니다.)</p>
-							<input type="hidden" class="ad2" name="ad2">
-							</div >
-							
+								<p>
+									<label><input type="checkbox" value="추천상품광고"
+										class="chek2" /> <span>추천상품 광고</span></label>
+								</p>
+								<p>(판매상품이 메인화면의 상위 추천상품 리스트에 노출됩니다.)</p>
+								<input type="hidden" class="ad2" name="ad2">
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -99,34 +102,45 @@ font-size: 15px;
 				</div>
 				<div class="row forminput">
 					<h5>
-						3.대문광고에 쓸 영상을 업로드 하거나 유튜브 url주소를 입력해주세요<span class="maindetail">(대문광고에 한해 필수)</span>
+						3.대문광고에 쓸 영상을 업로드 하거나 유튜브 url주소를 입력해주세요<span class="maindetail">(대문광고에
+							한해 필수)</span>
 					</h5>
 					<div class="file-field input-field">
 						<div class="btn">
 							<span>File</span> <input type="file" id="fileaddbtn"
-								name="storefile" maxlength="1" accept="image/*|video/*" multiple>
+								name="vidfile" maxlength="1" accept="image/*|video/*" multiple>
 						</div>
 						<div class="file-path-wrapper">
 							<input type="text" class="file-path validate">
 						</div>
-						
+
 					</div>
-					<input type="text" class="validate" name="vidurl"
-							id="vidurl" placeholder="url은 이곳에 작성해주세요">
+					<input type="text" class="validate" name="vidurl" id="vidurl"
+						placeholder="url은 이곳에 작성해주세요">
 				</div>
 				<!-- 항목 4 -->
 				<div class="row forminput">
 					<h5>
-						4.광고에 사용될 제품을 선택해주세요(제품의 이미지는 현재 등록된 이미지가 사용됩니다.)<span class="maindetail">*</span>
+						4.광고에 사용될 제품을 선택해주세요(제품의 이미지는 현재 등록된 대표 이미지가 사용됩니다.)<span
+							class="maindetail">*</span>
 					</h5>
-					<div class="file-field input-field">
-						<div class="btn">
-							<span>File</span> <input type="file" id="fileaddbtn"
-								name="storefile" maxlength="1" accept="image/*|video/*" multiple>
+					<div class="input-field">
+						<a class='dropdown-trigger btn' href='#' data-target='dropdown1'>제품을
+							선택해주세요</a>
+
+						<ul id='dropdown1' class='dropdown-content prodd1'>
+							<th:block th:each="prod : ${prodlist}">
+								<li th:value="${prod.productseq}" class="prodchoice"><a  th:text="${prod.Name}"
+									 ></a></li>
+							</th:block>
+						</ul>
+
+						<div class="proddimg">
+							<div class="imgbaam">
+							
+							</div>
 						</div>
-						<div class="file-path-wrapper">
-							<input type="text" class="file-path validate">
-						</div>
+
 					</div>
 				</div>
 				<!-- 항목 5 -->
@@ -141,8 +155,8 @@ font-size: 15px;
 					</div>
 				</div>
 				<div class="row forminput btn_style">
-					<input type="button" class="btn" id="submit" value="제출하기"> <input
-						type="reset" class="btn" value="취소하기">
+					<input type="button" class="btn" id="submit" value="제출하기">
+					<input type="reset" class="btn" value="취소하기">
 				</div>
 			</form>
 		</div>
@@ -152,21 +166,45 @@ font-size: 15px;
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script>
-	$(document).ready(function(){
-		$('#submit').click(function(){
-			if($("input:checkbox[class='chek1']").is(":checked")){
-				$('.ad1').val(1);
-			}else{
-				$('.ad1').val(0);
-			}
+	
+		$(document).ready(function() {
 			
-			var a = $('.ad1').val();
-			alert(a);
+			$('.dropdown-trigger').dropdown();
+			$('#submit').click(function() {
+				if ($("input:checkbox[class='chek1']").is(":checked")) {
+					$('.ad1').val(true);
+				} else {
+					$('.ad1').val(false);
+				}
+				if ($("input:checkbox[class='chek2']").is(":checked")) {
+					$('.ad2').val(true);
+				} else {
+					$('.ad2').val(false);
+				}
+			});
+		});
+		
+		$('.prodchoice').click(function(){
+			$.ajax({
+            	async: true,
+            	type : 'POST',
+            	data : name,
+            	url : "/adimg",
+            	dataType : "json",
+            	contentType: "application/json; charset=UTF-8",
+            	success : function(data) {
+            		console.log(data.cnt);
+                	if (data.cnt > 0) {
+                   	 $(".namechecked").text("동일한 상점 이름이 있습니다.");
+                   	 $(".namechecked").css("color","red");
+                   	 namebool=false;
+                	}  
+            	}
+         
+        	});
 			
 		});
 		
-		
-	});
 	</script>
 </body>
 </html>

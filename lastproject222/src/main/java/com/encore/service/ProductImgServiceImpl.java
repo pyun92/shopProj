@@ -41,4 +41,10 @@ public class ProductImgServiceImpl implements ProductImgService {
 		System.out.println("이미지 "+list.get(0).getFileName());
 		return list;
 	}
+
+	@Override
+	public ProductImg getDetailNum(Long seq) {
+//		ProductImg img = re
+		return null;
+	}
 }

@@ -13,4 +13,6 @@ public interface ProductImgService {
 	List<ProductImg> getProdImgs(); //전체 이미지 
 	
 	List<ProductImg> getDetailNum(); //대표 이미지 
+	
+	ProductImg getDetailNum(Long seq);
 }

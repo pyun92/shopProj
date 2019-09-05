@@ -276,7 +276,6 @@
 
 				<th:block
 					th:if="${session['data']!=null && session['data'].manage_level==1}">
-					<li><a href="/advertisereg">광고신청하기</a></li>
 					<li><a th:href="@{/index(storeseq=${session['data'].userseq})}"> 개인
 							상점</a></li>
 				</th:block>

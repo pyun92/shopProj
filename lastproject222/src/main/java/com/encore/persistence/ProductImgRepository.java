@@ -16,6 +16,8 @@ public interface ProductImgRepository extends CrudRepository<ProductImg, Long> {
 	
 	List<ProductImg> findByImgnum(Long productNum);
 	
+	
+	
 //	@Query("SELECT b FROM ProductImg b WHERE b.imgnum=searchKeyword and detailnum=0")  //데표이미지 출력 쿼리
 //	List<ProductImg> titleimage(@Param("searchKeyword") String searchKeyword);
 }
