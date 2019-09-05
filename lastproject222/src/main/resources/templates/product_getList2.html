@@ -84,98 +84,46 @@ th{
 					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
 				</ul>
 		</div>
-	<div class="col s9" id="getList_sj">
-	
-	<table class="centered">
-		<tr>
-			<th>상품이미지</th>
-			<th>상품명</th>
-			<th>가격</th>
-			<th>재고수량</th><!--재고수량이 5개 이상일 경우 ->"재고수량이 5개이하입니다. 삭제하시겠습니까?" 추가 -->
-			<th>진행상황</th>
-			<th>관리</th>
-		</tr>
+	<div class="col s9" id="getList_sj"><!-- 상품보여주기 -->
+		<div class="row">		
+			<div class="col s12" style="padding-left:30px;" >
 		
-		<tr class="rows" th:each="proc:${proc}">
-				<th:block  th:each="procimg:${procimg}" th:if="${proc.productseq}==${procimg.imgnum}">
-				<td class="list_img">
-					<img th:src="@{/upload/}+${procimg.fileName}"> 
-				</td>
-				</th:block>
-			<td style="display:none;" th:text="${proc.productseq}"></td>
-			<td th:text="${proc.name}"></td>
-			<td th:text="${proc.price}"></td>
-			<td id="sp" th:text="${proc.jaego}">10</td>
-			<td th:text="${proc.jaego} < 1 ?'품절':'판매중'"></td>
-			<td>
-				<p><a class="btn" th:href="@{/product_update(productseq=${proc.productseq})}">수정하기</a></p>
-				<!-- <p><a class="btn modal-trigger" href="#modal1">삭제하기</a></p> -->
-				<p><a class="btn deletebtn">삭제하기</a></p>
-			</td>
-		</tr>
-	</table>
+		<section>
+			<h5 id="chart1">전체상품</h5>
+			<div class="row">
+					<!-- 상품한개 -->
+      		<div class="col s12 l4" th:each="prodall : ${proc}">
+    			<th:block th:each="procimgdetail:${procimg}" th:if="${prodall.productseq}==${procimgdetail.imgnum}"> 
+     	 	<a th:href="@{/product_getProduct2(productseq=${prodall.productseq})}">
+     	 	<div class="card">
+        		<div class="card-image" >
+          		<img th:src="@{../upload/}+${procimgdetail.fileName}" >
+          		<span class="card-title" style="color: black;"><th:block th:text="${procimgdetail.imgnum}" ></th:block> </span>
+        		</div>
+        		<div class="card-content">
+        		<p th:text=${prodall.name}></p>
+          		<p><th:block th:text="'판매금액 ' + ${prodall.price}"></th:block></p>
+       			</div>
+      		</div>
+       		</a>
+      		</th:block>
+   			</div>
+  			</div>
+  		</section>
+  			</div>
+  		</div>
 	</div>
 	</div>
-	<!-- Modal Structure -->
- <!--  <div id="modal1" class="modal">
-    <div class="modal-content">
-    	<p>상품명: 감자탕</p>
-    	<p id="remainsp">재고수량 : 10개</p>
-    	
-      	삭제하시겠습니까?
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div> -->
-	</div>
-
 <th:block th:include="footer.html"></th:block>
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
 <script>
 $(document).ready(function(){
-   // $('.modal').modal();
+    $('.modal').modal();
    
-   $('.rows').each(function(i){
-	  $('.deletebtn:eq('+i+')').on("click",function(){
-		  
-		  text="상품명: "+$('.rows:eq('+i+')').children().eq(2).html();
-		  text+="\n가격: "+$('.rows:eq('+i+')').children().eq(3).html();
-		  text+="\n재고수량: "+$('.rows:eq('+i+')').children().eq(4).html()+"개";
-		  text+="\n진행상황: "+$('.rows:eq('+i+')').children().eq(5).html()
-		  var result=confirm(text);
-		  if(result && $('.rows:eq('+i+')').children().eq(5).html()=='판매중'){
-			result=confirm("판매중인 상품입니다.\n정말 삭제하시겠습니까?");
-			if(result){//삭제하기
-				$.ajax({
-					type:'POST',
-					url:'/deleteProduct',
-					data:$('.rows:eq('+i+')').children().eq(0).html(),
-					contentType:"application/json; charset=UTF-8",
-					cache:false,
-					success:function(data){
-						if(data.ok==1){//삭제되었을때
-							history.go(0);
-						}
-					},
-					error:function(data){
-						console.log(data);
-					}
-				});
-			}else{
-				alert("상품삭제를 취소하셨습니다.");
-				return;
-			}
-		 }else{
-			  alert("상품삭제를 취소하셨습니다.");
-			  return;
-		}
-	  });
-   });
     
-});
+  });
 </script>
 </body>
 </html>

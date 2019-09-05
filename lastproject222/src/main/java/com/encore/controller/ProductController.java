@@ -133,11 +133,11 @@ public class ProductController {
 			}
 		}
 
-        return "welcome";
+        return "redirect:product_getList2"; //판매목록보기로 이동
     }
 
-	//개인 상점 등록 상품 보기
-	@RequestMapping("/product_getList_sj")
+	//개인 상점 등록 상품관리 & 개인상점 상품리스트
+	@RequestMapping(value= {"/product_getList_sj","/product_getList2"})
 	public void product_getList_sj(@ModelAttribute("data") Userdata user,Model model ,Product proc) {
 		List<Product> proclist= service.getProdList(user.getUserseq());
 		List<ProductImg> procimg =imgService.getDetailNum();
@@ -146,7 +146,6 @@ public class ProductController {
 		model.addAttribute("procimg",procimg);
 	}
 
-	
 	@GetMapping("/product_getProduct2")
 	public ModelAndView product_getProduct(ModelAndView mav,Product prod) {
 		System.out.println("번호 :"+prod.getProductseq());
@@ -156,6 +155,28 @@ public class ProductController {
 		mav.addObject("proOption",opService.selectOption(prod.getProductseq()));
 		mav.addObject("review",reviewService.findReview(prod));
 		return mav;
+	}
+	
+	//상품수정 
+	@RequestMapping("/product_update")
+	public ModelAndView product_update(ModelAndView model,Product p) {
+		System.out.println("상품번호"+p.getProductseq());
+		model.setViewName("product_update");
+		model.addObject("proc", service.getProd(p));//상품정보
+		model.addObject("proImg", imgService.getProdImg(p));//상품이미지
+		model.addObject("proOption", opService.selectOption(p.getProductseq()));//상품옵션
+		//System.out.println("넘어감?"+imgService.getProdImg(p).get(0).getFileName());
+		return model;
+	}
+	
+	//상품삭제
+	@RequestMapping("/deleteProduct")
+	@ResponseBody
+	public Map<Object,Object> delete_product(@RequestBody String seq) {
+		//System.out.println("넘어감?"+imgService.getProdImg(p).get(0).getFileName());
+		System.out.println("상품번호 : "+Long.parseLong(seq));
+		Long product_seq=Long.parseLong(seq);
+		return null;
 	}
 	
 	//장바구니 추가

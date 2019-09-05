@@ -320,13 +320,16 @@ $(function(){
 	});
 	
 	$('input:radio[name="option"]').on("click",function(){
+		//라디오버튼선택여부에 따라 옵션창 보이고,안보이고
 		var value=$('input:radio[name="option"]:checked').val();
-		if(value==='yes'){//유튜브
+		if(value==='yes'){
 			$('.yesoption').css("display","block");
 		}else{
 			$('.yesoption').css("display","none");
 		}
 	});
+	//-------------------------------------------
+	//사진추가
 	$("#file_img").on("change",function(){//대표이미지 썸넬-1개
 		if(this.files && this.files[0]){
 			img_Files[0]=this.files[0];
@@ -355,7 +358,7 @@ $(function(){
 			return;
 		}
 	});
-	
+	//-------------------------------------------
 	$('.modal').modal();
 	var small='';
 	var big='';
@@ -372,7 +375,7 @@ $(function(){
 		
 		var li_list=['식품','음료/주류','인테리어소품','의류','악세사리','기타'];
 		var small_list=new Array();
-		small_list[0]=new Array('전통발효식품','장','떡','김치','그외 먹거리');
+		small_list[0]=new Array('전통발효식품','장','떡','김치','전통과자','그외 먹거리');
 		small_list[1]=new Array('전통음료','전통주');
 		small_list[2]=new Array('공예제품','도자기','유기그릇','그외 소품');
 		small_list[3]=new Array('한복','전통신발','그 외 의류');

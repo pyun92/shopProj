@@ -71,14 +71,14 @@
 								<!-- <td><a  class="detail_btn modal-trigger">상세보기</a></td> -->
 								<td><a th:href="'#shopdetail'+${list.storeseq}" class="modal-trigger">상세보기</a></td>
 								<td th:text="${list.requestdate}"></td>
-								<td><label><input type="checkbox" name="approve"><span></span></label></td>
+								<td><label><input type="checkbox" name="approve"><span></span></label></td><!--입점승인  -->
 								<td class="seq" th:text="${list.storeseq}" style="display:none;"></td>
 								<td th:class="confirmdate" th:text="${list.confirmdate}"></td>
 								<!-- 모달 -->
 								<th:block>
 									<div class="modal modalsize" th:id="shopdetail+${list.storeseq}">
 										<div class="modal-content">
-										<div class="container">
+									
 										<h3>입점신청서</h3>
 										<div class="divider"></div>
 											<div class="row">
@@ -102,7 +102,7 @@
 											<h5>5.입점완료 메일을 받을 주소를 입력하세요</h5>
 											<p th:text="${list.storeemail}"></p>
 										</div>
-									</div>
+								
 									<div class="modal-footer">
 									 <button type="reset" class="btn modal-close">닫기</button>
 									</div>
@@ -161,7 +161,7 @@ $(document).ready(function(){
 	});
 	
 	//상점상세보기
-	$('.modal').modal({
+	$('.modal').modal({ 
 		onOpenStart:function(){
 		$("#storefiles").empty();
 		 var files=$("#shop").html().split(',');
@@ -193,7 +193,8 @@ $(document).ready(function(){
 					cache:false,
 					success:function(data){
 						if(data.email_ok==1&&data.store_update==1){
-							location.href = location.href;
+							/* location.href = location.href; */
+							history.go(0);
 						}
 					},
 					error:function(data){

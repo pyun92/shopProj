@@ -28,6 +28,5 @@ public class Product {
 	private int discount;
 	private String categorybig;
 	private String categorysmall;
-	
 	private Long storeseq;   
 }

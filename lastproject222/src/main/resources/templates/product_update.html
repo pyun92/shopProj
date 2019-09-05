@@ -1,6 +1,6 @@
 <th:block th:include="main.html"></th:block>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style type="text/css">
-/* html, body { height:100%; } */
+
 /* 썸네일 이미지 */
 html, body {
 	width: 100%;
@@ -35,7 +35,7 @@ html .pullheight {
 	margin-bottom: 11px;
 }
 
-img {
+.img {
 	height: 100%;
 	width: 100%;
 }
@@ -69,7 +69,7 @@ img {
   font-size: inherit;
   line-height: normal;
   vertical-align: middle;
-  background-color: pink;
+  background-color: #e0e0e0;
   cursor: pointer;
   border: 1px solid #ebebeb;
   border-bottom-color: #e2e2e2;
@@ -81,32 +81,32 @@ img {
 	overflow:hidden;
 	clip:rect(0,0,0,0);
 }
+
+.category{
+	background-color: #e0e0e0;
+}
+
 </style>
 </head>
 <body>
 	<div class="container">
-	<form>
-		<div class="row">
+	<div class="row">
 		<!-- 배너  -->
 		<div class="col s3 pullheight grey lighten-5">
 				<ul id="slide-out" class=" center-align">
 					<li><div class="user-view">
 							<a href="#name"><span class="black-text name">감자탕 만드는
-									남자</span></a><br> <br> <a href="#user"><img class="circle"
+									남자</span></a><br> <br> <a href="#user"><img class="img circle"
 								src="image/a.jpg"></a><br> <br> <br>
 							<div>
-								<span class="black-text ">안녕하세요 감만남  <th:block th:text="${session['data'].userid}"> 입니다.</span>
+								<span class="black-text">안녕하세요 <label id="editorname" th:text="${session['data'].userid}"></label>니다.</span>
 							</div>
 
 						</div></li>
-					<li class="border1"><a class="red-text bold" href="#!"><i
-							class="material-icons">favorite_border</i>내 단골 상점에 추가하기</a></li>
 					<li class="border1"><a class="black-text" href="#!">판매목록
 							보기</a></li>
 					<li class="border1"><a class="black-text" href="sjTimeLine.html">담벼락(공지사항)
-							보기</a></li>
-					<li class="border1"><a class="black-text" href="#!">후기남기기</a></li>
-					<li class="border1"><a class="black-text" href="#!">응원하기</a></li>
+							관리</a></li>
 					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
 					<li class="border1"><a class="black-text" href="product_insert.html">상품등록</a></li>
 					<li class="border1"><a class="black-text" href="product_getList_sj.html">상품관리</a></li>
@@ -115,24 +115,27 @@ img {
 					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
 				</ul>
 		</div>
+	<form method="post" enctype="multipart/form-data" id="insertForm">
 		<!-- 상품 이미지 버튼 -->
 		<div class="col s9">
 			<h3>상품수정</h3>
 			<div class="row">
 				<div class="col s6">
 					<div class="spimg">
-				<!-- 사진추가할때 가져오는거 생각하기<input type="file" value="사진을 선택해주세요"> -->
-					<img src="image/a.jpg"><!-- 대표이미지는 있는 공간에 사진 들어가기 -->
+					<th:block th:each="proimg,index:${proImg}" th:if="${index.index}==0">
+						<img class="img" th:src="@{/upload/}+${proimg.fileName}"><!-- 대표이미지는 있는 공간에 사진 들어가기 -->
+					</th:block>
 					</div>
 				</div>
-		<!-- 제품명,가격,판매수량,옵션 -->
+		<!-- 제품명,가격,판매수량 -->
 				<div class="col s6">
-					<span><label>제품명</label><input type="text" name="name"></span>
-					<span><label>제품가격</label><input type="text" name="price"></span>
-					<span><label>할인</label><input type="text" name="discount"></span>
-					<span><label>판매수량</label><input type="text" name="jaego"></span>
-					<label class="file_btn">대표이미지 업로드<input type="file" id="file_img"></label>
-					<label class="file_btn">제품이미지 추가<input type="file" id="file_add_img"></label>
+					<span><label>제품명</label><input type="text" name="name" th:value="${proc.Name}"></span>
+					<span><label>제품가격</label><input type="text" name="price" th:value="${proc.price}"></span>
+					<span><label>할인</label><input type="text" name="discount" th:value="${proc.discount}"></span>
+					<span><label>판매수량</label><input type="text" name="jaego" th:value="${proc.jaego}"></span>
+					<label class="file_btn">대표이미지 업로드<input type="file" id="file_img" accept="image/*"></label>
+					<label class="file_btn">제품이미지 추가<input type="file" id="file_add_img" accept="image/*" multiple></label>
+					
 				</div>	
 			</div>	
 			<div class="divider"></div>
@@ -140,68 +143,57 @@ img {
 		 	<!-- 이미지 추가시 div row 밑으로 들어감 -->
 				<p>제품이미지</p>
 				<div class="row" id="img_full">
-					<!-- 여기에 자바스크립트로 이름 들어감 -->
+					<!-- 여기서 이미지 for문 다시 돌리기 -->
+					<th:block th:each="proimg,index:${proImg}" th:if="${index.index}!=0">
+						<div th:class="${index.index}+'del col s4'" style='height:200px;'>
+							<a href="javascript:void(0);" th:onclick="'re('+${index.index}+')'">
+							<img th:src="@{/upload/}+${proimg.fileName}" width=100% height=100%>
+							</a>
+						</div>
+					</th:block>
 				</div>
 		
 			<div class="divider"></div>
 		
 		<!-- 옵션 선택  :클릭시 사용자가 옵션을 추가할수 있도록-->
-			<p><input type="button" value="옵션추가하기" class="btn modal-trigger" href="#modal1"></p>
-    		<table>
-    			<tr>
-    				<td>옵션명</td>
-    				<td>옵션내용</td>
-    			</tr>
-    			<tr>
-    				<td><!-- 여기에 모달에서 작성한 내용 보여짐 --></td>
-    				<td><!-- 여기에 모달에서 작성한 내용 보여짐 --></td>
-    			</tr>
-    		</table>
-    	<!-- 옵션 추가 모달창 -->
-    	 <div id="modal1" class="modal">
-    		<div class="modal-content">
-    			<div class="row">
-    				<div class="col s12">옵션은 최대 5개까지 추가 가능합니다.</div>
-    			</div>
-      			<div class="row">
-      				<div class="col s6">옵션명</div>
-      				<div class="col s6">옵션내용</div>
-      			</div>
-      			<div class="row">
-      				<div class="col s6"><input type="text"></div>
-      				<div class="col s6">
-      				<input type="text">
-      				<input type="text">
-      				<input type="text">
-      				<input type="text">
-      				<input type="text">
-      				</div>
-      			</div>
-    		</div>
-    		<div class="modal-footer">
-      			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    		</div>
-  		</div>
-    	
+			<p>옵션여부 :<label><input class="with-gap" name="option" value="yes" type="radio"/><span style="color:black;">선택</span></label>
+      				<label><input class="with-gap" name="option" value="no" type="radio"/><span style="color:black;">선택안함</span></label>
+      		</p>
+      		<div class="yesoption" style="display:none;">
+      			<label>옵션명은 ,로 분리해서 적어주세요</label>
+      			<a class="btn" id="option_add">옵션 추가하기</a>
+      			<table id="optiontable">
+      				<tr>
+      				<td>옵션설명</td><td>옵션명</td><td>추가금액</td><td>삭제</td>
+      				</tr>
+      				<tbody></tbody>
+      				<!-- 여기에 옵션 클릭할때마다 추가됨 -->
+      			</table>
+      		</div>		
+    	<div class="divider"></div>
     	<p>상품분류</p>
+    	<th:block th:sytle="display:none;">
+    		<p id="categorybig" th:text="${proc.categorybig}"></p>
+    		<p id="categorysmall" th:text="${proc.categorysmall}"></p>
+    	</th:block>
     	<table>
     		<tr>
-    			<th>대분류</th>
-    			<th>소분류</th>
+    			<th style="width:50%;">대분류</th>
+    			<th style="width:50%;">소분류</th>
     		</tr>
     		<tr>
-    		<td><!-- 대분류-->
-    		<ul>
-    			<li class="divi">식품</li>
-    			<li class="divi">음료/주류</li>
-    			<li class="divi">인테리어소품</li>
-    			<li class="divi">의류</li>
-    			<li class="divi">악세사리</li>
+    		<td style="width:50%;"><!-- 대분류-->
+    		
+    		<ul id="big">
+    			<li>식품</li>
+    			<li>음료/주류</li>
+    			<li>인테리어소품</li>
+    			<li>의류</li>
+    			<li>악세사리</li>
     		</ul>
     		</td>
-    		<td><!-- 소분류 -->
+    		<td style="width:50%;"><!-- 소분류 -->
 				<ul id="small">
-				
 				</ul>	
     		</td>
     		</tr>
@@ -209,63 +201,163 @@ img {
 		
 		<div class="divider"></div>
 		
-			<p>제품소개</p>
-			<textarea></textarea>
+			<p>상세설명</p>
+			<table border="0">
+				<tr>
+				<td>
+					<input type="button" class="file_btn" value="B" onclick="htmliframe.document.execCommand('bold')">
+					<input type="button" class="file_btn" value="I" onclick="htmliframe.document.execCommand('Italic')">
+					<input type="button" class="file_btn" value="underline" onclick="htmliframe.document.execCommand('Underline')">
+					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifyleft')"><i class="material-icons" >format_align_left</i></a></label>
+					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifycenter')"><i class="material-icons">format_align_center</i></a></label>
+					<label class="file_btn"><a class="file_btn" href="javascript:void(0)" onclick="htmliframe.document.execCommand('justifyright')"><i class="material-icons">format_align_right</i></a></label>
+					<label class="file_btn"><i class="material-icons">image</i><input type="file" id="editorImage" name="editorImage" accept="image/*"></label>
+				</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea id="product_detail" name="editor" style="display:none;">[[${proc.editor}]]</textarea>
+         				<iframe id="htmlframe" name="htmliframe" width="100%" height="400px"></iframe>
+					</td>
+				</tr>
+			</table>
+			
 			<div class="right-align">
-			<input type="submit" class="btn red lighten-1" name="product_submit" value="제출하기">
-			<input type="reset" class="btn red lighten-1" name="product_submit" value="취소하기">
+			<input type="button" class="waves-effect waves-light btn red lighten-1" value="제출하기" id="product_submit">
+			<input type="button" class="waves-effect waves-light btn red lighten-1" value="취소하기" name="product_reset">
 			</div>
+		</div>
 		</form>
 		</div>
-	</div>
-		<th:block th:include="footer.html"></th:block>
-	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
-<!--머티리얼 디자인 자바스크립트-->
+	</div>	
+		
+	<th:block th:include="footer.html"></th:block>
+		
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script> -->
 <script>
+var img_Files=[];//이미지 넣을 배열 --0:대표,
+var index=1;//이미지 추가시 인덱스 늘어남
 $(function(){
-	$("#file_img").on("change",function(){//대표이미지 썸넬 
+	//카테고리 선택
+	var small='';
+	var big='';
+	
+	//처음 카테고리 선택된 값 불러올때 
+	$('#big').find('li').each(function(i){
+		console.log($(this));
+		if($('#categorybig').html()==$(this).html()){
+			$(this).addClass('category');
+			big=$('#categorybig').html();
+		}
+		
+	});
+	
+	//li태그 선택시 
+	$('#big').find('li').on('click',function(){
+		$('#big').find('li').each(function(i){
+			$(this).removeClass('category');
+		})
+		
+		$('#small').empty();
+		//클릭한 li의 위치 얻어오기
+		big=$(this).html();
+		$(this).addClass('category');
+		
+		var li_list=['식품','음료/주류','인테리어소품','의류','악세사리','기타'];
+		var small_list=new Array();
+		small_list[0]=new Array('전통발효식품','장','떡','김치','전통과자','그외 먹거리');
+		small_list[1]=new Array('전통음료','전통주');
+		small_list[2]=new Array('공예제품','도자기','유기그릇','그외 소품');
+		small_list[3]=new Array('한복','전통신발','그 외 의류');
+		small_list[4]=new Array('반지','팔찌','헤어소품');
+		small_list[5]=new Array('기타상품');
+		
+		for(var i=0;i<li_list.length;i++){
+			if(big==li_list[i]){
+				for(var j=0;j<small_list[i].length;j++){
+					$('#small').append("<li>"+small_list[i][j]+"</li>");
+				}
+			}
+		}
+		
+		$('#small').find('li').on('click',function(i){
+			small=$(this).html();
+			$(this).addClass('category');
+			console.log(small+" "+big);
+		});
+	});
+	
+	//이미지---------------------------------------
+	//대표이미지 src에 넣어주기
+	if($(".spimg img").attr('src')!=''){
+		img_Files[0]=$(".spimg img").attr('src');
+		console.log(img_Files[0]);
+	}
+	//제품이미지 src값 배열에 넣어주기
+	$('#img_full div').find('img').each(function(i){
+		if($(this).attr('src')!=''){
+			img_Files.push($(this).attr('src'));
+			index++;
+		}
+	});
+	
+	//사진추가
+	$("#file_img").on("change",function(){//대표이미지 썸넬-1개
 		if(this.files && this.files[0]){
+			img_Files[0]=this.files[0];
 			var reader=new FileReader();
 			reader.onload=function(e){
+				console.log(img_Files);
 				$(".spimg img").attr('src',e.target.result);
 			}
 			reader.readAsDataURL(this.files[0]);
+			console.log(img_Files);
 		}	
 	});
 	
-	$("#file_add_img").on("change",function(){//이미지추가 썸넬 
-		if(this.files && this.files[0]){
-			var reader=new FileReader();
-			reader.onload=function(e){
-				//<div class="row">태그 밑에 <div class="col s4">태그 만들기
-				var div_img=document.createElement("img");
-				div_img.setAttribute('src',e.target.result);
-				div_img.setAttribute('width','100%');
-				div_img.setAttribute('height','100%');
-				/* div_img.attr('src',e.target.result); */
-				var div_col=document.createElement("div");
-				div_col.setAttribute("class","col s4");
-				var div_row=document.getElementById('img_full');
-				//<div>태그 안에 <img>태그 넣기
-				//col 태그 밑으로 넣기				
-				div_col.appendChild(div_img);
-				div_row.appendChild(div_col);
-			}
-			reader.readAsDataURL(this.files[0]);
-		}	
+	$("#file_add_img").on("change",function(event){//이미지추가 썸넬 
+		console.log("index "+index+"현재 file배열:"+img_Files);
+		var Files=event.target.files;
+		console.log(Files.length);
+		
+		if(Files.length==1){//선택된 파일의 갯수가 1개
+			fileReader(this.files[0]);
+		}else if(Files.length>1){//선택된 파일의 갯수가 2개
+			var filesArr=Array.prototype.slice.call(Files);
+			filesArr.forEach(function(f){
+				fileReader(f);
+			});
+			return;
+		}
 	});
-	
-	
-	$('.modal').modal();
+	//이미지끝----------------------------------------------
+	htmliframe.document.designMode='On';
+	var iframe=$("#htmlframe").contents();
+	var text=$("#product_detail").html();
+	text = text.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+	iframe.find('body').html(text);
 });
-
-/* $(document).ready(function(){
-    $('.modal').modal();
-  }); */
-
-
+//제품이미지파일리더
+function fileReader(file){
+	img_Files.push(file);
+	var reader=new FileReader();
+	reader.onload=function(e){
+		console.log("파일의 인덱스"+index);
+		$("#img_full").append("<div class='"+index+"del col s4' style='height:200px;'><a href=javascript:void(0) onclick=re("+index+")><img src='"+e.target.result+"' width=100% height=100%></a></div>");
+		index++
+	}
+	reader.readAsDataURL(file);
+}
+function re(e){//이미지클릭해서 삭제
+	if(confirm("사진을 삭제 하시겠습니까?")== true){
+		$('.'+e+'del').remove();//이미지 클래스 숫자+del
+		index--;
+		console.log("삭제한 인덱스:"+index);
+	}else{
+		return;
+	}
+};
 </script>
 </body>
 </html>

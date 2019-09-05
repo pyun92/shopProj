@@ -126,10 +126,6 @@ public class BoardController {
 	public void product_insert() {
 	
 	}
-	@GetMapping("/product_update")
-	public void product_update() {
-	
-	}
 
 	/*
 	 * @GetMapping("/jumoon") public void jumoon() {
