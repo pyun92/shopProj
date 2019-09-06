@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.encore.domain.Advertising;
 import com.encore.domain.Report;
 import com.encore.domain.Store;
 import com.encore.domain.Userdata;
 import com.encore.service.AdminService;
+import com.encore.service.AdvertisingService;
 import com.encore.service.EmailChkService;
 import com.encore.service.LoginDataService;
 import com.encore.service.ShopService;
@@ -32,6 +34,9 @@ public class AdminController {
 
 	@Autowired
 	private EmailChkService eService;
+	
+	@Autowired
+	private AdvertisingService adservice;
 	
 	@GetMapping("/admin_jang")
 	public String admin() {
@@ -78,6 +83,18 @@ public class AdminController {
 	@RequestMapping("/admin_user")
 	public ModelAndView admin_user(ModelAndView mav) {
 		mav.addObject("userlist",adminService.selectUser());
+		
+		return mav;
+	}
+	@RequestMapping("/admin_timetable")
+	public ModelAndView admin_timetable(ModelAndView mav) {
+		mav.addObject("userlist",adminService.selectUser());
+		
+		return mav;
+	}
+	@RequestMapping("/admin_advertising")
+	public ModelAndView admin_advertising(ModelAndView mav) {
+		mav.addObject("list", adservice.findAll());
 		
 		return mav;
 	}

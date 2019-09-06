@@ -41,6 +41,11 @@ html, body {
 	color: red;
 }
 
+.imga {
+	height: 300px;
+	width: 250px;
+}
+
 .smallgl {
 	font-size: 15px;
 }
@@ -60,7 +65,7 @@ html, body {
 			</p>
 			<span class="maindetail">*는 필수항목입니다.</span>
 			<div class="divider"></div>
-			<form id="registerForm" method="post" enctype="multipart/form-data">
+			<form id="registerForm" name="registerForm" action="/adregform" method="post" enctype="multipart/form-data">
 				<div class="row forminput">
 					<div class="input-field">
 						<h5>
@@ -111,7 +116,7 @@ html, body {
 								name="vidfile" maxlength="1" accept="image/*|video/*" multiple>
 						</div>
 						<div class="file-path-wrapper">
-							<input type="text" class="file-path validate">
+							<input type="text" class="file-path validate fileaddrchek">
 						</div>
 
 					</div>
@@ -124,23 +129,26 @@ html, body {
 						4.광고에 사용될 제품을 선택해주세요(제품의 이미지는 현재 등록된 대표 이미지가 사용됩니다.)<span
 							class="maindetail">*</span>
 					</h5>
-					<div class="input-field">
-						<a class='dropdown-trigger btn' href='#' data-target='dropdown1'>제품을
-							선택해주세요</a>
+					<div class="input-field ">
+						<div class="col s6">
+							<a class='dropdown-trigger btn' href='#' data-target='dropdown1'>제품을
+								선택해주세요</a>
 
-						<ul id='dropdown1' class='dropdown-content prodd1'>
-							<th:block th:each="prod : ${prodlist}">
-								<li th:value="${prod.productseq}" class="prodchoice"><a  th:text="${prod.Name}"
-									 ></a></li>
-							</th:block>
-						</ul>
-
-						<div class="proddimg">
-							<div class="imgbaam">
-							 <img class="imga" src=""/>
+							<ul id='dropdown1' class='dropdown-content prodd1'>
+								<th:block th:each="prod : ${prodlist}">
+									<li  th:value="${prod.productseq}" class="prodchoice"><a
+										th:text="${prod.Name}"></a></li>
+										<input type="hidden" th:value="${prod.productseq}" name="prodseq">
+								</th:block>
+							</ul>
+						</div>
+						<div class="col s6">
+							<div class="proddimg">
+								<div class="imgbaam">
+									<img class="imga" src="" alt="대표 이미지" />
+								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 				<!-- 항목 5 -->
@@ -155,7 +163,7 @@ html, body {
 					</div>
 				</div>
 				<div class="row forminput btn_style">
-					<input type="button" class="btn" id="submit" value="제출하기">
+					<input type="submit" class="btn" id="submit1" value="제출하기">
 					<input type="reset" class="btn" value="취소하기">
 				</div>
 			</form>
@@ -166,43 +174,64 @@ html, body {
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script>
-	
 		$(document).ready(function() {
-			
 			$('.dropdown-trigger').dropdown();
 			$('#submit').click(function() {
-				if ($("input:checkbox[class='chek1']").is(":checked")) {
-					$('.ad1').val(true);
-				} else {
-					$('.ad1').val(false);
-				}
-				if ($("input:checkbox[class='chek2']").is(":checked")) {
-					$('.ad2').val(true);
-				} else {
-					$('.ad2').val(false);
-				}
+				
 			});
-		});
 		
-		$('.prodchoice').click(function(){
+
+		$('.prodchoice').click(function() {
 			var val = $(this).val();
 			$.ajax({
-            	async: true,
-            	type : 'POST',
-            	data : JSON.stringify({"seq":val}),
-            	url : "/adimg",
-            	dataType : 'json',
-            	cache:false,
-            	contentType: "application/json; charset=UTF-8",
-            	success : function(data) {
-            		alert(data.imgj.fileName);
-            		var a = "../upload/";
-            		$('.imga').attr('src',a+data.imgj.fileName);
-            	}
-         
-        	});
+				async : true,
+				type : 'POST',
+				data : JSON.stringify({
+					"seq" : val
+				}),
+				url : "/adimg",
+				dataType : 'json',
+				cache : false,
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+					var a = "../upload/";
+					$('.imga').attr('src', a + data.imgj.fileName);
+				}
+
+			});
 		});
-		
+
+		$('#registerForm').submit(
+				
+				function() {
+					if ($("input:checkbox[class='chek1']").is(":checked")) {
+						$('.ad1').val(1);
+					} else {
+						$('.ad1').val(0);
+					}
+					if ($("input:checkbox[class='chek2']").is(":checked")) {
+						$('.ad2').val(1);
+					} else {
+						$('.ad2').val(0);
+					}
+					if (!$("input:checkbox[class='chek1']").is(":checked")
+							&& !$("input:checkbox[class='chek2']").is(
+									":checked")) {
+						alert("광고를 선택해주세요");
+						return false;
+					} else if ($('#storedetail').val() == "") {
+						alert("상점소개문구를 작성해주세요");
+						return false;
+					} else if ($('.fileaddrchek').val() == ""
+							&& $('#vidurl').val() == "") {
+						alert("동영상의 주소를 입력하거나 동영상을 업로드 해주세요");
+						return false;
+					}  else{
+						return;
+					}
+
+				});
+		});
 	</script>
 </body>
 </html>

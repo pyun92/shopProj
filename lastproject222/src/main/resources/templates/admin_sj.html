@@ -34,20 +34,7 @@
 </head>
 <body>
 	<!-- 메뉴바 -->
-	<header>
-		<nav>
-    	<div class="nav-wrapper white">
-      		<a href="#" class="brand-logo center black-text">admin</a>
-      		<a href="#" data-target="sidenav-left" class="sidnav-trigger"><i class="material-icons black-text">menu</i></a>
-      		<!-- 메뉴 클릭했을때 안열림 & main 다 가리는거 수정하기 -->
-    		<ul id="sidenav-left" class="sidenav sidenav-fixed">
-        		<li><a th:href="@{/admin_sj}">상점관리</a></li>
-        		<li><a th:href="@{/admin_user}">회원관리</a></li>
-        		<li><a th:href="@{/admin_report}">신고리스트</a></li>
-        		<li><a href="#">정지</a>
-      		</ul>
-    	</div>
-  		</nav>
+	<header th:replace="admin_main :: mainHead">
 	</header>
 	<section>
 	<div class="container">
