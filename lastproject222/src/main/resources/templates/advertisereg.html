@@ -137,7 +137,7 @@ html, body {
 
 						<div class="proddimg">
 							<div class="imgbaam">
-							
+							 <img class="imga" src=""/>
 							</div>
 						</div>
 
@@ -185,24 +185,22 @@ html, body {
 		});
 		
 		$('.prodchoice').click(function(){
+			var val = $(this).val();
 			$.ajax({
             	async: true,
             	type : 'POST',
-            	data : name,
+            	data : JSON.stringify({"seq":val}),
             	url : "/adimg",
-            	dataType : "json",
+            	dataType : 'json',
+            	cache:false,
             	contentType: "application/json; charset=UTF-8",
             	success : function(data) {
-            		console.log(data.cnt);
-                	if (data.cnt > 0) {
-                   	 $(".namechecked").text("동일한 상점 이름이 있습니다.");
-                   	 $(".namechecked").css("color","red");
-                   	 namebool=false;
-                	}  
+            		alert(data.imgj.fileName);
+            		var a = "../upload/"
+            		$('.imga').attr('src',a+data.imgj.fileName);
             	}
          
         	});
-			
 		});
 		
 	</script>

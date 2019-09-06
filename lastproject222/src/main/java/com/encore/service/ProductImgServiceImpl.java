@@ -44,7 +44,7 @@ public class ProductImgServiceImpl implements ProductImgService {
 
 	@Override
 	public ProductImg getDetailNum(Long seq) {
-//		ProductImg img = re
-		return null;
+		ProductImg img = rep.titleImage(seq);
+		return img;
 	}
 }
