@@ -79,10 +79,12 @@ height: 100%;
 			<th:block th:text="${proDe.jaego}+개"></th:block>
 			<p>
 			<select id="options">
-				<option value='1' >옵션을 선택해주세요</option>
+				<option  >옵션을 선택해주세요</option>
+				
 				<option th:each="option:${proOption}" th:value="${option.optionseq}" >
-				<th:block th:text="${option.optioncontent}+' '+${option.optionname}+' (추가금액 : '+${option.optionprice}+')'">
-				</th:block></option>
+				<th:block th:if="${option.optioncontent}!='no'" th:text="${option.optioncontent}+' '+${option.optionname}+' (추가금액 : '+${option.optionprice}+')'"></th:block>
+				<th:block th:unless="${option.optioncontent}!='no'">옵션없음</th:block>
+				</option>
 				
 			</select>
 			<input type="hidden" id="optionseq" name="optionseq"> 
@@ -217,7 +219,7 @@ $(document).ready(function(){
     $("#options").on('change' ,function(){
     	var index = $("#options option:selected").val();
     	$("#optionseq").val(index);
-    	alert($("#optionseq").val(index));
+    	
     	
     });
     

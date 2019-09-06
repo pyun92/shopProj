@@ -114,7 +114,10 @@ font-weight: bold;
 			<div class="col s9 m9 l9">
 				<div th:each="option:${options}" th:if="${option.optionseq}==${probucket.optionseq}">
 				<p th:text="${probucket.itemname}" class="bucketoption1"></p> 
-				<p class="bucketoption2" th:text="${option.optioncontent}  + ${option.optionname}+'(+'+${option.optionprice}+'원)'"></p>
+				<th:block th:if="${option.optioncontent}!='no'">
+					<p class="bucketoption2" th:text="${option.optioncontent}  + ${option.optionname}+'(+'+${option.optionprice}+'원)'"></p>
+				</th:block>
+				
 				</div>
 				
 				
@@ -136,7 +139,9 @@ font-weight: bold;
         <th:block th:each="option:${options}" th:if="${option.optionseq}==${probucket.optionseq}"> 
 		<td>
 			<p th:text="(${probucket.price}*${probucket.quantity}+원)"  class="total-price"></p>
+			<th:block th:if="${option.optioncontent}!='no'">
 			<p th:text="'옵션'+'('+${option.optionprice}+'원)'"> </p>
+			</th:block>
 		<input type="hidden" class="item-price" th:value="${probucket.price}">
 		<input type="hidden" class="option-price" th:value="${option.optionprice}">
 		<input type="hidden" class="discount" th:value="${probucket.discount}" >
@@ -173,7 +178,7 @@ font-weight: bold;
 			<input type="hidden" class="order-deliveryfee" name="deliveryfee">
 			</li>
 			
-			<li><strong>할이율</strong><p><em class="order-discount" ></em></p> </li>
+			<li><strong>할인액</strong><p><em class="order-discount" ></em></p> </li>
 			<input type="hidden" class="order-discount"  name="discount">
 			<li></li>
 		</ul> 
@@ -384,7 +389,39 @@ font-weight: bold;
 				});
 		  
 		  $(".all-check").on('click',function(){
-			  $( '.item-check' ).prop( 'checked', this.checked );
+				  var bucketseq =$(".bucketseq").length;
+				  if($('input:checkbox[class="all-check"]').is(":checked")){
+					  $( '.item-check' ).prop( 'checked', this.checked );
+					  for(var i=0;i<bucketseq;i++){
+					  var bucketseqss =$(".bucketseq:eq("+ i +")").val();
+							 $.ajax({
+							        async: true,
+							        type : 'POST',
+							        data : JSON.stringify({"bucketseq":bucketseqss,"checkd":1}),
+							        url : "/checked",
+							        dataType : "json",
+							        contentType: "application/json; charset=UTF-8",
+							        success : function(data) {
+							            }
+								});
+					  }
+				  }else {
+					  $( '.item-check' ).prop( 'checked', this.checked );
+					  for(var i=0;i<bucketseq;i++){
+					  var bucketseqss =$(".bucketseq:eq("+ i +")").val();
+							 $.ajax({
+							        async: true,
+							        type : 'POST',
+							        data : JSON.stringify({"bucketseq":bucketseqss,"checkd":0}),
+							        url : "/checked",
+							        dataType : "json",
+							        contentType: "application/json; charset=UTF-8",
+							        success : function(data) {
+							            }
+								});
+					  }
+				  }
+				 
 			  orderprice();
 		  });
 		  
@@ -401,7 +438,6 @@ font-weight: bold;
 						        dataType : "json",
 						        contentType: "application/json; charset=UTF-8",
 						        success : function(data) {
-									
 						            }
 							});
 				  }else if($('input:checkbox[name="item-check"]:eq('+index+')').is(":checked")==false){
@@ -414,7 +450,6 @@ font-weight: bold;
 					        dataType : "json",
 					        contentType: "application/json; charset=UTF-8",
 					        success : function(data) {
-									
 					            }
 						});
 				  }

@@ -71,7 +71,10 @@ public class KaKaoController {
 	        order.setOrdername(request.getParameter("received"));
 	      
 	        service.productorder(order);
-	        Long oseq=(order.getOrderseq()); service.afterpaymnet(oseq,user.getUserseq());
+	        
+	        Long oseq=(order.getOrderseq()); 
+	        System.out.println(oseq+" "+user.getUserseq());
+	        service.afterpaymnet(oseq,user.getUserseq());
 	        
 	        return "redirect:" + kakaopay.kakaoPayReady(order);
 	 
@@ -79,8 +82,14 @@ public class KaKaoController {
 	    
 	    @GetMapping("/kakaoPaySuccess")
 	    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
-	    	
-	    	
+	       
+			return "redirect:welcome";
+	        
+	        
+	    }
+	    
+	    @GetMapping("/kakaoPayCancle")
+	    public String kakaoPayCancle(@RequestParam("pg_token") String pg_token, Model model) {
 	       
 			return "redirect:welcome";
 	        

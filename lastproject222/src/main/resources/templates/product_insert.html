@@ -161,6 +161,15 @@ html .pullheight {
       				<tbody></tbody>
       				<!-- 여기에 옵션 클릭할때마다 추가됨 -->
       			</table>
+      			<table id="optiontable1" style="display: none;">
+      				<tr>
+      				<td>옵션설명</td><td>옵션명</td><td>추가금액</td><td>삭제</td>
+      				</tr>
+      				<tbody></tbody>
+      				<!-- 여기에 옵션 클릭할때마다 추가됨 -->
+      			</table>
+      			
+      			
       		</div>		
     	<div class="divider"></div>
     	<p>상품분류</p>
@@ -324,9 +333,20 @@ $(function(){
 		var value=$('input:radio[name="option"]:checked').val();
 		if(value==='yes'){
 			$('.yesoption').css("display","block");
-		}else{
+		}else if(value==='no'){
 			$('.yesoption').css("display","none");
+			var eleCount1 = $('.opcount1').length;
+			if (eleCount1 <1 ) {
+				var innerHtml1 = '<tr class="opcount1"><td><input type="text" name="optionContent" value="no"></td>'
+								+ '<td><input type="text" name="optionName" value="no"></td>'
+								+ '<td><input type="text" name="optionPrice" value="0"></td>'
+								+ '<td><input type="button" class="removeBtn btn" value="삭제"></td></tr>'
+				$('#optiontable1> tbody:last').append(
+								innerHtml1);
+			}
 		}
+		
+		
 	});
 	//-------------------------------------------
 	//사진추가

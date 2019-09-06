@@ -110,7 +110,9 @@ font-weight: bold;
 			<div class="col s9 m9 l9">
 				<div th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}">
 				<p th:text="${jude.itemname}" class="bucketoption1"></p> 
+				<th:block th:if="${option.optioncontent}!='no'">
 				<p class="bucketoption2" th:text="${option.optioncontent}  + ${option.optionname}+'(+'+${option.optionprice}+'원)'"></p>
+				
 				</div>		
 			</div>
 		</div>
@@ -126,13 +128,15 @@ font-weight: bold;
         </td>
         <td th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}">
 			<p th:text="(${jude.price}*${jude.quantity}+원)"  class="total-price"></p>
+			<th:block th:if="${option.optioncontent}!='no'">
 			<p th:text="'옵션'+'('+${option.optionprice}+'원)'"> </p>
+			</th:block>
+		
 		</td>
 		<td th:text="(${jude.discount}*${jude.quantity})+원" class="total-discount"> </td>
 		<td th:text="${jude.deliveryfee}" class="item-deliveryfee"></td>
 		<td th:text="${jude.sellername}"></td>
-		<td class="cal-price" th:text="(${jude.price}*${jude.quantity}-${jude.discount}+2500)+원" ></div>
-		</td>
+		<td class="cal-price1" th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}" th:text="(${jude.price}*${jude.quantity}-${jude.discount}*${jude.quantity}+2500+${option.optionprice}*${jude.quantity})+원"></td>
 		</tr>
 		
 		
@@ -150,8 +154,6 @@ font-weight: bold;
 
 
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	
-	
+
 </body>
 </html>
