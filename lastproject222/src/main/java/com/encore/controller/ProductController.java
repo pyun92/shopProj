@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,13 +57,6 @@ public class ProductController {
 	
 	@Autowired
 	private ShopService shopservice;
-	
-	
-	
-	@ModelAttribute("data")
-	public Userdata setMember() {
-		return new Userdata();
-	}
 	
 	//에디터 이미지 등록
 /*	@RequestMapping("/editorImage")
@@ -176,14 +170,44 @@ public class ProductController {
 		return model;
 	}
 	
+	//수정하기 처리
+	@RequestMapping("/updateProc")
+	public Map<Object,Object> updateProc(){
+		//수정된 값만 넘어가기
+		//
+		return null;
+	}
+	
 	//상품삭제
 	@RequestMapping("/deleteProduct")
 	@ResponseBody
-	public Map<Object,Object> delete_product(@RequestBody String seq) {
+	public Map<Object,Object> delete_product(@RequestBody Map<String,Object> obj) {
 		//System.out.println("넘어감?"+imgService.getProdImg(p).get(0).getFileName());
-		System.out.println("상품번호 : "+Long.parseLong(seq));
-		Long product_seq=Long.parseLong(seq);
-		return null;
+		System.out.println("상품번호 : "+obj.get("seq"));
+		Long seq=Long.valueOf((String)obj.get("seq"));
+		service.deleteProduct(seq);
+		//파일 삭제
+		List<ProductImg> img=imgService.getProdImg(seq);//이미지num으로 받아오기
+		File file;
+		for(ProductImg i:img) {
+			file=new File(i.getFileUrl()+i.getFileName());
+			if(file.exists()) {
+				if(file.delete()) {//파일삭제 성공
+					System.out.println("파일삭제 성공"+i.getFileName());
+				}else {
+					System.out.println("파일 삭제 실패");
+				}
+			}else {
+				System.out.println("파일이 존재하지 않습니다.");
+			}
+		}
+		
+		//데이터베이스 삭제
+		imgService.deleteProdImg(seq);
+		Map<Object,Object> m= new HashMap<Object, Object>();
+		System.out.println("상품삭제함 controller");
+		m.put("ok", 1);
+		return m;
 	}
 	
 	//장바구니 추가

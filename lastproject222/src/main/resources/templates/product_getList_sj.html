@@ -145,7 +145,7 @@ $(document).ready(function(){
 			  text+="\n가격: "+$('.rows:eq('+i+')').children().eq(3).html();
 			  text+="\n재고수량: "+$('.rows:eq('+i+')').children().eq(4).html()+"개";
 			  text+="\n진행상황: "+$('.rows:eq('+i+')').children().eq(5).html();
-			  var seq=$('.rows:eq('+i+')').children().eq(0).html();
+			  var seq=$('.rows:eq('+i+')').children().eq(1).html();
 			  var result=confirm(text);
 			  if(result && $('.rows:eq('+i+')').children().eq(5).html()=='판매중'){
 				result=confirm("판매중인 상품입니다.\n정말 삭제하시겠습니까?");
@@ -153,7 +153,8 @@ $(document).ready(function(){
 					$.ajax({
 						type:'POST',
 						url:'/deleteProduct',
-						data:seq,
+						data:JSON.stringify({"seq":seq}),
+						dataType:'json',
 						contentType:"application/json; charset=UTF-8",
 						cache:false,
 						success:function(data){

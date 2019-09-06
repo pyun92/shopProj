@@ -172,10 +172,10 @@ html .pullheight {
       		</div>		
     	<div class="divider"></div>
     	<p>상품분류</p>
-    	<th:block th:sytle="display:none;">
+    	<div style="display:none;">
     		<p id="categorybig" th:text="${proc.categorybig}"></p>
     		<p id="categorysmall" th:text="${proc.categorysmall}"></p>
-    	</th:block>
+    	</div>
     	<table>
     		<tr>
     			<th style="width:50%;">대분류</th>
@@ -190,6 +190,7 @@ html .pullheight {
     			<li>인테리어소품</li>
     			<li>의류</li>
     			<li>악세사리</li>
+    			<li>기타</li>
     		</ul>
     		</td>
     		<td style="width:50%;"><!-- 소분류 -->
@@ -238,21 +239,107 @@ html .pullheight {
 <script>
 var img_Files=[];//이미지 넣을 배열 --0:대표,
 var index=1;//이미지 추가시 인덱스 늘어남
+var li_list=['식품','음료/주류','인테리어소품','의류','악세사리','기타'];
+var small_list=new Array();
+small_list[0]=new Array('전통발효식품','장','떡','김치','전통과자','그외 먹거리');
+small_list[1]=new Array('전통음료','전통주');
+small_list[2]=new Array('공예제품','도자기','유기그릇','그외 소품');
+small_list[3]=new Array('한복','전통신발','그 외 의류');
+small_list[4]=new Array('반지','팔찌','헤어소품');
+small_list[5]=new Array('기타상품');
 $(function(){
 	//카테고리 선택
 	var small='';
 	var big='';
 	
+	//제출 
+	$('#product_submit').on("click",function(){
+		 event.preventDefault();
+		 //대표이미지 안들어왔을때 alert 으로 알려주기
+		 if(img_Files[0]==null){
+			 alert("대표 이미지는 반드시 등록해야 합니다.");
+			 return;
+		 }
+		$("#product_detail").html(iframe.find('body').html());
+		
+		var form=$('#insertForm')[0];
+		console.log(form.name);
+		var formData=new FormData(form);
+		
+		for(var i=0;i<img_Files.length;i++){
+			formData.append("files",img_Files[i],img_Files[i].name);
+		}
+		console.log("카테고리 1"+big+"카테고리2"+small);
+		//카테고리추가
+		formData.append("categorybig",big);
+		formData.append("categorysmall",small);
+		
+		 $.ajax({
+             url:'/updateProc',
+             processData: false,
+             contentType: false,
+             data: formData,
+             type: 'POST',
+             cache: false,
+             enctype: 'multipart/form-data',
+             success: function(result){
+            	 console.log(result);
+                 alert("업로드 성공!!");
+                 location.href = "welcome";
+              },
+              error:function(xhr){
+            	  console.log(xhr.responseText);
+              }
+         });
+	});
+	
+	//옵션
+	$('#option_add').on("click",function() {
+		var eleCount = $('.opcount').length;
+		if (eleCount >= 6) {
+			alert("옵션은 6개까지 추가 가능합니다.");
+		} else {
+			var innerHtml = '<tr class="opcount"><td><input type="text" name="optionContent"></td>'
+							+ '<td><input type="text" name="optionName"></td>'
+							+ '<td><input type="text" name="optionPrice"></td>'
+							+ '<td><input type="button" class="removeBtn btn" value="삭제"></td></tr>'
+			$('#optiontable> tbody:last').append(
+							innerHtml);
+		}//td만들어줌
+
+		$('.removeBtn').on("click", function() {
+			$(this).parent().parent().remove();//td
+		});
+	});
+	
+	$('input:radio[name="option"]').on("click",function(){
+		//라디오버튼선택여부에 따라 옵션창 보이고,안보이고
+		var value=$('input:radio[name="option"]:checked').val();
+		if(value==='yes'){
+			$('.yesoption').css("display","block");
+		}else{
+			$('.yesoption').css("display","none");
+		}
+	});
 	//처음 카테고리 선택된 값 불러올때 
 	$('#big').find('li').each(function(i){
 		console.log($(this));
 		if($('#categorybig').html()==$(this).html()){
 			$(this).addClass('category');
 			big=$('#categorybig').html();
+			
+			for(var j=0;j<small_list[i].length;j++){
+				$('#small').append("<li>"+small_list[i][j]+"</li>");
+			}
 		}
-		
 	});
 	
+	$('#small').find('li').each(function(i){
+		if($('#categorysmall').html()==$(this).html()){
+			$(this).addClass('category');
+			small=$('#categorysmall').html();
+		}
+	});
 	//li태그 선택시 
 	$('#big').find('li').on('click',function(){
 		$('#big').find('li').each(function(i){
@@ -264,14 +351,6 @@ $(function(){
 		big=$(this).html();
 		$(this).addClass('category');
 		
-		var li_list=['식품','음료/주류','인테리어소품','의류','악세사리','기타'];
-		var small_list=new Array();
-		small_list[0]=new Array('전통발효식품','장','떡','김치','전통과자','그외 먹거리');
-		small_list[1]=new Array('전통음료','전통주');
-		small_list[2]=new Array('공예제품','도자기','유기그릇','그외 소품');
-		small_list[3]=new Array('한복','전통신발','그 외 의류');
-		small_list[4]=new Array('반지','팔찌','헤어소품');
-		small_list[5]=new Array('기타상품');
 		
 		for(var i=0;i<li_list.length;i++){
 			if(big==li_list[i]){
@@ -289,23 +368,11 @@ $(function(){
 	});
 	
 	//이미지---------------------------------------
-	//대표이미지 src에 넣어주기
-	if($(".spimg img").attr('src')!=''){
-		img_Files[0]=$(".spimg img").attr('src');
-		console.log(img_Files[0]);
-	}
-	//제품이미지 src값 배열에 넣어주기
-	$('#img_full div').find('img').each(function(i){
-		if($(this).attr('src')!=''){
-			img_Files.push($(this).attr('src'));
-			index++;
-		}
-	});
 	
-	//사진추가
+	//대표사진추가
 	$("#file_img").on("change",function(){//대표이미지 썸넬-1개
 		if(this.files && this.files[0]){
-			img_Files[0]=this.files[0];
+		//	img_Files[0]=this.files[0];
 			var reader=new FileReader();
 			reader.onload=function(e){
 				console.log(img_Files);
@@ -316,6 +383,7 @@ $(function(){
 		}	
 	});
 	
+	//제품이미지 추가
 	$("#file_add_img").on("change",function(event){//이미지추가 썸넬 
 		console.log("index "+index+"현재 file배열:"+img_Files);
 		var Files=event.target.files;
@@ -331,7 +399,9 @@ $(function(){
 			return;
 		}
 	});
+
 	//이미지끝----------------------------------------------
+	
 	htmliframe.document.designMode='On';
 	var iframe=$("#htmlframe").contents();
 	var text=$("#product_detail").html();
@@ -340,24 +410,24 @@ $(function(){
 });
 //제품이미지파일리더
 function fileReader(file){
-	img_Files.push(file);
+	//img_Files.push(file);
 	var reader=new FileReader();
 	reader.onload=function(e){
 		console.log("파일의 인덱스"+index);
+		//index++
 		$("#img_full").append("<div class='"+index+"del col s4' style='height:200px;'><a href=javascript:void(0) onclick=re("+index+")><img src='"+e.target.result+"' width=100% height=100%></a></div>");
-		index++
 	}
 	reader.readAsDataURL(file);
 }
+
 function re(e){//이미지클릭해서 삭제
 	if(confirm("사진을 삭제 하시겠습니까?")== true){
 		$('.'+e+'del').remove();//이미지 클래스 숫자+del
 		index--;
-		console.log("삭제한 인덱스:"+index);
 	}else{
 		return;
 	}
-};
+}
 </script>
 </body>
 </html>

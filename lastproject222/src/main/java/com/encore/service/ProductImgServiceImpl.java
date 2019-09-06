@@ -47,4 +47,17 @@ public class ProductImgServiceImpl implements ProductImgService {
 		ProductImg img = rep.titleImage(seq);
 		return img;
 	}
+	
+	@Override
+	public void deleteProdImg(Long seq) {
+		rep.deleteByImgnum(seq);
+		System.out.println("삭제성공");
+	}
+
+	@Override
+	public List<ProductImg> getProdImg(Long seq) {
+		List<ProductImg> list=rep.findByImgnum(seq);
+		System.out.println("이미지 "+list.get(0).getFileName());
+		return list;
+	}
 }

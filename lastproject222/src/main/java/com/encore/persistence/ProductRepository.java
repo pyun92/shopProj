@@ -21,7 +21,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 	
 	Optional<Product> findByProductseq(Long productseq);//상품시퀀스로 하나씩받아오기
 	
-	
 	@Query(value ="select * from bucket where productseq=(select productseq from product where storeseq=1) ",nativeQuery = true)
 	void cancelbucket(Long num);
 	
