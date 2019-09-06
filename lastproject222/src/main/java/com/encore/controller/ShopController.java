@@ -41,10 +41,11 @@ public class ShopController {
 
 	}
 
-	@RequestMapping("/index")
+	@RequestMapping(value= {"/index","/"})
 	public ModelAndView index(ModelAndView mav, Store store) {
 		if(shopservice.findbyid(store.getStoreseq())==null) {
-			mav.setViewName("welcome");
+//			mav.setViewName("welcome");
+			mav.setViewName("redirect:welcome");
 		}else {
 			mav.setViewName("index");
 			mav.addObject("store", shopservice.findbyid(store.getStoreseq()));

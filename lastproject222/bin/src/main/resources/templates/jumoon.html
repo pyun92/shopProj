@@ -4,16 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <title>주문내역</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css"
-	media="screen,projection" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" type="text/css" th:href="@{/main.css}">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
 
 <style type="text/css">
 html {
@@ -54,38 +44,25 @@ html {
 				<div class="col s12 jhead">주문내역</div>
 
 				<ul class="collection">
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 3 <br> 33,000원
+					<li class="collection-item avatar" th:each="jumoon:${jumoonlist}" th:if="${jumoon.orderstate!='주문취소'}">
+					<a th:href="@{/jumoondetail(orderseq=${jumoon.orderseq})}">
+					상세보기
+					</a>
+						<p th:text="${jumoon.itemname}">
 						</p>
-						<p class="baesongchk">
-							배송대기<br>(도착예정일 : 2019.08.15)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 1 <br> 11,000원
+						<p th:text="${jumoon.calprice}+원">
 						</p>
-						<p class="baesongchk">
-							배송완료<br>(2019.08.01)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 4 <br> 44,000원
+						<div class="baesongchk">
+						<p  th:text="${jumoon.orderstate}">
 						</p>
-						<p class="baesongchk">
-							배송완료<br>(2019.07.17)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
-					<li class="collection-item avatar"><img src="image/a.jpg"
-						alt="" class="circle"> <span class="title">감만남</span>
-						<p>
-							감자탕 * 5 <br> 55,000원
-						</p>
-						<p class="baesongchk">
-							배송완료<br>(2019.07.11)
-						</p> <a href="#!" class="secondary-content">장바구니에 담기</a></li>
+						<p th:text="${jumoon.orderdate}"></p> 
+						</div>
+						<div  style="text-align: right;">
+						<a href="#!" class="secondary-content">장바구니에 담기</a>
+						<a th:href="@{/jumooncancel(orderseq=${jumoon.orderseq})}">주문 취소하기</a>
+						</div>
+					</li>
+					
 				</ul>
 			<div class="col s12 center-align">
 				<ul class="pagination">

@@ -8,16 +8,8 @@ html {
 	height: 100%;
 }
 
-.img1 {
-	height: 250px;
-}
-
 .card1 {
 	height: 360px;
-}
-
-.imgdiv {
-	height: 185px;
 }
 
 .fontsize20px {
@@ -25,68 +17,115 @@ html {
 	font-family: fantasy;
 }
 
-.circle {
+.imgdiv {
+	height: 185px;
+}
+
+.img1 {
 	height: 100%;
 	width: 100%;
 }
 
-.marginbb{
-margin-bottom: 5px;
+.img2 {
+	height: 225px;
 }
+
+.marginbb {
+	margin-bottom: 5px;
+}
+
+.storenames {
+	font-weight: bold;
+	font-size: 13px;
+	color: #424242;
+}
+
+.storedetails {
+	font-size: 17px;
+	height: 34px;
+	color: black;
+}
+
+.storecategories {
+	font-size: 11px;
+	color: #424242;
+}
+
+.card-content .align1 {
+	
+}
+
 /* 따라다니는 애 안보이게 맨 앞으로 둠 */
 /* #video_main{
-	z-index:1;
+	z-index:1; 
 } */
 </style>
 </head>
 <body>
-
+	<div></div>
 	<div class="container row grey lighten-3">
 		<div class="col s12">
 			<p class="fontsize20px">상점 리스트 (검색 상품을 판매하는 상점입니다)</p>
-			<div class="col s12">
+			<div class="col s12 row">
 				<th:block th:if="${storelist}!=null" th:each="store : ${storelist}">
-					<div class="col s12 l3">
+					<div class="col s12 l4 ">
 						<a th:href="@{/index(storeseq=${store.storeseq})}">
-							<div class="imgdiv">
-								<img th:src="@{../storefiles/}+${store.storefile}"
-									class="circle">
+							<div class="imgdiv ">
+								<img th:src="@{../storefiles/}+${store.storefile}" class="img1">
 							</div>
+							<div class="col s12 l12">
+								<div th:text="${store.storetype}" class="storecategories"></div>
+								<div th:text="${store.storename}" class="storenames marginbb"></div>
+								<div th:text="${store.storedetail}"
+									class=" marginbb storedetails"></div>
+							</div>
+						</a>
 					</div>
-					<div class="col s12 l3 ">
-						<div th:text="${store.storename}" class="center-align marginbb "></div>
-						<div th:text="${store.storedetail}" class="center-align marginbb "></div>
-						<div th:text="${store.storetype}" class="center-align"></div>
-					</div>
-					</a>
 				</th:block>
 				<p th:if="${storelist}==null">"검색한 단어와 관련된 상점이 없습니다."</p>
+				<div class="col s12 l12 center-align ">
+					<ul class="pagination">
+						<li class="disabled"><a href="#!"><i
+								class="material-icons">chevron_left</i></a></li>
+						<th:block th:if="${pagesu>0}"
+							th:each="num: ${#numbers.sequence(1,{pagesu})}">
+							<li class="active"><a href="#!" th:text="${num}"></a></li>
+						</th:block>
+						<li class="waves-effect"><a href="#!"><i
+								class="material-icons">chevron_right</i></a></li>
+
+					</ul>
+				</div>
+
 			</div>
 			<div class="col s12">
-				<p class="fontsize20px">상품 리스트 (검색한 상품에 대한 결과, 일단은 전체가져옴. 나중에
-					인기순이나 히트순 관련 카테고리로)</p>
-
-
-				<div class="col s12 l3" th:each="prodlist : ${prodlist}">
+				<p class="fontsize20px">상품 리스트</p>
+				<div class="col s12 l3" th:if="${prodlist}!=null" th:each="prod : ${prodlist}">
 					<th:block th:each="prodimg : ${prodimglist}"
-						th:if="${prodlist.productseq}==${prodimg.imgnum}">
+						th:if="${prod.productseq}==${prodimg.imgnum}">
 						<div class="card card1">
 							<a
-								th:href="@{/product_getProduct2(productseq=${prodlist.productseq})}">
+								th:href="@{/product_getProduct2(productseq=${prod.productseq})}">
 								<div class="card-image">
-									<img th:src="@{../upload/}+${prodimg.fileName}" class="img1">
+									<img th:src="@{../upload/}+${prodimg.fileName}" class="img2">
 								</div>
-								<div class="card-content center-align">
-									<p>
-										<th:block th:text="${prodlist.name}"></th:block>
-									</p>
+								<div class="card-content align1 center-align">
+									<div>
+										<th:block th:text="${prod.categorysmall}"
+											th:class="strcategorysmall"></th:block>
+									</div>
+									<div>
+										<th:block th:text="${prod.name}" th:class="stname"></th:block>
+									</div>
+									<div>
+										<th:block th:text="${prod.price} +원" th:class="stprice"></th:block>
+									</div>
 								</div>
 							</a>
 						</div>
 					</th:block>
-					<p th:if="${prodlist}==null">"검색한 단어와 관련된 상품이 없습니다."</p>
 				</div>
-
+				<p th:if="${prodlist}==null">"검색한 단어와 관련된 상품이 없습니다."</p>
 
 			</div>
 		</div>

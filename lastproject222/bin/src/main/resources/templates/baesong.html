@@ -91,6 +91,7 @@ table {
 		<div class="row center-align">이부분은 헤더를 띄우기 위해 만들었습니다.</div>
 		<div class="row">
 			<div class="col s10 offset-s1 left-align">
+			<form action="kakaoPay" method="post">
 				<div class="col s11">결제정보 입력</div>
 				<div class="col s6 ">
 					<div class="col s12 border2 margin">
@@ -98,16 +99,15 @@ table {
 					</div>
 					<div class="col s12 border2 margin">
 						<p class="p1">받는 사람</p>
-						<input type="text" />
+						<input type="text" name="received" />
 						<p class="p1">연락받을 번호</p>
-						<input type="text" />
+						<input type="text" name="phone"/>
 						<p class="p1">주소</p>
-						<input type="text" id="sample6_postcode" placeholder="우편번호">
-						<input type="button" onclick="sample6_execDaumPostcode()"
-							value="우편번호 찾기"><br> <input type="text"
-							id="sample6_address" placeholder="주소"><br> <input
-							type="text" id="sample6_detailAddress" placeholder="상세주소">
-						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+						<input type="text" id="sample6_postcode" placeholder="우편번호" name="addressnum">
+						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br> 
+							<input type="text" id="sample6_address" placeholder="주소" name="address1"><br> 
+							<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="address2">
+						    <input type="text" id="sample6_extraAddress" placeholder="참고항목" name ="detail"> 
 					</div>
 					<div class="col s12 ">
 						<p class="p1"></p>
@@ -118,8 +118,9 @@ table {
 								<div class="collapsible-header z-depth-0">
 									<i class="material-icons">filter_drama</i>구매목록 확인하기
 								</div>
-								<div class="collapsible-body ">
-									<span>ㅇㅇㅇㅇ</span>
+								<div class="collapsible-body " th:each="item:${bucketinfo}" th:if="${item.condition=='bucket' && item.checked==1}">
+									<span th:text="${item.itemname}"></span>
+									<input type="hidden" th:value="${item.itemname}" name="itemname">
 								</div>
 							</li>
 					</div>
@@ -133,7 +134,7 @@ table {
 						</ul>
 					</div>
 				</div>
-				<form action="kakaoPay" method="post">
+				
 				
 				<div class="col s5 border1">
 					<table>
@@ -143,19 +144,22 @@ table {
 
 							</tr>
 						</thead>
-
-						<tbody>
+			<th:block th:each="order:${order}">
+						<tbody >
 							<tr class="noborder">
 								<td>총 구매금액</td>
-								<td>30,000원</td>
+								<td th:text="${order.totalprice}" ></td>
+								<input type="hidden" th:value="${order.totalprice}" name="totalprice">
 							</tr>
 							<tr class="noborder">
 								<td>배송비</td>
-								<td>2,500원</td>
+								<td th:text="${order.delivery}"></td>
+								<input type="hidden" th:value="${order.delivery}" name="delivery">
 							</tr>
 							<tr class="noborder">
 								<td>총 할인금액</td>
-								<td>0언</td>
+								<td th:text="${order.totaldis}"></td>
+								<input type="hidden" th:value="${order.totaldis}" name="discount">
 							</tr>
 						</tbody>
 					</table>
@@ -164,12 +168,14 @@ table {
 							<span>총 결제 금액 </span>
 						</div>
 						<div class="col s6">
-							<span class="g1">32,500원</span>
+							<span class="g1" th:text="${order.calprice}"></span>
+							<input type="hidden" th:value="${order.calprice}" name="calprice">
 						</div>
 						<div class="col s12 center-align">
 							<button type="submit" id="btn_pay" class="waves-effect waves-light btn pink center-align  ">결제하기</button>
 						</div>
 					</div>
+					</th:block>
 				</div>
 				</form>
 			</div>

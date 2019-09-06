@@ -1,0 +1,157 @@
+<th:block th:include="main.html"> </th:block>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.bucket-talble{
+border-top: 4px solid black; 
+
+padding-top: 30px;
+}
+
+.item-img{
+width: 80px;
+height: 80px;
+}
+.bucket-item{
+margin: 0;
+}
+.inc ,.dec{
+background-color: white;
+border: 1px solid black;
+height: 22px;
+}
+
+input[type=text]:not(.browser-default){
+border:0;
+text-align:center;
+margin: 0;
+
+}
+.last-total-pay ul:not(.browser-default) li{
+margin: 10px 15px;
+display: list-item;
+overflow: hidden;
+line-height: 20px;
+}
+ul:not(.browser-default) strong{
+float: left;
+}
+
+ul:not(.browser-default) p{
+display: block;
+float: right;
+margin: 0;
+}
+.last-total-pay{
+background-color: #43ca26;
+}
+
+.last-total-pay2{
+background-color: #43ca26;
+padding: 10px;
+
+}
+
+.lastselect-btn{
+padding: 20px;
+margin: 10px;
+}
+
+/* 중복되는 css */
+.bucketoption1 ,.bucketoption2{ 
+text-align: center;
+font-size: 110%; 
+}
+.bucketoption1{
+font-weight: bold;
+}
+/* ----------------- */
+</style>
+</head>
+<body>
+<div class="container">
+	<h3> 주문 상세내역</h3>
+
+	
+	<table class="bucket-talble">
+		<tr class="totalColumn">
+		<th>
+			<label>
+				<input type="checkbox" class="all-check"/>
+				<span></span>
+			</label>
+   		</th>
+		<th style="width: 521px;">상품 정보 </th>
+		<th style="width: 100px;">수량</th>
+		<th>상품 금액</th>
+		<th>할인 금액</th>
+		<th>배송비</th>
+		<th>판매자 명</th>
+		<th>주문 금액</th>
+		</tr>
+		<!-- 상품 시작 -->
+
+		<tr th:each="jude:${jumoondetail}" >
+		
+		<td>
+			<label>
+			</label>
+   		</td>
+		<td>
+		<div class="row bucket-item">
+			<div class="col s3 m3 l3">
+				<a th:href="@{/product_getProduct2(productseq=${jude.productseq})}">
+					<img th:src="@{../upload/}+${jude.imgname}" class="item-img"> 
+				</a>
+			</div>
+			<div class="col s9 m9 l9">
+				<div th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}">
+				<p th:text="${jude.itemname}" class="bucketoption1"></p> 
+				<p class="bucketoption2" th:text="${option.optioncontent}  + ${option.optionname}+'(+'+${option.optionprice}+'원)'"></p>
+				</div>		
+			</div>
+		</div>
+		</td>
+		<td>        			
+			<div class="bucket-option" >
+        				<div class="row">
+        						<div class="bucket-precnt col s4 m4 l4" style="padding: 0px;">
+        							<input type="text" th:value="${jude.quantity}">
+        						</div>
+        				</div>
+        	</div>
+        </td>
+        <td th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}">
+			<p th:text="(${jude.price}*${jude.quantity}+원)"  class="total-price"></p>
+			<p th:text="'옵션'+'('+${option.optionprice}+'원)'"> </p>
+		</td>
+		<td th:text="(${jude.discount}*${jude.quantity})+원" class="total-discount"> </td>
+		<td th:text="${jude.deliveryfee}" class="item-deliveryfee"></td>
+		<td th:text="${jude.sellername}"></td>
+		<td class="cal-price" th:text="(${jude.price}*${jude.quantity}-${jude.discount}+2500)+원" ></div>
+		</td>
+		</tr>
+		
+		
+		<!--  마지막 줄 -->
+		
+	</table>
+
+	<div style="text-align: center;">
+		<a href="jumoon" class="btn lastselect-btn">주문 내역으로 돌아가기</a>
+</div>
+
+
+<th:block th:include="footer.html" ></th:block>
+
+
+
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+	
+</body>
+</html>

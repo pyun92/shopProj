@@ -32,7 +32,7 @@ public class minsung {
 	@Autowired
 	private ProductImgService imgService;
 
-	@RequestMapping(name = "/advertisereg")
+	@RequestMapping("/advertisereg")
 	public void advertisereg(@ModelAttribute("data") Userdata user, Model model) {
 
 		List<Product> prodlist = service.getProdList(user.getUserseq());
