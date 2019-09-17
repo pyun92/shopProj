@@ -129,11 +129,11 @@ html .pullheight {
 				</div>
 		<!-- 제품명,가격,판매수량 -->
 				<div class="col s6">
-					<span><label>제품명</label><input type="text" name="name"></span>
+					<span><label>제품명</label><input type="text" name="proname"></span>
 					<span><label>제품가격</label><input type="text" name="price"></span>
 					<span><label>할인</label><input type="text" name="discount"></span>
 					<span><label>판매수량</label><input type="text" name="jaego"></span>
-					<label class="file_btn">대표이미지 업로드<input type="file" id="file_img" accept="image/*"></label>
+					<label class="file_btn">대표이미지 업로드<input type="file" id="file_img" name="main_img" accept="image/*"></label>
 					<label class="file_btn">제품이미지 추가<input type="file" id="file_add_img" accept="image/*" multiple></label>
 				</div>	
 			</div>	
@@ -233,9 +233,8 @@ html .pullheight {
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
-var index=1;//이미지추가시 인덱스
+var index=0;//이미지추가시 인덱스
 var img_Files=[];
-//0번 고정, 나머지1부터
 
 $(function(){
 /* 	if("${session['data'].userid}"!= null){
@@ -272,16 +271,28 @@ $(function(){
 	//제출버튼 눌렀을때
 	$('#product_submit').on("click",function(){
 		 event.preventDefault();
-		 //대표이미지 안들어왔을때 alert 으로 알려주기
-		 if(img_Files[0]==null){
+
+		 //유효성 검사
+		 if($('input[name="main_img"]')==''){
 			 alert("대표 이미지는 반드시 등록해야 합니다.");
 			 return;
 		 }
+		 if($('input[name="proname"]')=='' && $('input[name="price"]')=='' 
+				 && $('input[name="discount"]')=='' && $('input[name="discount"]')==''
+				 && $('input[name="jaego"]')==''){
+			 alert("모든 입력란을 입력해주세요!");
+			 return;
+		 }
+		//190916--main_img 라는 값으로 넘기기
 		$("#product_detail").html(iframe.find('body').html());
 		
 		var form=$('#insertForm')[0];
 		console.log(form.name);
 		var formData=new FormData(form);
+		
+		/* img_array=img_array.concat(img_Files);
+		//190911수정
+		//-- 사용자가 제품이미지먼저 선택할 경우 0번 자리에 들어갈 수 있어서 바꿈 */
 		
 		for(var i=0;i<img_Files.length;i++){
 			formData.append("files",img_Files[i],img_Files[i].name);
@@ -351,11 +362,11 @@ $(function(){
 	//-------------------------------------------
 	//사진추가
 	$("#file_img").on("change",function(){//대표이미지 썸넬-1개
+		//기존에 이미지 파일 있으면 삭제하기
 		if(this.files && this.files[0]){
-			img_Files[0]=this.files[0];
+			/* img_array[0]=this.files[0];//190911수정 */
 			var reader=new FileReader();
 			reader.onload=function(e){
-				console.log(img_Files);
 				$(".spimg img").attr('src',e.target.result);
 			}
 			reader.readAsDataURL(this.files[0]);
@@ -363,7 +374,6 @@ $(function(){
 	});
 	
 	$("#file_add_img").on("change",function(event){//이미지추가 썸넬 
-		
 		console.log("index "+index+"현재 file배열:"+img_Files);
 		var Files=event.target.files;
 		console.log(Files.length);
@@ -433,7 +443,7 @@ function fileReader(file){
 function re(e){//이미지클릭해서 삭제
 	if(confirm("사진을 삭제 하시겠습니까?")== true){
 		$('.'+e+'del').remove();//이미지 클래스 숫자+del
-		index--;
+		/* img_Files.splice(e,1);//이미지 배열 삭제 */
 	}else{
 		return;
 	}

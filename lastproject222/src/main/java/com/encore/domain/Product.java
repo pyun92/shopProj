@@ -20,7 +20,7 @@ public class Product {
 	@SequenceGenerator(name = "PRODUCT", sequenceName = "PRODUCT_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "PRODUCT")
 	private Long productseq;//num->seq변경
-	private String Name;
+	private String proname;
 	private int price;
 	private int jaego;
 	private String editor;

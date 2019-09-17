@@ -122,21 +122,21 @@ html .pullheight {
 			<div class="row">
 				<div class="col s6">
 					<div class="spimg">
-					<th:block th:each="proimg,index:${proImg}" th:if="${index.index}==0">
+					<th:block th:each="proimg,index:${proImg}" th:if="${proimg.detailnum}==0">
 						<img class="img" th:src="@{/upload/}+${proimg.fileName}"><!-- 대표이미지는 있는 공간에 사진 들어가기 -->
 					</th:block>
 					</div>
 				</div>
 		<!-- 제품명,가격,판매수량 -->
 				<div class="col s6">
-					<span><label>제품명</label><input type="text" name="name" th:value="${proc.Name}"></span>
+					<input type="hidden" name="seq" th:value="${proc.productseq}">
+					<span><label>제품명</label><input type="text" name="name" th:value="${proc.proname}"></span>
 					<span><label>제품가격</label><input type="text" name="price" th:value="${proc.price}"></span>
 					<span><label>할인</label><input type="text" name="discount" th:value="${proc.discount}"></span>
 					<span><label>판매수량</label><input type="text" name="jaego" th:value="${proc.jaego}"></span>
-					<label class="file_btn">대표이미지 업로드<input type="file" id="file_img" accept="image/*"></label>
+					<label class="file_btn">대표이미지 업로드<input type="file" id="file_img" name="main_img" accept="image/*"></label>
 					<label class="file_btn">제품이미지 추가<input type="file" id="file_add_img" accept="image/*" multiple></label>
-					
-				</div>	
+				</div>		
 			</div>	
 			<div class="divider"></div>
 		 
@@ -144,15 +144,14 @@ html .pullheight {
 				<p>제품이미지</p>
 				<div class="row" id="img_full">
 					<!-- 여기서 이미지 for문 다시 돌리기 -->
-					<th:block th:each="proimg,index:${proImg}" th:if="${index.index}!=0">
-						<div th:class="${index.index}+'del col s4'" style='height:200px;'>
-							<a href="javascript:void(0);" th:onclick="'re('+${index.index}+')'">
+					<th:block th:each="proimg,index:${proImg}" th:if="${proimg.detailnum}!=0">
+						<div th:class="${proimg.detailnum}+'del col s4'" style='height:200px;'>
+							<a href="javascript:void(0);" th:onclick="'re('+${proimg.detailnum}+')'">
 							<img th:src="@{/upload/}+${proimg.fileName}" width=100% height=100%>
 							</a>
 						</div>
 					</th:block>
 				</div>
-		
 			<div class="divider"></div>
 		
 		<!-- 옵션 선택  :클릭시 사용자가 옵션을 추가할수 있도록-->
@@ -169,6 +168,7 @@ html .pullheight {
       				<tbody></tbody>
       				<!-- 여기에 옵션 클릭할때마다 추가됨 -->
       			</table>
+      			
       		</div>		
     	<div class="divider"></div>
     	<p>상품분류</p>
@@ -183,14 +183,12 @@ html .pullheight {
     		</tr>
     		<tr>
     		<td style="width:50%;"><!-- 대분류-->
-    		
     		<ul id="big">
     			<li>식품</li>
     			<li>음료/주류</li>
     			<li>인테리어소품</li>
     			<li>의류</li>
     			<li>악세사리</li>
-    			<li>기타</li>
     		</ul>
     		</td>
     		<td style="width:50%;"><!-- 소분류 -->
@@ -222,23 +220,25 @@ html .pullheight {
 					</td>
 				</tr>
 			</table>
-			
+			<!-- <textarea></textarea>  -->
+			<!-- 상점인덱스 -->
+			<!-- <input type="hidden" name="shopSeq" value="1"> -->
 			<div class="right-align">
 			<input type="button" class="waves-effect waves-light btn red lighten-1" value="제출하기" id="product_submit">
 			<input type="button" class="waves-effect waves-light btn red lighten-1" value="취소하기" name="product_reset">
 			</div>
-		</div>
 		</form>
 		</div>
 	</div>	
 		
-	<th:block th:include="footer.html"></th:block>
+		<th:block th:include="footer.html"></th:block>
 		
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
-var img_Files=[];//이미지 넣을 배열 --0:대표,
-var index=1;//이미지 추가시 인덱스 늘어남
+var index=0;//이미지추가시 인덱스
+var img_Files=[];
+
 var li_list=['식품','음료/주류','인테리어소품','의류','악세사리','기타'];
 var small_list=new Array();
 small_list[0]=new Array('전통발효식품','장','떡','김치','전통과자','그외 먹거리');
@@ -247,49 +247,66 @@ small_list[2]=new Array('공예제품','도자기','유기그릇','그외 소품
 small_list[3]=new Array('한복','전통신발','그 외 의류');
 small_list[4]=new Array('반지','팔찌','헤어소품');
 small_list[5]=new Array('기타상품');
+
 $(function(){
-	//카테고리 선택
+/* 	if("${session['data'].userid}"!= null){
+			$(".product_detail").html("${session['data'].userid}");
+	} */
 	var small='';
 	var big='';
+	htmliframe.document.designMode='On';
+	var iframe=$("#htmlframe").contents();
+	var text=$("#product_detail").html();
+	text = text.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+	iframe.find('body').html(text);
 	
-	//제출 
+	//제출버튼 눌렀을때
 	$('#product_submit').on("click",function(){
 		 event.preventDefault();
-		 //대표이미지 안들어왔을때 alert 으로 알려주기
-		 if(img_Files[0]==null){
+
+		 //유효성 검사
+		 if($('input[name="main_img"]').val()==null){
 			 alert("대표 이미지는 반드시 등록해야 합니다.");
 			 return;
 		 }
+		 if($('input[name="productname"]').val() =='' && $('input[name="price"]').val() =='' 
+				 && $('input[name="discount"]').val() =='' && $('input[name="discount"]').val() ==''
+				 && $('input[name="jaego"]').val() ==''){
+			 alert("모든 입력란을 입력해주세요!");
+			 return;
+		 }
+		//190916--main_img 라는 값으로 넘기기
 		$("#product_detail").html(iframe.find('body').html());
 		
 		var form=$('#insertForm')[0];
 		console.log(form.name);
 		var formData=new FormData(form);
-		
+
 		for(var i=0;i<img_Files.length;i++){
 			formData.append("files",img_Files[i],img_Files[i].name);
 		}
+		
 		console.log("카테고리 1"+big+"카테고리2"+small);
 		//카테고리추가
 		formData.append("categorybig",big);
 		formData.append("categorysmall",small);
 		
-		 $.ajax({
-             url:'/updateProc',
-             processData: false,
-             contentType: false,
-             data: formData,
-             type: 'POST',
-             cache: false,
-             enctype: 'multipart/form-data',
-             success: function(result){
-            	 console.log(result);
-                 alert("업로드 성공!!");
-                 location.href = "welcome";
-              },
-              error:function(xhr){
-            	  console.log(xhr.responseText);
-              }
+		  $.ajax({
+			  url:'/updateProc',
+	          processData: false,
+	          contentType: false,
+	          data: formData,
+	          type: 'POST',
+	         cache: false,
+	          enctype: 'multipart/form-data',
+	          success: function(result){
+	            console.log(result);
+	            alert("업로드 성공!!");
+	             location.href = "product_getList2&seq="+result.seq;
+	          },
+	           error:function(xhr){
+	           	console.log(xhr.responseText);
+	         }
          });
 	});
 	
@@ -321,6 +338,7 @@ $(function(){
 			$('.yesoption').css("display","none");
 		}
 	});
+	
 	//처음 카테고리 선택된 값 불러올때 
 	$('#big').find('li').each(function(i){
 		console.log($(this));
@@ -340,6 +358,7 @@ $(function(){
 			small=$('#categorysmall').html();
 		}
 	});
+	
 	//li태그 선택시 
 	$('#big').find('li').on('click',function(){
 		$('#big').find('li').each(function(i){
@@ -366,20 +385,12 @@ $(function(){
 			console.log(small+" "+big);
 		});
 	});
-	
-	//이미지---------------------------------------
-	
+	//-------------------------------------------
 	//대표사진추가
 	$("#file_img").on("change",function(){//대표이미지 썸넬-1개
 		if(this.files && this.files[0]){
 		//	img_Files[0]=this.files[0];
-			var reader=new FileReader();
-			reader.onload=function(e){
-				console.log(img_Files);
-				$(".spimg img").attr('src',e.target.result);
-			}
-			reader.readAsDataURL(this.files[0]);
-			console.log(img_Files);
+			fileReader(this.files[0],".spimg img");
 		}	
 	});
 	
@@ -390,44 +401,48 @@ $(function(){
 		console.log(Files.length);
 		
 		if(Files.length==1){//선택된 파일의 갯수가 1개
-			fileReader(this.files[0]);
+			fileReader(this.files[0],"#img_full");
 		}else if(Files.length>1){//선택된 파일의 갯수가 2개
 			var filesArr=Array.prototype.slice.call(Files);
 			filesArr.forEach(function(f){
-				fileReader(f);
+				fileReader(f,"#img_full");
 			});
 			return;
 		}
 	});
+	//-------------------------------------------
+	$('.modal').modal();
 
-	//이미지끝----------------------------------------------
-	
-	htmliframe.document.designMode='On';
-	var iframe=$("#htmlframe").contents();
-	var text=$("#product_detail").html();
-	text = text.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
-	iframe.find('body').html(text);
 });
 //제품이미지파일리더
 function fileReader(file){
-	//img_Files.push(file);
+	img_Files.push(file);
 	var reader=new FileReader();
 	reader.onload=function(e){
 		console.log("파일의 인덱스"+index);
-		//index++
+		index++
 		$("#img_full").append("<div class='"+index+"del col s4' style='height:200px;'><a href=javascript:void(0) onclick=re("+index+")><img src='"+e.target.result+"' width=100% height=100%></a></div>");
 	}
 	reader.readAsDataURL(file);
 }
 
 function re(e){//이미지클릭해서 삭제
+	var img=$(this).children("img").attr('src');
+	alert(img);
 	if(confirm("사진을 삭제 하시겠습니까?")== true){
+		//이미지를 upload 했으면 서버로 가서 사진삭제
+		
+		if(img.indexOf('upload')!=-1){
+			alert($("this > img").attr('src'));
+			return;
+		}
 		$('.'+e+'del').remove();//이미지 클래스 숫자+del
-		index--;
+		/* img_Files.splice(e,1);//이미지 배열 삭제 */
+		
 	}else{
 		return;
 	}
-}
+};
 </script>
 </body>
 </html>

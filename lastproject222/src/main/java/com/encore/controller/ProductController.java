@@ -73,69 +73,48 @@ public class ProductController {
 	//상품 등록
 	@RequestMapping("/insertProc" )
     public String requestupload2(MultipartHttpServletRequest mtfRequest,@ModelAttribute("data") Userdata userdata ) {
-        List<MultipartFile> fileList = mtfRequest.getFiles("files");
-       
-        Product prod = new Product();
-        
-        prod.setName(mtfRequest.getParameter("name"));
-        prod.setJaego(Integer.parseInt(mtfRequest.getParameter("jaego")));
-        prod.setPrice(Integer.parseInt(mtfRequest.getParameter("price")));
-        prod.setDiscount(Integer.parseInt(mtfRequest.getParameter("discount")));
-      //  prod.setEditor("ddd");  //나중에 변경
-        prod.setEditor(mtfRequest.getParameter("editor"));
-        prod.setCategorybig(mtfRequest.getParameter("categorybig"));
-        prod.setCategorysmall(mtfRequest.getParameter("categorysmall"));
-        prod.setStoreseq(userdata.getUserseq());
-        service.insertProd(prod); //게시글 insert
-        Long detailNum= (long) 0.0;
-        for (MultipartFile mf : fileList) {
-        		
-        		ProductImg prodImg = new ProductImg();
-                String fileName = mf.getOriginalFilename(); 
-                String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase(); 
-                File destinationFile; 
-                String destinationFileName; 
-                //String uploadPath = request.getServletContext().getRealPath("Productimg");
-                    destinationFileName = RandomStringUtils.randomAlphanumeric(10) + "." + fileNameExtension; 
-                    destinationFile = new File (uploadFileDir+ destinationFileName); 
-                System.out.println(("실제 파일 업로드 경로 : "+uploadFileDir));
-                System.out.println(mtfRequest.getServletContext().getContextPath());
-                destinationFile.getParentFile().mkdirs(); 
-                
-            	prodImg.setImgnum(prod.getProductseq());
-            	prodImg.setFileName(destinationFileName);
-            	prodImg.setFileUrl(uploadFileDir);
-                prodImg.setDetailnum(detailNum);
-                imgService.insertProdImg(prodImg); //file insert
-                try {
-					mf.transferTo(destinationFile);
-					detailNum++;
-					System.out.println(detailNum);
-				} catch (IllegalStateException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		  List<MultipartFile> fileList = mtfRequest.getFiles("files");
+	       
+	      Product prod = new Product();
+	        
+	      prod.setProname(mtfRequest.getParameter("proname"));
+	      prod.setJaego(Integer.parseInt(mtfRequest.getParameter("jaego")));
+	      prod.setPrice(Integer.parseInt(mtfRequest.getParameter("price")));
+	      prod.setDiscount(Integer.parseInt(mtfRequest.getParameter("discount")));
+	      //  prod.setEditor("ddd");  //나중에 변경
+	      prod.setEditor(mtfRequest.getParameter("editor"));
+	      prod.setCategorybig(mtfRequest.getParameter("categorybig"));
+	      prod.setCategorysmall(mtfRequest.getParameter("categorysmall"));
+	      prod.setStoreseq(userdata.getUserseq());
+	      service.insertProd(prod); //게시글 insert
+	      
+	      MultipartFile main_img=mtfRequest.getFile("main_img");
+	      imgSave(main_img,prod.getProductseq(),0L);
+	      
+	      Long detailNum= (long) 1.0;
+	      for (MultipartFile mf : fileList) {
+	    	  imgSave(mf,prod.getProductseq(),detailNum);
+	    	  detailNum++;
+	      }
+	      
+	        String[] optionContent = mtfRequest.getParameterValues("optionContent");
+			String[] optionName = mtfRequest.getParameterValues("optionName");
+			String[] optionPrice = mtfRequest.getParameterValues("optionPrice");
+			if (optionContent != null) {
+				for (int i = 0; i < optionContent.length; i++) {
+					Option op = new Option();
+					op.setOptioncontent(optionContent[i]);
+					op.setOptionname(optionName[i]);
+					op.setOptionprice(optionPrice[i]);
+					op.setProductseq(prod.getProductseq());
+					opService.insertOption(op);
 				}
-
-        }
-        String[] optionContent = mtfRequest.getParameterValues("optionContent");
-		String[] optionName = mtfRequest.getParameterValues("optionName");
-		String[] optionPrice = mtfRequest.getParameterValues("optionPrice");
-		if (optionContent != null) {
-			for (int i = 0; i < optionContent.length; i++) {
-				Option op = new Option();
-				op.setOptioncontent(optionContent[i]);
-				op.setOptionname(optionName[i]);
-				op.setOptionprice(optionPrice[i]);
-				op.setProductseq(prod.getProductseq());
-				opService.insertOption(op);
 			}
-		}
 
-        return "redirect:product_getList2"; //판매목록보기로 이동
+	        return "redirect:product_getList2"; //판매목록보기로 이동
     }
+	
+	
 
 	//개인 상점 등록 상품관리 & 개인상점 상품리스트
 	@RequestMapping(value= {"/product_getList_sj","/product_getList2"})
@@ -172,10 +151,51 @@ public class ProductController {
 	
 	//수정하기 처리
 	@RequestMapping("/updateProc")
-	public Map<Object,Object> updateProc(){
+	@ResponseBody
+	public Map<Object,Object> updateProc(MultipartHttpServletRequest mtfReqeust,@ModelAttribute("data") Userdata data){
 		//수정된 값만 넘어가기
-		//
-		return null;
+		//게시글 insert
+		Long seq=Long.parseLong(mtfReqeust.getParameter("seq"));
+		Product pr=service.getProd(seq);
+		pr.setProname(mtfReqeust.getParameter("proname"));
+        pr.setJaego(Integer.parseInt(mtfReqeust.getParameter("jaego")));
+        pr.setPrice(Integer.parseInt(mtfReqeust.getParameter("price")));
+        pr.setDiscount(Integer.parseInt(mtfReqeust.getParameter("discount")));
+        pr.setEditor(mtfReqeust.getParameter("editor"));
+        pr.setCategorybig(mtfReqeust.getParameter("categorybig"));
+        pr.setCategorysmall(mtfReqeust.getParameter("categorysmall"));
+        pr.setStoreseq(data.getUserseq());
+        service.insertProd(pr);
+        
+        //이미지 
+        //재정렬
+        List<ProductImg> img=imgService.getProdImg(seq);
+        for(int i=0;i<img.size();i++) {
+        	img.get(i).setDetailnum((long)i);
+        	System.out.println("파일이름 "+img.get(i).getFileName()+"상세번호" +img.get(i).getDetailnum());
+        	imgService.insertProdImg(img.get(i));
+        }
+        
+        //대표이미지 수정됬으면 넘기기
+        MultipartFile main_img=mtfReqeust.getFile("main_img");
+        List<MultipartFile> img_array=mtfReqeust.getFiles("files");//제품이미지
+        
+        if(!img.get(0).getFileOriginalName().equals(main_img.getOriginalFilename())) {
+        	imgSave(main_img,pr.getProductseq(),0L);
+        }
+        System.out.println("이미지 사이즈 :"+img.size());
+        
+        Long jseq=(long)img.size();
+        for(int i=0;i<img_array.size();i++) {
+        	imgSave(img_array.get(i), pr.getProductseq(), jseq);
+        	jseq++;
+        }
+      
+    	Map<Object,Object> m= new HashMap<Object, Object>();
+		System.out.println("상품수정함");
+		m.put("ok", 1);
+		m.put("seq", pr.getProductseq());
+		return m;
 	}
 	
 	//상품삭제
@@ -279,6 +299,36 @@ public class ProductController {
         return map;
 	}
 	
+	public void imgSave(MultipartFile mf,Long prod_seq,Long detailNum) {
+
+        String fileName = mf.getOriginalFilename(); 
+        String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase(); 
+        String destinationFileName = RandomStringUtils.randomAlphanumeric(10) + "." + fileNameExtension; 
+        File destinationFile = new File (uploadFileDir+ destinationFileName); 
+        //String uploadPath = request.getServletContext().getRealPath("Productimg");
+        System.out.println(("실제 파일 업로드 경로 : "+uploadFileDir));
+//      System.out.println(mtfRequest.getServletContext().getContextPath());
+        destinationFile.getParentFile().mkdirs(); 
+                
+        ProductImg prodImg = new ProductImg();
+        prodImg.setImgnum(prod_seq);
+        prodImg.setFileOriginalName(fileName);
+        prodImg.setFileName(destinationFileName);
+        prodImg.setFileUrl(uploadFileDir);
+        prodImg.setDetailnum(detailNum);
+        imgService.insertProdImg(prodImg); //file insert
+        try {
+			mf.transferTo(destinationFile);
+			
+        } catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+        }
+	}
+	
 //	//결제창 
 //	@RequestMapping("/paymentwindow")
 //	public String paymentwindow(HttpServletRequest request,Model model) {
@@ -288,7 +338,7 @@ public class ProductController {
 //		return "baesong";
 //		
 //	}
-	
+
 	
 	
 }

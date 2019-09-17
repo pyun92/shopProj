@@ -97,6 +97,11 @@ public class ProductServiceImpl implements ProductService {
 		rep.deleteById(seq);
 	}
 
+	@Override
+	public Product getProd(Long seq) {
+		return rep.findById(seq).get();
+	}
+
 
 
 }
