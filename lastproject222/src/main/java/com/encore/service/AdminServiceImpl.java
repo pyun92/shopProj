@@ -42,16 +42,17 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void updateRegister(Long seq) {
 		Store oregisto=shopRepository.findByStoreseq(seq);
-		Store nregisto=new Store();
-		nregisto.setStoreseq(oregisto.getStoreseq());//시퀀스
-		nregisto.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));//오늘날짜
-		nregisto.setRequestdate(oregisto.getRequestdate());//신청날짜
-		nregisto.setStoredetail(oregisto.getStoredetail());//상세설명
-		nregisto.setStoreemail(oregisto.getStoreemail());//이메일주소
-		nregisto.setStorefile(oregisto.getStorefile());//file이름
-		nregisto.setStorename(oregisto.getStorename());//상점이름
-		nregisto.setStoretype(oregisto.getStoretype());//타입
-		shopRepository.save(nregisto);
+		//Store nregisto=new Store();
+		oregisto.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));//오늘날짜
+//		nregisto.setStoreseq(oregisto.getStoreseq());//시퀀스
+//		nregisto.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));//오늘날짜
+//		nregisto.setRequestdate(oregisto.getRequestdate());//신청날짜
+//		nregisto.setStoredetail(oregisto.getStoredetail());//상세설명
+//		nregisto.setStoreemail(oregisto.getStoreemail());//이메일주소
+//		nregisto.setStorefile(oregisto.getStorefile());//file이름
+//		nregisto.setStorename(oregisto.getStorename());//상점이름
+//		nregisto.setStoretype(oregisto.getStoretype());//타입
+		shopRepository.save(oregisto);
 	}
 
 	@Override
@@ -80,24 +81,24 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int updateConfirm(Long seq, int day) {
 		Report re=reportRepository.findById(seq).get();
-		Report newre=new Report();
-		newre.setReportseq(re.getReportseq());//시퀀스
-		newre.setReportdate(re.getReportdate());//접수날짜
-		newre.setReportdetail(re.getReportdetail());//상세내용
-		newre.setReportname(re.getReportname());//상점인지사람인지
-		newre.setReportsubject(re.getReportsubject());//주제
-		newre.setProductseq(re.getProductseq());//상품시퀀스
-		//날짜계산
+		/*
+		 * Report newre=new Report(); newre.setReportseq(re.getReportseq());//시퀀스
+		 * newre.setReportdate(re.getReportdate());//접수날짜
+		 * newre.setReportdetail(re.getReportdetail());//상세내용
+		 * newre.setReportname(re.getReportname());//상점인지사람인지
+		 * newre.setReportsubject(re.getReportsubject());//주제
+		 * newre.setProductseq(re.getProductseq());//상품시퀀스
+		 */		//날짜계산
 		Calendar c=Calendar.getInstance();
 		c.setTime(new Date());
 		if(day==15) {
 			c.add(Calendar.DATE,15);
-			newre.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(c.getTime()));
+			re.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(c.getTime()));
 		}else {
 			c.add(Calendar.DATE,30);
-			newre.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(c.getTime()));
+			re.setConfirmdate(new SimpleDateFormat("yyyy/MM/dd").format(c.getTime()));
 		}
-		return (reportRepository.save(newre).getReportseq()!=null)?1:0;
+		return (reportRepository.save(re).getReportseq()!=null)?1:0;
 	}
 
 	@Override

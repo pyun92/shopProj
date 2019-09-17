@@ -1,129 +1,230 @@
 <th:block th:include="main.html"></th:block>
-<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- 머티리얼 라이즈 css파일 -->
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <style type="text/css">
-html, body {
-	width: 100%;
-	height: 100%;
-	font-family: 나눔고딕;
+/* html, body { height:100%; } */
+
+/* .spimg{
+	display:block;
+		overflow: hidden;
+		width:300px;
+		height:300px;
 }
 
-html .pullheight {
-	margin-bottom: 60%;
-}
-
-.sidenav {
-	padding-bottom: 40px;
-	padding-top: 40px;
-}
-
-.user-view {
-	padding-bottom: 80px;
-}
-
-.border1 {
-	/* 	border: 1px solid; */
-	border-color: #90a4ae;
-	margin-bottom: 11px;
-}
-
-.list_img{
-	width: 200px;
-	height:auto;
-}
-
-img {
+.sping img{
+	display: block; 
+	max-width: 100%;
+	max-height: auto;
+	-ms-interpolation-mode: bicubic;
+} */
+.spdetail{
 	width:100%;
-	height: 150px;
 }
 
-#getList_sj{
-	padding-left:20px;
+.spalign{
+	/* vertical-align:middle;
+	align-items:center; */
+	
 }
 
-th{
-	text-align:center;
+#modal1{
+	width:50%;
+}
+
+.carousel.carousel-slider.center{
+width: 100%;
+height: 370px;
+}
+.total-image{
+width: 100%;
+height: 100%;
 }
 </style>
 </head>
 <body>
 	<div class="container">
-	<!-- 수정, 삭제 둘다 보여주는 창/ 수정->insert.html파일에 입력내용 그대로 가져가기, 삭제 모달창 띄워서 삭제하기 -->
-	<div class="row">
-	<!-- 배너  -->
-		<div class="col s3 pullheight grey lighten-5">
-				<ul id="slide-out" class=" center-align">
-					<li><div class="user-view">
-							<a href="#name"><span class="black-text name">감자탕 만드는
-									남자</span></a><br> <br> <a href="#user"><img class="circle"
-								src="image/a.jpg"></a><br> <br> <br>
-							<div>
-								<span class="black-text ">안녕하세요 감만남 <th:block th:text="${session['data'].userid}"></th:block> 입니다.</span>
-							</div>
-
-						</div></li>
-					<li class="border1"><a class="red-text bold" href="#!"><i
-							class="material-icons">favorite_border</i>내 단골 상점에 추가하기</a></li>
-					<li class="border1"><a class="black-text" href="#!">판매목록
-							보기</a></li>
-					<li class="border1"><a class="black-text" href="sjTimeLine.html">담벼락(공지사항)
-							보기</a></li>
-					<li class="border1"><a class="black-text" href="#!">후기남기기</a></li>
-					<li class="border1"><a class="black-text" href="#!">응원하기</a></li>
-					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
-					<li class="border1"><a class="black-text" href="product_insert">상품등록</a></li>
-					<li class="border1"><a class="black-text" href="product_getList_sj">상품관리</a></li>
-					<li><div class="divider paddingup200"></div></li>
-					<li><a class="subheader">감자탕을 만드는 남자</a></li>
-					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
-				</ul>
-		</div>
-	<div class="col s9" id="getList_sj"><!-- 상품보여주기 -->
-		<div class="row">		
-			<div class="col s12" style="padding-left:30px;" >
-		
+	<h3></h3>
 		<section>
-			<h5 id="chart1">전체상품</h5>
+		<form action="bucketsession" id="item-detail-bucket" method="post">
+		<div class="row">
+		<!-- 상품 이미지 버튼 -->
+			<div class="col s6 spalgin">
+			<!-- 사진추가할때 가져오는거 생각하기<input type="file" value="사진을 선택해주세요"> -->
+			
+<!-- 					mav.addObject("proDe", service.getProd(prod)); -->
+<!-- 		mav.addObject("proDeImg", imgService.getProdImg()); -->
+			
+			 <div class="carousel carousel-slider center" >
+    		 	<div class="carousel-item"  th:each="pro:${proDeImg}">
+    				<img class="total-image" th:src="@{../upload/}+${pro.fileName}">
+    				<input type="hidden" th:value="${pro.fileName}" name="filename">
+   			 	</div>
+  			</div>
+			</div>
+		<!-- 제품명,가격,판매수량,옵션 -->
+			<div class="col s6">
+			<input type="hidden" th:value="${proDe.productseq}" name="productseq">
+			<input type="hidden" th:value="${proDe.proname}" name="name">
+			<input type="hidden" th:value="${proDe.discount}" name="discount">
+			<input type="hidden" th:value="${proDe.price}" name="price">
+			<input type="hidden" th:value="${proDe.storeseq}" name="storeseq">
+			<!-- <th:block th:if="${{session['data']!=null}"><input type="hidden" th:value="${session['data'].userseq}" name="owner"></th:block> -->
+			<h2 th:text="${proDe.proname}"></h2>
+			<h5 th:text="할인  + ${proDe.discount}"></h5>
+			<h4 th:text=" ${proDe.price} +' → '+(${proDe.price} - (${proDe.price} *(${proDe.discount}/100)))+원"></h4><!-- 이부분 수정 -->
+			<label><span >판매수량</span></label> 
+			<th:block th:text="${proDe.jaego}+개"></th:block>
+			<p>
+			<select id="options">
+				<option  >옵션을 선택해주세요</option>
+				
+				<option th:each="option:${proOption}" th:value="${option.optionseq}" >
+				<th:block th:if="${option.optioncontent}!='no'" th:text="${option.optioncontent}+' '+${option.optionname}+' (추가금액 : '+${option.optionprice}+')'"></th:block>
+				<th:block th:unless="${option.optioncontent}!='no'">옵션없음</th:block>
+				</option>
+				
+			</select>
+			<input type="hidden" id="optionseq" name="optionseq"> 
+			</p>
+			<p><div class="col s3">수량</div><input class="col s9" type="number" value="1" min="1" max="10" name="quantity"></p><!-- 수량 추가 버튼 -->
+			<p>
+				<a class="waves-effect waves-light btn" href="#">구매하기</a>
+				<a href="javascript:void(0)" id ="bucket-btn" class="waves-effect waves-light btn">장바구니 담기</a>
+			</p>
+			</div>	
+		</div>
+		</form>	
+		</section>
+		<div class="divider"></div>
+		<section>
+		<!-- 제품소개 -->
+		<p>제품소개</p>
 			<div class="row">
-					<!-- 상품한개 -->
-      		<div class="col s12 l4" th:each="prodall : ${proc}">
-    			<th:block th:each="procimgdetail:${procimg}" th:if="${prodall.productseq}==${procimgdetail.imgnum}"> 
-     	 	<a th:href="@{/product_getProduct2(productseq=${prodall.productseq})}">
-     	 	<div class="card">
-        		<div class="card-image" >
-          		<img th:src="@{../upload/}+${procimgdetail.fileName}" >
-          		<span class="card-title" style="color: black;"><th:block th:text="${procimgdetail.imgnum}" ></th:block> </span>
+			<p id="editor" th:text="${proDe.editor}" style="display:none;"></p>
+			 <div id="content" class="card-panel teal lighten-2">
+			 	
+			 </div>
+			</div>
+		</section>
+		<div class="divider"></div>
+		 <section>
+		 <!-- 제품후기 -->
+		<p>제품후기</p>
+		<th:block th:if="${review}==null" >
+		<p>dd</p>
+		</th:block>
+		<th:block th:if="${review}!=null" th:each="review : ${review}">
+		 <div class="row" >
+			<div class="col s9 valign-wrapper" th:text="${review.reviewdetail}"></div>
+			<div class="col s3">
+				<label><span>작성자</span><span th:text="${review.userseq}"></span> </label><br>
+				<label><span>등록일</span> <span th:text="${review.reviewdate}"></span></label>
+			</div>
+		</div>
+		</th:block>
+		
+		<!-- 3*3구조 -->
+		<div class="row">
+			<div class="col s12 l4">
+				<a class="modal-trigger" href="#modal1">
+      			<div class="card small">
+        		<div class="card-image">
+         	 		<img src="../static/image/04.jpg">
         		</div>
         		<div class="card-content">
-        		<p th:text=${prodall.name}></p>
-          		<p><th:block th:text="'판매금액 ' + ${prodall.price}"></th:block></p>
-       			</div>
+          			<!--  <p class="card-title">JMT감자탕 대존맛</p>-->6
+          			<span>호날두도 반한 맛!</span>
+        		</div>
       		</div>
-       		</a>
-      		</th:block>
-   			</div>
+      		<!-- </a> -->
+    		</div>
+    		<div class="col s12 l4">
+				<a class="modal-trigger" href="#modal1">
+      			<div class="card small">
+        		<div class="card-image">
+         	 		<img src="../static/image/04.jpg">
+          			<span class="card-title">감자탕맛있어욤</span>
+        		</div>
+        		<div class="card-content">
+          			<p>호날두도 반한맛!</p>
+        		</div>
+      		</div>
+      		<!-- </a> -->
+    		</div>
+    		<div class="col s12 l4">
+				<a class="modal-trigger" href="#modal1">
+      			<div class="card small">
+        		<div class="card-image">
+         	 		<img src="../static/image/04.jpg">
+          			<span class="card-title">감자탕맛있어욤</span>
+        		</div>
+        		<div class="card-content">
+          			<p>호날두도 반한맛!</p>
+        		</div>
+      		</div>
+      		<!-- </a> -->
+    		</div>
+    	<!-- 후기를 클릭했을때 나타나는 모달창 -->
+  			<div id="modal1" class="modal">
+    			<div class="modal-content">
+    			<div class="row">
+    				<div class="col s6" id="sph_img">
+    					<img src="../static/image/04.jpg"  style="width:100%;height:300px;"></p>
+    				</div>
+    				<div class="col s6" id="sph_detail">
+    					<p>상품이름</p>
+    					<div class="divider"></div>
+      					<span>jmt</span>
+    				</div>
+    			</div>
+    			</div>
+    			<div class="modal-footer">
+      				<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    			</div>
   			</div>
-  		</section>
-  			</div>
-  		</div>
-	</div>
-	</div>
-<th:block th:include="footer.html"></th:block>
-<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
+		</div>		
+		
+		</section>
+		
+		
+  </div>
+</div>
+	<th:block th:include="footer.html"></th:block>
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>		
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
 <script>
 $(document).ready(function(){
-    $('.modal').modal();
-   
+   // $('.carousel').carousel();
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true,
+        indicators: true
+      });
     
-  });
+    $('select').formSelect();
+    
+    $('.modal').modal();
+    
+    
+    $("#bucket-btn").on('click' ,function(){
+    	
+    	document.getElementById("item-detail-bucket").submit();
+    });
+    
+   // alert($('#editor').html());
+    $('#content').append($('#editor').text());
+    
+    $("#options").on('change' ,function(){
+    	var index = $("#options option:selected").val();
+    	$("#optionseq").val(index);
+    	
+    	
+    });
+    
+ });
+      
 </script>
 </body>
 </html>

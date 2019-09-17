@@ -130,7 +130,7 @@ html .pullheight {
 		<!-- 제품명,가격,판매수량 -->
 				<div class="col s6">
 					<input type="hidden" name="seq" th:value="${proc.productseq}">
-					<span><label>제품명</label><input type="text" name="name" th:value="${proc.proname}"></span>
+					<span><label>제품명</label><input type="text" name="proname" th:value="${proc.proname}"></span>
 					<span><label>제품가격</label><input type="text" name="price" th:value="${proc.price}"></span>
 					<span><label>할인</label><input type="text" name="discount" th:value="${proc.discount}"></span>
 					<span><label>판매수량</label><input type="text" name="jaego" th:value="${proc.jaego}"></span>
@@ -265,11 +265,8 @@ $(function(){
 		 event.preventDefault();
 
 		 //유효성 검사
-		 if($('input[name="main_img"]').val()==null){
-			 alert("대표 이미지는 반드시 등록해야 합니다.");
-			 return;
-		 }
-		 if($('input[name="productname"]').val() =='' && $('input[name="price"]').val() =='' 
+		 //대표이미지 등록여부 체크--상태가 변했을때만
+		 if($('input[name="proname"]').val() =='' && $('input[name="price"]').val() =='' 
 				 && $('input[name="discount"]').val() =='' && $('input[name="discount"]').val() ==''
 				 && $('input[name="jaego"]').val() ==''){
 			 alert("모든 입력란을 입력해주세요!");

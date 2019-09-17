@@ -89,6 +89,7 @@ public class ProductController {
 	      service.insertProd(prod); //게시글 insert
 	      
 	      MultipartFile main_img=mtfRequest.getFile("main_img");
+	      System.out.println("비어있는지"+main_img.isEmpty()+""+main_img.getOriginalFilename());
 	      imgSave(main_img,prod.getProductseq(),0L);
 	      
 	      Long detailNum= (long) 1.0;
@@ -180,9 +181,14 @@ public class ProductController {
         MultipartFile main_img=mtfReqeust.getFile("main_img");
         List<MultipartFile> img_array=mtfReqeust.getFiles("files");//제품이미지
         
-        if(!img.get(0).getFileOriginalName().equals(main_img.getOriginalFilename())) {
-        	imgSave(main_img,pr.getProductseq(),0L);
+        System.out.println("이미지 main_img:"+main_img.getOriginalFilename()+"main_img1"+main_img.getSize());
+        img=imgService.getProdImg(seq);
+        if(!main_img.isEmpty()) {
+        	if(!img.get(0).getFileOriginalName().equals(main_img.getOriginalFilename())) {
+            	imgSave(main_img,pr.getProductseq(),0L);
+            }
         }
+        
         System.out.println("이미지 사이즈 :"+img.size());
         
         Long jseq=(long)img.size();
