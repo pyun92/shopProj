@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 머티리얼 라이즈 css파일 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+html {
+	height: 100%;
+}
+
+.align1 {
+	height: 660px;
+}
+
+.carousel.carousel-slider {
+	width: 100%;
+	height: 90%;
+}
+
+.card {
+	height: 200px;
+	margin-bottom: 0;
+}
+
+.ww1 {
+	height: 140px;
+}
+
+.col .s6 img {
+	border: solid 1px grey;
+	height: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.card-image {
+	height: 60%;
+}
+
+.card-content {
+	
+}
+
+.card-image img {
+	width: 100%;
+	height: 100%;
+}
+
+.col .s6 {
+	align-items: center;
+	margin: 0px;
+	padding: 0px;
+}
+
+.col .s12 {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+.chart {
+	margin-top: 70px;
+	background-color: #fce4ec;
+}
+
+.chart1 {
+	margin-top: 10px;
+}
+
+.char_con {
+	height: 300px;
+}
+
+p {
+	font-size: 14px;
+	font-weight: bold;
+	border-bottom: 1px solid #9e9e9e;
+}
+
+#followquick {
+	position: absolute;
+	margin-top: 180px;
+	top: 180px;
+	right: 45%;
+	margin-right: -670px;
+	visibility: hidden;
+}
+
+.s1 {
+	
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+.nav-wrapper {
+	padding-left: 10px;
+	padding-rigth: 10px;
+}
+
+section {
+	background-color: #e0e0e0;
+	height: 100%;
+	margin-left: 150px;
+}
+/* detail.html */
+.broad {
+	height: 100px;
+}
+
+#icon a {
+	align: center;
+}
+</style>
+</head>
+<body>
+	<!-- 메뉴바 -->
+	<header th:replace="admin_main :: mainHead"> </header>
+	<section>
+		<div class="container row grey lighten-3">
+			<div class="col s3 align1">
+				<div class="col s12">
+
+					<h5 class="center-align">
+						<i class="small material-icons">shopping_cart</i>영상 속 상점 들르기
+					</h5>
+					<p th:text="${ad.vidurl}" hidden="hidden" class="hdurl"></p>
+				</div>
+				<div class="col s12 ">
+					<div class="card center-align">
+						<div class="card-image">
+							<img th:src="@{../storeimages/}+${store.storeimg}">
+						</div>
+						<div class="card-content center-align">
+							<p th:text="${store.storename}"></p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col s12 4d ww1">
+					<div class="card center-align">
+						<div class="card-image">
+							<th:block th:each="img:${prodimg}"
+								th:if="${img.imgnum}==${product.productseq}">
+								<img th:src="@{../upload/}+${img.fileName}">
+							</th:block>
+						</div>
+						<div class="card-content center-align">
+							<p th:text="${ad.intro}"></p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="col s9 align1">
+				<div class="carousel carousel-slider" id="video_main">
+					<a class="carousel-item" href="#one!"> <iframe width="100%"
+							height="100%" class="if1" th:src="${ad.vidurl}" frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+				</div>
+			</div>
+			<div class="col s12" style="border-bottom: 2px solid grey"></div>
+			<div class="col s6 offset-s3" style="margin-top: 20px; margin-bottom: 20px">
+		<button class="btn" onclick="gotable()">타임테이블로 올리기</button>
+		<button class="btn" style="width: 120px" onclick="deladv()">광고삭제</button>
+		<button class="btn" style="width: 120px" onclick="javascript:location.href = 'admin_advertising'">돌아가기</button>
+		</div>
+		</div>
+		
+		
+	</section>
+	<!-- 자바스크립트 -->
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script>
+		
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('.carousel');
+			var instances = M.Carousel.init(elems, {
+				fullWidth : true,
+				indicators : true
+			});
+		});
+		$(function() {
+			
+		});
+		
+		function getparam(name) {
+		    var params = location.search.substr(location.search.indexOf("?") + 1);
+		    var sval = "";
+		    params = params.split("&");
+		    for (var i = 0; i < params.length; i++) {
+		        temp = params[i].split("=");
+		        if ([temp[0]] == name) { sval = temp[1]; }
+		    }
+		    return sval;
+
+		}
+		
+		function gotable(){
+			var seq = getparam("adseq");
+			
+			
+			
+		}
+		function deladv(){
+			var seq = getparam("adseq");
+			var chek = confirm("정말 삭제 하시겠습니까?");
+			var a = $(this).val();
+			var alldata = {
+				"adseq" : seq
+			};
+			
+			if (chek) {
+				$.ajax({
+					url : "/addel(adseq="+seq+")",
+					type : 'GET',
+					data : alldata,
+					success : function(data) {
+						alert("삭제가 완료되었습니다.");
+						location.reload(true);
+					}
+				});
+			} else {
+				alert("삭제가 취소되었습니다.");
+			}
+			
+		}
+	</script>
+
+</body>
+</html>

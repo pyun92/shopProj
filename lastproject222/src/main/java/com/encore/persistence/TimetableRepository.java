@@ -3,11 +3,9 @@ package com.encore.persistence;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.encore.domain.Advertising;
+import com.encore.domain.Timetable;
 
 @Repository
-public interface AdvertisingRepository extends CrudRepository<Advertising, Long>{
+public interface TimetableRepository extends CrudRepository<Timetable, Long>{
 
-	
-	
 }

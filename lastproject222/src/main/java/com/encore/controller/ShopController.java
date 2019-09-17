@@ -33,6 +33,9 @@ public class ShopController {
 	@Value("${store.upload-dir}")
 	String storeFileURL;
 
+	@Value("${storeimg.upload-dir}")
+	String storeimgFileURL;
+	
 	@Autowired
 	private ShopService shopservice;
 
@@ -64,6 +67,7 @@ public class ShopController {
 	@PostMapping("/insertShop")
 	public String insertShop(MultipartHttpServletRequest mrequest, @ModelAttribute("data") Userdata user) {
 		List<MultipartFile> storefile = mrequest.getFiles("storefile");
+		MultipartFile storeimg = mrequest.getFile("storeimg");
 
 		Store store = new Store();
 		String storename;
@@ -98,10 +102,26 @@ public class ShopController {
 		}
 
 		store.setStorefile(lastFileName);
+		
+		//상점사진 추가
+			String storeimgName=user.getUserid()+"_storeimg_";
+			String storeimgNameExtendsion=FilenameUtils.getExtension(storeimg.getOriginalFilename()).toLowerCase();
+			String storename2=storeimgName+"."+storeimgNameExtendsion;
+			File lastFile2=new File(storeimgFileURL+storename2);
+			try {
+				storeimg.transferTo(lastFile2);
+			} catch (IllegalStateException  |IOException e) {
+				e.printStackTrace();
+			} 
+			
+			store.setStoreimg(storename2);
+		//
 		store.setRequestdate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
 		System.out.println("store " + store.toString());
 		shopservice.insertStore(store);
 
+		
+		
 		return "welcome";
 	}
 }
