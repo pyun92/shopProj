@@ -1,5 +1,6 @@
 package com.encore.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -7,6 +8,10 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -60,9 +65,17 @@ public class Huijin {
 	}
 	
 	@RequestMapping("baesong_sj")
-	public String beasongsj(@ModelAttribute("data") Userdata user,Model model) {
+	public String beasongsj(@ModelAttribute("data") Userdata user,Model model,Integer pgno) {
 		
-		List<Bucket> listjumoon= myinfo.jumoonmanager(user.getUserseq());
+		Page<Bucket> listjumoon= myinfo.jumoonmanager(user.getUserseq(),PageRequest.of(pgno-1, 5, new Sort(Direction.DESC, "bucketseq")));
+		
+		List<Bucket> listsize = myinfo.jumoonsize(user.getUserseq());
+		System.out.println(listjumoon+"222222222222222222222222222");
+		
+		List<Integer> bucketsize= new ArrayList<Integer>();
+		bucketsize.add(listsize.size());
+		bucketsize.add(pgno);
+		model.addAttribute("ordersize",bucketsize);
 		model.addAttribute("options",optionservice.findoption());
 		model.addAttribute("list", listjumoon);
 		
@@ -107,14 +120,19 @@ public class Huijin {
 //			return "newbucket";
 //		}
 //			
-		@RequestMapping("/buccondition")
+		@RequestMapping("/bucconditioncancel")
 		@ResponseBody
-		public void buccondition(@RequestBody Long seq) {
-			System.out.println("sadasdasdasdasd");
+		public String buccondition(@RequestBody Long seq) {
+			myinfo.cancel(seq);
+			return "cancel";
+			
+		}
+		@RequestMapping("/bucconditioncomplete")
+		@ResponseBody
+		public void bucconditioncomplete(@RequestBody Long seq) {
 			System.out.println(seq);
 			myinfo.cancel(seq);
 		}
-		
 		
 	
 }

@@ -32,8 +32,43 @@ html {
 .fsize-40p {
 	font-size: 22px;
 }
+<!--                  -->
+
+.item-img{
+width: 80px;
+height: 80px;
+}
+.bucket-item{
+margin: 0;
+}
 
 
+
+
+
+
+
+/* 중복되는 css */
+.bucketoption1 ,.bucketoption2{ 
+text-align: center;
+font-size: 110%; 
+}
+.bucketoption1{
+font-weight: bold;
+}
+.bucket-talble th{
+font-size: 85%;
+
+border-left: 1px solide black;
+}
+.bucket-talble td{	
+font-size: 70%;
+}
+.cancelbtn{
+background-color: white;
+color: black;
+padding: 0
+}
 </style>
 </head>
 <body>
@@ -43,46 +78,129 @@ html {
 			<div class="content-body col s10 m10 l10 ">
 				<div class="col s12 jhead">주문내역</div>
 
-				<ul class="collection jumoonul">
-					<li class="collection-item avatar" th:each="jumoon:${jumoonlist}" th:if="${jumoon.orderstate!='주문취소'}">
+				<ul class="collection jumoonul" th:each="jumoon:${jumoonlist}"  >
+					<li class="collection-item avatar" >
 					<input type="hidden" th:value="${jumoon.itemname}" class="itemname">
-					<a th:href="@{/jumoondetail(orderseq=${jumoon.orderseq})}">
-					상세보기
+<!-- 					<a th:href="@{/jumoondetail(orderseq=${jumoon.orderseq})}"> -->
+					<a href="#" class="detail" style="padding-right: 10px;">
+					상세보기  
+					</a>
+					<a href="#" class="detailclose">
+					접기
 					</a>
 						<p th:text="${jumoon.itemname}">
 						</p>
 						<p th:text="${jumoon.calprice}+원">
 						</p>
 						<div class="baesongchk">
-						<p  th:text="${jumoon.orderstate}">
+						<p >
+						주문 날짜
 						</p>
 						<p th:text="${jumoon.orderdate}"></p> 
 						</div>
 						<div  style="text-align: right;">
 						<a href="#!" class="secondary-content">장바구니에 담기</a>
-						<a th:href="@{/jumooncancel(orderseq=${jumoon.orderseq})}">주문 취소하기</a>
+						<a th:href="@{/jumooncancel(orderseq=${jumoon.orderseq})}">전체 주문 취소하기</a>
 						</div>
+						
+			
+			
+						
+	<table class="bucket-talble" style="display: none;">
+		<tr class="totalColumn">
+		<th>
+   		</th>
+		<th style="width: 300px;">상품 정보 </th>
+		<th style="width: 100px;">수량</th>
+		<th>상품 금액</th>
+		<th>할인 금액</th>
+		<th>배송비</th>
+		<th>판매자 명</th>
+		<th>주문 금액</th>
+		<th>배송 상태</th>
+		</tr>
+		<!-- 상품 시작 -->
+
+		<tr th:each="jude:${jumoondetail}" th:if="${jude.orderseq}==${jumoon.orderseq}">
+			
+		<td>
+			<label>
+			</label>
+   		</td>
+		<td>
+		<div class="row bucket-item">
+			<div class="col s3 m3 l3">
+				<a th:href="@{/product_getProduct2(productseq=${jude.productseq})}">
+					<img th:src="@{../upload/}+${jude.imgname}" class="item-img" > 
+				</a>
+			</div>
+			<div class="col s9 m9 l9">
+				<div th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}">
+				<p th:text="${jude.itemname}" class="bucketoption1"></p> 
+				<th:block th:if="${option.optioncontent}!='no'">
+				<p class="bucketoption2" th:text="${option.optioncontent}  + ${option.optionname}+'(+'+${option.optionprice}+'원)'"></p>
+				
+				</div>		
+			</div>
+		</div>
+		</td>
+		<td>        			
+			<div class="bucket-option" >
+        				<div class="row">
+        						<div class="bucket-precnt col s4 m4 l4" style="padding: 0px;">
+        							<input type="text" th:value="${jude.quantity}" readonly="readonly">
+        						</div>
+        				</div>
+        	</div>
+        </td>
+        <td th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}">
+			<p th:text="(${jude.price}*${jude.quantity}+원)"  class="total-price"></p>
+			<th:block th:if="${option.optioncontent}!='no'">
+			<p th:text="'옵션'+'('+${option.optionprice}+'원)'"> </p>
+			</th:block>
+		
+		</td>
+		<td th:text="(${jude.discount}*${jude.quantity})+원" class="total-discount"> </td>
+		<td th:text="${jude.deliveryfee}" class="item-deliveryfee"></td>
+		<td th:text="${jude.sellername}"></td>
+		<td class="cal-price1" th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}" th:text="(${jude.price}*${jude.quantity}-${jude.discount}*${jude.quantity}+2500+${option.optionprice}*${jude.quantity})+원"></td>
+		<td  th:if="${jude.condition}=='cancel'" style="color: red">주문이 취소됨</td>
+		<td  th:if="${jude.condition}=='payment'" style="color: green">
+		<p><a class="btn cancelbtn1">상품 취소하기</a></p>
+		<input type="hidden" th:value="${jude.bucketseq}" class="jumoonlist-bucseq"></input>
+		배송 준비중</td>
+		
+		<td  th:if="${jude.condition}=='complete'" style="color: blue">배송 준비중</td>
+			
+		</tr>
+		
+		<!--  마지막 줄 -->
+		</table>
+						
+						
 					</li>
 					
 				</ul>
+				
+				
 			<div class="col s12 center-align jumoonul">
-				<ul class="pagination">
-					<li class="disabled"><a href="#!"><i
-							class="material-icons">chevron_left</i></a></li>
-					<li class="active"><a href="#!">1</a></li>
-					<li class="waves-effect"><a href="#!">2</a></li>
-					<li class="waves-effect"><a href="#!">3</a></li>
-					<li class="waves-effect"><a href="#!">4</a></li>
-					<li class="waves-effect"><a href="#!">5</a></li>
-					<li class="waves-effect"><a href="#!"><i
-							class="material-icons">chevron_right</i></a></li>
+			<input type="hidden"  th:value="${jumoonsize[0]}" class="size1"></input>
+			<input type="hidden"  th:value="${jumoonsize[1]}" class="size2" ></input>
+				<ul class="pagination" >
+					<li class="waves-effect"><a href="#!">
+					<i class="material-icons larr">chevron_left</i></a></li>
+					<li class="page"></li>
+					
+					
+					<li class="waves-effect"><a href="#!">
+					<i class="material-icons rarr">chevron_right</i></a></li>
 				</ul>
 			</div>
 		</div>
 		<!-- 내용이 없을시 출력 데이터 베이스 작성후 제이쿼리 만들기 -->
 		<div class="row jumoon">
 			<div class="col s8 offset-s2 center-align">
-				<p class="fsize-40p">주문 내역이 없습니다.</p>
+				<p class="fsize-40p" >주문 내역이 없습니다.</p>
 				<a class="waves-effect waves-light btn"><i
 					class="material-icons left">cloud</i>인기상품 보러가기</a>
 			</div>
@@ -92,6 +210,30 @@ html {
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
+		
+		
+		if($(".size1").val()!=0){
+			var size= $(".size1").val();
+			
+			var size2= $(".size2").val();
+			$(".pagenum").css("background-color","red");
+			var a=10;
+			
+			for(var i=1;i<size/5+1;i++){
+				
+				
+				var innerHtml1 = '<li class="waves-effect pagenum"><a href="/jumoon?pgno='+i+'">'+i+'</a></li>'
+				if(i==size2){
+				var innerHtml1 = '<li class="waves-effect pagenum active"><a href="/jumoon?pgno='+i+'">'+i+'</a></li>'
+				}
+				
+						$('.page').append(innerHtml1);	
+			}
+			
+		}
+	
+		
+		
 		var name = $(".itemname").val();
 		if(name==null){
 			$(".jumoon").css("display","show");
@@ -100,6 +242,43 @@ html {
 			$(".jumoon").css("display","none");
 			$(".jumoonul").css("display","show");
 		}
+	});
+	
+	$('.detail').on('click',function(){
+		var index=$(".detail").index(this);
+		$('.bucket-talble:eq('+index+')').css("display","block");
+		
+	});
+	$('.detailclose').on('click',function(){
+		var index=$(".detailclose").index(this);
+		$('.bucket-talble:eq('+index+')').css("display","none");
+		
+	});
+	
+	$('.cancelbtn1').on('click',function(){
+		var index=$(".cancelbtn1").index(this);
+		var seq=$(".jumoonlist-bucseq:eq("+index+")").val();
+		var choose=confirm("주문을 취소 하시겠습니까?");
+		alert("seq"+seq);
+		 if(choose){
+ 			$.ajax({
+			async:true,
+			type:'POST',
+			data:JSON.stringify(seq),
+			url:"/bucconditioncancel",
+			dataType : "json",
+			contentType: "application/json; charset=UTF-8",
+			
+		    success : function(data) {
+		        alert("success!");
+		    },
+		    complete : function() {
+		    	location.reload(true);
+		    }
+			
+		}); 
+		} 
+		
 	});
 	</script>
 </body>
