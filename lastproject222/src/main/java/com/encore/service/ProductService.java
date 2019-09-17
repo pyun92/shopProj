@@ -15,8 +15,6 @@ public interface ProductService {
 	
 	Product getProd(Product prod);
 	
-	Product getProd(Long seq);//상품번호로 찾기
-	
 	void insertBucket(Bucket bucket);
 	
 	void delbucketlist(Long num);

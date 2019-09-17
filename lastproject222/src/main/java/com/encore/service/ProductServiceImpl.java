@@ -45,11 +45,6 @@ public class ProductServiceImpl implements ProductService {
 	public Product getProd(Product prod) {
 		return rep.findById(prod.getProductseq()).get();
 	}
-	
-	public Product getProd(Long seq) {
-		return rep.findById(seq).get();
-	}
-
 
 	@Override
 	public void insertBucket(Bucket bucket) {
