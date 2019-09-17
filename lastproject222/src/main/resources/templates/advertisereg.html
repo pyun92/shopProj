@@ -137,7 +137,7 @@ html, body {
 							<ul id='dropdown1' class='dropdown-content prodd1'>
 								<th:block th:each="prod : ${prodlist}">
 									<li  th:value="${prod.productseq}" class="prodchoice"><a
-										th:text="${prod.Name}"></a></li>
+										th:text="${prod.proname}"></a></li>
 										<input type="hidden" th:value="${prod.productseq}" name="prodseq">
 								</th:block>
 							</ul>
