@@ -67,12 +67,12 @@ height: 100%;
 		<!-- 제품명,가격,판매수량,옵션 -->
 			<div class="col s6">
 			<input type="hidden" th:value="${proDe.productseq}" name="productseq">
-			<input type="hidden" th:value="${proDe.name}" name="name">
+			<input type="hidden" th:value="${proDe.proname}" name="name">
 			<input type="hidden" th:value="${proDe.discount}" name="discount">
 			<input type="hidden" th:value="${proDe.price}" name="price">
 			<input type="hidden" th:value="${proDe.storeseq}" name="storeseq">
 			<!-- <th:block th:if="${{session['data']!=null}"><input type="hidden" th:value="${session['data'].userseq}" name="owner"></th:block> -->
-			<h2 th:text="${proDe.name}"></h2>
+			<h2 th:text="${proDe.proname}"></h2>
 			<h5 th:text="할인  + ${proDe.discount}"></h5>
 			<h4 th:text=" ${proDe.price} +' → '+(${proDe.price} - (${proDe.price} *(${proDe.discount}/100)))+원"></h4><!-- 이부분 수정 -->
 			<label><span >판매수량</span></label> 
