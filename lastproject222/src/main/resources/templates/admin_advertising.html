@@ -4,71 +4,128 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- 머티리얼 라이즈 css파일 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
-	html,body{
-		width:100%;
-		height:100%;
-	}
-	.nav-wrapper{
-		padding-left:10px;
-		padding-rigth:10px;
-	}
-	section{
-		background-color:#e0e0e0;
-		height:100%;
-		margin-left:150px;
-	}
-	/* detail.html */
-	.broad{
-		height:100px;
-	}
-	#icon a{
-		align:center;
-	}
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+.nav-wrapper {
+	padding-left: 10px;
+	padding-rigth: 10px;
+}
+
+section {
+	background-color: #e0e0e0;
+	height: 100%;
+	margin-left: 150px;
+}
+/* detail.html */
+.broad {
+	height: 100px;
+}
+
+#icon a {
+	align: center;
+}
 </style>
 </head>
 <body>
 	<!-- 메뉴바 -->
-	<header th:replace="admin_main :: mainHead">
-	</header>
+	<header th:replace="admin_main :: mainHead"> </header>
 	<section>
-	<div class="container">
-		<div class="row">
-			<div class="col s12">
-				<div class="card">
-				<table class="highlight centered">
-				<thead>
-					<tr>
-					<th>광고번호</th><th>대문광고</th><th>추천상품광고</th><th>제품번호</th><th>url</th><th>승인상태</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:if="${list}!=null" th:each="adv:${list}">
-						<td th:text="${adv.adseq}"></td>
-						<td th:text="${adv.bigad}"></td>
-						<td th:text="${adv.smallad}"></td>
-						<td th:text="${adv.prodseq}"></td>
-						<td ><a  th:href="${adv.vidurl}" th:text="${adv.vidurl}"></a></td>
-						<td th:text="${adv.status}"></td>
-					</tr>
-				</tbody>
-				</table>
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<div class="card">
+						<table class="highlight centered">
+							<thead>
+								<tr>
+									<th>광고번호</th>
+									<th>대문광고</th>
+									<th>추천상품광고</th>
+									<th>제품번호</th>
+									<th>url</th>
+									<th>승인상태</th>
+									<th>광고승인</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${list}!=null" th:each="adv:${list}">
+									<td th:text="${adv.adseq}"></td>
+									<td th:text="${adv.bigad}"></td>
+									<td th:text="${adv.smallad}"></td>
+									<td th:text="${adv.prodseq}"></td>
+									<td><a th:href="${adv.vidurl}" th:text="${adv.vidurl}"></a></td>
+									<td th:text="${adv.status}"></td>
+									<td th:if="${adv.status}=='대기'"><button
+											th:value="${adv.adseq}" class="btn okb">승인</button> <a
+										th:href="@{/addel(adseq=${adv.adseq})}"><button
+												th:value="${adv}" class="btn delb">삭제</button></a></td>
+									<td th:if="${adv.status}=='승인'"><a th:href="@{/setad(adseq=${adv.adseq})}">
+									<button th:value="${adv.adseq}" class="btn setad">광고설정</button></a></td>
+								</tr>
+								<tr th:if="${list}==null">
+									<td colspan="7">신청된 광고가 없습니다.</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</section>
-	
-<!-- 자바스크립트 -->
-<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>	
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script>
-$(function(){
-});
-</script>
+
+	<!-- 자바스크립트 -->
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script>
+		$(function() {
+
+		});
+
+		$('.delb').click(function() {
+			var chek = confirm("정말 삭제 하시겠습니까?");
+			var a = $(this).val();
+			if (chek) {
+				alert("삭제완료");
+				return;
+			} else {
+				alert("삭제가 취소되었습니다.");
+				return false;
+			}
+		});
+
+		$('.okb').click(function() {
+			var chek = confirm("정말 승인 하시겠습니까?");
+			var a = $(this).val();
+			var alldata = {
+				"adseq" : a
+			};
+			if (chek) {
+				$.ajax({
+					url : "/adok",
+					type : 'GET',
+					data : alldata,
+					success : function(data) {
+						alert("승인이 완료되었습니다.");
+						location.reload(true);
+					}
+				});
+			} else {
+				alert("승인이 취소되었습니다.");
+				return false;
+			}
+
+		});
+		
+	</script>
 
 </body>
 </html>

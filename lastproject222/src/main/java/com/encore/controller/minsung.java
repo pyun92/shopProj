@@ -10,14 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.encore.domain.Advertising;
 import com.encore.domain.Product;
@@ -42,7 +45,6 @@ public class minsung {
 	public void advertisereg(@ModelAttribute("data") Userdata user, Model model) {
 
 		List<Product> prodlist = service.getProdList(user.getUserseq());
-
 		model.addAttribute("prodlist", prodlist);
 	}
 
@@ -57,13 +59,16 @@ public class minsung {
 		return map1;
 	}
 	
+	
 	@RequestMapping(value = "/adregform" ,method = RequestMethod.POST)
 	public String adregform(MultipartHttpServletRequest mtfRequest) {
 		Advertising adv = new Advertising();
 		adv.setBigad(Integer.parseInt(mtfRequest.getParameter("ad1")));
 		adv.setSmallad(Integer.parseInt(mtfRequest.getParameter("ad2")));
-		adv.setProdseq(Integer.parseInt(mtfRequest.getParameter("prodseq")));
-		adv.setVidurl(mtfRequest.getParameter("vidurl"));
+		adv.setProdseq(Long.parseLong(mtfRequest.getParameter("prodseq")));
+		String url = "https://www.youtube.com/embed/" +mtfRequest.getParameter("vidurl").split("be/")[1];
+		adv.setVidurl(url);
+		adv.setIntro(mtfRequest.getParameter("storedetail"));
 		adv.setStatus("대기");
 		adservice.insertAD(adv);
 		return "redirect:welcome";

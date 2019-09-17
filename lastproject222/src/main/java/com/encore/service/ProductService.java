@@ -32,4 +32,5 @@ public interface ProductService {
 	void afterpaymnet(Long seq,Long idnum);
 	
 	void deleteProduct(Long seq);
+	Product getProd(Long seq);
 }

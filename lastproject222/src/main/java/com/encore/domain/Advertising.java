@@ -27,7 +27,9 @@ public class Advertising {
 	
 	private int smallad;  //추천상품광고선택인가
 	
-	private int prodseq;  //선택한 제품번호
+	private Long prodseq;  //선택한 제품번호
+	
+	private String intro;	//광고등록할 때 쓴 소개글
 	
 	private String vidurl; //입력받은 url(or 동영상의 저장경로 주소)
 	

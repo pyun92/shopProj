@@ -37,6 +37,9 @@ public class Store {
 	private String storefile;//사업자등록증
 	
 	@Column(nullable = false)
+	private String storeimg;//상점프사
+	
+	@Column(nullable = false)
 	private String storeemail;//사업자이메일
 	
 	@Column(nullable = false)

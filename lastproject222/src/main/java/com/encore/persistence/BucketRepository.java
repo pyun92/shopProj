@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -31,8 +33,9 @@ public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	
 	@Modifying
 	@Transactional
-	@Query(value ="update bucket set condition='cancel' where orderseq=?1",nativeQuery = true)
+	@Query(value ="update bucket set condition='cancel' where bucketseq=?1",nativeQuery = true)
 	void cancelbucket(Long num);
 	
+	Page<Bucket> findByStoreseq(Long seq,Pageable pageable);
 	List<Bucket> findByStoreseq(Long seq);
 }

@@ -91,6 +91,7 @@ font-weight: bold;
 		<th>배송비</th>
 		<th>판매자 명</th>
 		<th>주문 금액</th>
+		<th>배송 상태</th>
 		</tr>
 		<!-- 상품 시작 -->
 
@@ -137,6 +138,10 @@ font-weight: bold;
 		<td th:text="${jude.deliveryfee}" class="item-deliveryfee"></td>
 		<td th:text="${jude.sellername}"></td>
 		<td class="cal-price1" th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}" th:text="(${jude.price}*${jude.quantity}-${jude.discount}*${jude.quantity}+2500+${option.optionprice}*${jude.quantity})+원"></td>
+		<td  th:if="${jude.condition}=='cancel'">주문이 취소됨</td>
+		<td  th:if="${jude.condition}=='payment'">배송 준비중</td>
+		<td  th:if="${jude.condition}=='complete'">배송 준비중</td>
+		
 		</tr>
 		
 		

@@ -42,17 +42,17 @@
 				<table class="highlight centered">
 				<thead>
 					<tr>
-					<th>이름</th><th>아이디</th><th>전화번호</th><th>생년월일</th><th>주소</th><th>분류</th>
+					<th>table번호</th><th>상품번호</th><th>1번 시간대</th><th>2번 시간대</th><th>영상 url</th><th>상태</th><th>설정</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="list:${userlist}">
-						<td th:text="${list.username}"></td>
-						<td th:text="${list.userid}"></td>
-						<td th:text="${list.phone}"></td>
-						<td th:text="${list.birthday}"></td>
-						<td th:class="address" th:text="${list.address1}+${list.address2}"></td>
-						<td th:class="level" th:text="${list.manage_level}"></td>
+					<tr th:if="${list}!=null" th:each="timetable:${list}">
+						<td th:text="${timetable.timeseq}"></td>
+						<td th:text="${timetable.productseq}"></td>
+						<td th:text="${timetable.time1}"></td>
+						<td th:text="${timetable.time2}"></td>
+						<td th:text="${timetable.videourl}"></td>
+						<td >여기는 추가할 거 </td>
 					</tr>
 				</tbody>
 				</table>
@@ -67,24 +67,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
 $(function(){
-	$(".address").each(function(i){
-		if($(this).text()=='nullnull'||$(this).text()=='null'){
-			$(this).text("");
-		}
-	});
-	
-	$(".level").each(function(i){
-		var level=$(this).html();
-		var gubun;
-		if(level==0){
-			gubun="일반회원";	
-		}else if(level==1){
-			gubun="상점";
-		}else{
-			gubun="관리자";
-		}
-		$(this).text(gubun);
-	});
 });
 </script>
 
