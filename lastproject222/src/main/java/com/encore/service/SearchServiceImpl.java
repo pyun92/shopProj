@@ -45,7 +45,7 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<Product> searchProd(String word) {
 		List<Product> list = null;
-		String qstr = "from Product WHERE name like :pname or categorybig like :pcategorybig or categorysmall like :pcategorysmall";
+		String qstr = "from Product WHERE proname like :pname or categorybig like :pcategorybig or categorysmall like :pcategorysmall";
 		Query query = entityManager.createQuery(qstr).setParameter("pname", "%" + word + "%")
 				.setParameter("pcategorybig", "%" + word + "%").setParameter("pcategorysmall", "%" + word + "%");
 		list = query.getResultList();
