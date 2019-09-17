@@ -176,7 +176,7 @@ public class ProductController {
         	imgService.insertProdImg(img.get(i));
         }
         
-        //대표이미지 수정됬으면 넘기기
+        //대표이미지 수정됬으면 넘기기fgg
         MultipartFile main_img=mtfReqeust.getFile("main_img");
         List<MultipartFile> img_array=mtfReqeust.getFiles("files");//제품이미지
         
