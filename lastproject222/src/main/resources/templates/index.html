@@ -59,9 +59,18 @@ html .pullheight {
 	margin-top: 200px;
 }
 
-img {
+.user-view img {
 	height: 100%;
 	width: 100%;
+}
+
+#container{
+margin-top: 20px;
+}
+.black-text.name{
+font-size: 150%;
+font-weight: bold;
+
 }
 </style>
 </head>
@@ -69,7 +78,7 @@ img {
 
 
 <body>
-	<div class="container" id="container">
+	<div class="container" id="container" >
 		<div class="row ">
 			<div th:replace="shopside :: shopside"></div>
 
@@ -92,14 +101,6 @@ img {
 
 		</div>
 	</div>
-
-	<div class="carousel carousel-slider">
-		<a class="carousel-item" href="#one!"><img src="image/a.jpg"></a>
-		<a class="carousel-item" href="#two!"><img src="image/a.jpg"></a>
-		<a class="carousel-item" href="#three!"><img src="image/a.jpg"></a>
-		<a class="carousel-item" href="#four!"><img src="image/a.jpg"></a>
-	</div>
-
 
 	<th:block th:include="footer.html"></th:block>
 

@@ -114,10 +114,7 @@ public class BoardController {
 	}
 	
 
-	@GetMapping("/product_insert")
-	public void product_insert() {
 	
-	}
 
 	/*
 	 * @GetMapping("/jumoon") public void jumoon() {

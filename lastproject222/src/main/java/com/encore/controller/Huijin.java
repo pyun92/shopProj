@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,7 +79,7 @@ public class Huijin {
 		model.addAttribute("ordersize",bucketsize);
 		model.addAttribute("options",optionservice.findoption());
 		model.addAttribute("list", listjumoon);
-		
+		model.addAttribute("store", shopservice.findbyid(user.getUserseq()));
 		return "baesong_sj";
 		
 	}
@@ -141,5 +142,11 @@ public class Huijin {
 			myinfo.receive(seq);
 		}
 		
-	
+		@GetMapping("/product_insert")
+		public String product_insert(@ModelAttribute("data") Userdata user,Model model) {
+			model.addAttribute("store", shopservice.findbyid(user.getUserseq()));
+			return "product_insert";
+		
+		}
+		
 }

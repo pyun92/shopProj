@@ -122,7 +122,7 @@ public class ProductController {
 	public void product_getList_sj(@ModelAttribute("data") Userdata user,Model model ,Product proc) {
 		List<Product> proclist= service.getProdList(user.getUserseq());
 		List<ProductImg> procimg =imgService.getDetailNum();
-		
+		model.addAttribute("store", shopservice.findbyid(user.getUserseq()));
 		model.addAttribute("proc",proclist);
 		model.addAttribute("procimg",procimg);
 	}

@@ -85,36 +85,24 @@ html .pullheight {
 .category{
 	background-color: #e0e0e0;
 }
+#container{
+margin-top: 20px;
+}
+.black-text.name{
+font-size: 150%;
+font-weight: bold;
 
+}
 </style>
 </head>
 <body>
-	<div class="container">
+		<div class="container" id="container">
 	<div class="row">
 		<!-- 배너  -->
-		<div class="col s3 pullheight grey lighten-5">
-				<ul id="slide-out" class=" center-align">
-					<li><div class="user-view">
-							<a href="#name"><span class="black-text name">감자탕 만드는
-									남자</span></a><br> <br> <a href="#user"><img class="img circle"
-								src="image/a.jpg"></a><br> <br> <br>
-							<div>
-								<span class="black-text">안녕하세요 <label id="editorname" th:text="${session['data'].userid}"></label>니다.</span>
-							</div>
-
-						</div></li>
-					<li class="border1"><a class="black-text" href="#!">판매목록
-							보기</a></li>
-					<li class="border1"><a class="black-text" href="sjTimeLine.html">담벼락(공지사항)
-							관리</a></li>
-					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
-					<li class="border1"><a class="black-text" href="product_insert.html">상품등록</a></li>
-					<li class="border1"><a class="black-text" href="product_getList_sj.html">상품관리</a></li>
-					<li><div class="divider paddingup200"></div></li>
-					<li><a class="subheader">감자탕을 만드는 남자</a></li>
-					<li><a class="waves-effect" href="#!">copyright-민성민성</a></li>
-				</ul>
-		</div>
+	<div th:replace="shopside :: shopside"></div>
+		<!-- 상품 이미지 버튼 -->
+		
+		
 	<form method="post" enctype="multipart/form-data" id="insertForm">
 		<!-- 상품 이미지 버튼 -->
 		<div class="col s9">

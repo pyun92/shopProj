@@ -173,13 +173,12 @@ font-size: 15px;
 		<td  th:if="${jude.condition}=='cancel'" style="color: red">주문이 취소됨</td>
 		<td  th:if="${jude.condition}=='payment'" style="color: green ;text-align: center;">
 		<p><a class="btn cancelbtn1">상품 취소하기</a></p>
-		
 		배송 준비중</td>
 		<input type="hidden" th:value="${jude.bucketseq}" class="jumoonlist-bucseq"></input>
 		
 		<td  th:if="${jude.condition}=='complete' or ${jude.condition}=='receive'" style="color: blue">
 		<p><a href="#" class="received btn" th:if="${jude.condition}=='complete'">상품 수령 확인</a></p>
-		<p class="bfreceived" th:if="${jude.condition}=='complete'">배송 준비중</p>
+		<p class="bfreceived" th:if="${jude.condition}=='complete'">배송 중</p>
 		<p  th:if="${jude.condition}=='receive'">상품 수령 완료</p>
 		<p  th:if="${jude.condition}=='receive'"><a href="/review"class="btn">상품 후기 작성하기</a></p>
 		</td>
@@ -296,7 +295,7 @@ font-size: 15px;
 	$('.received').on('click',function(){
 		var index=$(".received").index(this);
 		var seq=$(".jumoonlist-bucseq:eq("+index+")").val();
-		var choose=confirm("상품을 수령을 하셨습니다");
+		var choose=confirm("상품을 수령을 하셨습니까?");
 		alert("seq"+seq);
 		 if(choose){
  			$.ajax({
