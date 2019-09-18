@@ -23,7 +23,7 @@ public class Advertising {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "ADVERTISING")
 	private Long adseq;
 	
-	private int bigad;    //대문광고 선택인가
+	private int bigad;    //대문광고 선택인가(0-미신청,1신청,2-진행중 3-완료(3번은 일단 안 넣음))
 	
 	private int smallad;  //추천상품광고선택인가
 	

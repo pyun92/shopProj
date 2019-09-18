@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.encore.domain.Advertising;
+import com.encore.domain.Product;
 import com.encore.domain.Store;
 import com.encore.service.AdminService;
 import com.encore.service.AdvertisingService;
@@ -114,6 +115,13 @@ public class AdminController {
 		
 		return mav;
 	}
+	// 추천광고 설정
+	@RequestMapping("/admin_smallad")
+	public Model admin_smallad(Model model) {
+		model.addAttribute("adlist", adservice.findAll());
+		model.addAttribute("list", adservice.findAdProduct()); 
+		return model;
+	}
 	
 	//광고 쳌쳌
 	@GetMapping(value = "/addel")
@@ -147,7 +155,6 @@ public class AdminController {
 			model.addAttribute("store",	shopservice.findbyid(prodservice.getProd(ad.getProdseq()).getStoreseq()));
 			//상점과 상점소개글
 			model.addAttribute("ad", ad);	//ad소개글, url
-
 			//이대로만 넣을 시 타임테이블 도메인 수정해야함
 			
 			return "admin_ad_update";

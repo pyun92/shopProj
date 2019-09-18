@@ -20,6 +20,10 @@ html {
 	height: 660px;
 }
 
+.align2 {
+	height: 450px;
+}
+
 .carousel.carousel-slider {
 	width: 100%;
 	height: 90%;
@@ -120,12 +124,17 @@ section {
 #icon a {
 	align: center;
 }
+
+.card2 {
+	height: 220%;
+	width: 130%;
+}
 </style>
 </head>
 <body>
 	<!-- 메뉴바 -->
 	<header th:replace="admin_main :: mainHead"> </header>
-	<section>
+	<section th:if="${ad.bigad}==1" class="bigadreg">
 		<div class="container row grey lighten-3">
 			<div class="col s3 align1">
 				<div class="col s12">
@@ -171,21 +180,168 @@ section {
 				</div>
 			</div>
 			<div class="col s12" style="border-bottom: 2px solid grey"></div>
-			<div class="col s6 offset-s3" style="margin-top: 20px; margin-bottom: 20px">
-		<button class="btn" onclick="gotable()">타임테이블로 올리기</button>
-		<button class="btn" style="width: 120px" onclick="deladv()">광고삭제</button>
-		<button class="btn" style="width: 120px" onclick="javascript:location.href = 'admin_advertising'">돌아가기</button>
+			<div th:if="${ad.status}=='승인'" class="col s6 offset-s3"
+				style="margin-top: 20px; margin-bottom: 20px">
+				<a onclick="gotable()" th:href="@{/gotable(adseq=${ad.adseq})}"><button
+						class="btn">타임테이블로 올리기</button></a> <a
+					th:href="@{/addel(adseq=${ad.adseq})}"><button
+						class="btn delbtnn" style="width: 120px">광고삭제</button></a>
+				<button class="btn" style="width: 120px"
+					onclick="javascript:location.href = 'admin_advertising'">돌아가기</button>
+			</div>
+			<div class="col s6 offset-s5" th:if="${ad.status}=='대기'"
+				style="margin-top: 20px; margin-bottom: 20px">
+				<button class="btn" style="width: 120px"
+					onclick="javascript:location.href = 'admin_advertising'">돌아가기</button>
+			</div>
 		</div>
-		</div>
-		
-		
 	</section>
+	<section th:if="${ad.smallad}==1" class="smalladreg">
+		<div class="container row grey lighten-3">
+			<div class="col s3 align2 offset-s4">
+				<p>추천광고 집행 미리보기</p>
+				<div class="col s12 4d ww1">
+					<h5>추천 상품</h5>
+					<div class="card card2 ">
+						<div class="card-image">
+							<th:block th:each="img:${prodimg}"
+								th:if="${img.imgnum}==${product.productseq}">
+								<img th:src="@{../upload/}+${img.fileName}">
+						</div>
+						<div class="card-content ">
+							<p th:text="${ad.intro}"></p>
+							<p th:text="${product.price}"></p>
+						</div>
+						</th:block>
+					</div>
+				</div>
+
+			</div>
+			<div class="col s12" style="border-bottom: 2px solid grey"></div>
+			<div class="col s6 offset-s3" th:if="${ad.status}=='승인'"
+				style="margin-top: 20px; margin-bottom: 20px">
+				<a onclick="gosmallad()" th:href="@{/gosmallad(adseq=${ad.adseq})}"><button
+						class="btn">추천광고로 올리기</button></a> <a
+					th:href="@{/addel(adseq=${ad.adseq})}"><button
+						class="btn delbtnn" style="width: 120px">광고삭제</button></a>
+				<button class="btn" style="width: 120px"
+					onclick="javascript:location.href = 'admin_advertising'">돌아가기</button>
+			</div>
+			<div class="col s6 offset-s5" th:if="${ad.status}=='대기'"
+				style="margin-top: 20px; margin-bottom: 20px">
+				<button class="btn" style="width: 120px"
+					onclick="javascript:location.href = 'admin_advertising'">돌아가기</button>
+			</div>
+
+			<!-- 			여기가 컨테이너 닫는 곳 밑에가 -->
+		</div>
+
+
+	</section>
+
+	<!-- *********************************************************************미리보기용 -->
+	<!-- *********************************************************************미리보기용 -->
+	<section th:if="${ad.bigad}==2" class="bigadreg">
+		<div class="container row grey lighten-3">
+			<div class="col s3 align1">
+				<div class="col s12">
+
+					<h5 class="center-align">
+						<i class="small material-icons">shopping_cart</i>영상 속 상점 들르기
+					</h5>
+					<p th:text="${ad.vidurl}" hidden="hidden" class="hdurl"></p>
+				</div>
+				<div class="col s12 ">
+					<div class="card center-align">
+						<div class="card-image">
+							<img th:src="@{../storeimages/}+${store.storeimg}">
+						</div>
+						<div class="card-content center-align">
+							<p th:text="${store.storename}"></p>
+						</div>
+					</div>
+				</div>
+
+				<div class="col s12 4d ww1">
+					<div class="card center-align">
+						<div class="card-image">
+							<th:block th:each="img:${prodimg}"
+								th:if="${img.imgnum}==${product.productseq}">
+								<img th:src="@{../upload/}+${img.fileName}">
+							</th:block>
+						</div>
+						<div class="card-content center-align">
+							<p th:text="${ad.intro}"></p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="col s9 align1">
+				<div class="carousel carousel-slider" id="video_main">
+					<a class="carousel-item" href="#one!"> <iframe width="100%"
+							height="100%" class="if1" th:src="${ad.vidurl}" frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>
+				</div>
+			</div>
+			<div class="col s12" style="border-bottom: 2px solid grey"></div>
+			<div class="col s6 offset-s3"
+				style="margin-top: 20px; margin-bottom: 20px">
+				<a onclick="gotable()" th:href="@{/gotable(adseq=${ad.adseq})}"><button
+						class="btn">타임테이블로 올리기</button></a> <a
+					th:href="@{/addel(adseq=${ad.adseq})}"><button
+						class="btn delbtnn" style="width: 120px">광고삭제</button></a>
+				<button class="btn" style="width: 120px"
+					onclick="javascript:location.href = 'admin_advertising'">돌아가기</button>
+			</div>
+		</div>
+	</section>
+	<section th:if="${ad.smallad}==2" class="smalladreg">
+		<div class="container row grey lighten-3">
+			<div class="col s3 align2 offset-s4">
+				<p>추천광고 집행 미리보기</p>
+				<div class="col s12 4d ww1">
+					<h5>추천 상품</h5>
+					<div class="card card2 ">
+						<div class="card-image">
+							<th:block th:each="img:${prodimg}"
+								th:if="${img.imgnum}==${product.productseq}">
+								<img th:src="@{../upload/}+${img.fileName}">
+						</div>
+						<div class="card-content ">
+							<p th:text="${ad.intro}"></p>
+							<p th:text="${product.price}"></p>
+						</div>
+						</th:block>
+					</div>
+				</div>
+
+			</div>
+			<div class="col s12" style="border-bottom: 2px solid grey"></div>
+			<div class="col s6 offset-s3"
+				style="margin-top: 20px; margin-bottom: 20px">
+				<a onclick="gosmallad()" th:href="@{/gosmallad(adseq=${ad.adseq})}"><button
+						class="btn">추천광고로 올리기</button></a> <a
+					th:href="@{/addel(adseq=${ad.adseq})}"><button
+						class="btn delbtnn" style="width: 120px">광고삭제</button></a>
+				<button class="btn" style="width: 120px"
+					onclick="javascript:location.href = 'admin_advertising'">돌아가기</button>
+			</div>
+
+		</div>
+	</section>
+	<!-- *********************************************************************미리보기용 -->
+	<!-- *********************************************************************미리보기용 -->
+
+
+
 	<!-- 자바스크립트 -->
 	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script>
-		
 		document.addEventListener('DOMContentLoaded', function() {
 			var elems = document.querySelectorAll('.carousel');
 			var instances = M.Carousel.init(elems, {
@@ -194,50 +350,59 @@ section {
 			});
 		});
 		$(function() {
-			
+
 		});
-		
+
 		function getparam(name) {
-		    var params = location.search.substr(location.search.indexOf("?") + 1);
-		    var sval = "";
-		    params = params.split("&");
-		    for (var i = 0; i < params.length; i++) {
-		        temp = params[i].split("=");
-		        if ([temp[0]] == name) { sval = temp[1]; }
-		    }
-		    return sval;
+			var params = location.search
+					.substr(location.search.indexOf("?") + 1);
+			var sval = "";
+			params = params.split("&");
+			for (var i = 0; i < params.length; i++) {
+				temp = params[i].split("=");
+				if ([ temp[0] ] == name) {
+					sval = temp[1];
+				}
+			}
+			return sval;
 
 		}
-		
-		function gotable(){
-			var seq = getparam("adseq");
-			
-			
-			
+
+		function gotable() {
+			var chek = confirm("정말 타임테이블에 올리시겠습니까?");
+			if (chek) {
+				alert("타임테이블로 이동완료");
+				return;
+			} else {
+				alert(" 취소되었습니다.");
+				return false;
+			}
+
 		}
-		function deladv(){
-			var seq = getparam("adseq");
+
+		function gosmallad() {
+			var chek = confirm("정말 추천광고에 올리시겠습니까?");
+			if (chek) {
+				alert("추천광고로 이동완료");
+				return;
+			} else {
+				alert(" 취소되었습니다.");
+				return false;
+			}
+
+		}
+
+		$('.delbtnn').click(function() {
 			var chek = confirm("정말 삭제 하시겠습니까?");
 			var a = $(this).val();
-			var alldata = {
-				"adseq" : seq
-			};
-			
 			if (chek) {
-				$.ajax({
-					url : "/addel(adseq="+seq+")",
-					type : 'GET',
-					data : alldata,
-					success : function(data) {
-						alert("삭제가 완료되었습니다.");
-						location.reload(true);
-					}
-				});
+				alert("삭제완료");
+				return;
 			} else {
 				alert("삭제가 취소되었습니다.");
+				return false;
 			}
-			
-		}
+		});
 	</script>
 
 </body>

@@ -25,10 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.encore.domain.Advertising;
 import com.encore.domain.Product;
 import com.encore.domain.ProductImg;
+import com.encore.domain.Timetable;
 import com.encore.domain.Userdata;
 import com.encore.service.AdvertisingService;
 import com.encore.service.ProductImgService;
 import com.encore.service.ProductService;
+import com.encore.service.TimetableService;
 
 @SessionAttributes("data")
 @Controller
@@ -40,7 +42,10 @@ public class minsung {
 	private ProductImgService imgService;
 	@Autowired
 	private AdvertisingService adservice;
-
+	@Autowired
+	private TimetableService tservice;
+	
+	
 	@RequestMapping("/advertisereg")
 	public void advertisereg(@ModelAttribute("data") Userdata user, Model model) {
 
@@ -62,16 +67,41 @@ public class minsung {
 	
 	@RequestMapping(value = "/adregform" ,method = RequestMethod.POST)
 	public String adregform(MultipartHttpServletRequest mtfRequest) {
+		String url="";
 		Advertising adv = new Advertising();
 		adv.setBigad(Integer.parseInt(mtfRequest.getParameter("ad1")));
 		adv.setSmallad(Integer.parseInt(mtfRequest.getParameter("ad2")));
 		adv.setProdseq(Long.parseLong(mtfRequest.getParameter("prodseq")));
-		String url = "https://www.youtube.com/embed/" +mtfRequest.getParameter("vidurl").split("be/")[1];
+		if(mtfRequest.getParameter("vidurl").length()!=0) {
+			url = "https://www.youtube.com/embed/" +mtfRequest.getParameter("vidurl").split("be/")[1];
+		}
 		adv.setVidurl(url);
 		adv.setIntro(mtfRequest.getParameter("storedetail"));
 		adv.setStatus("대기");
 		adservice.insertAD(adv);
 		return "redirect:welcome";
+	}
+	
+	@GetMapping(value = "/gotable")
+	public ModelAndView gotable(ModelAndView mav,  @RequestParam(value = "adseq") String adseq) { 
+		Long seq = Long.parseLong(adseq);
+		Timetable tb = new Timetable();
+		tb.setProductseq(seq);
+		tb.setVideourl(adservice.findAdvertising(seq).getVidurl());
+		tservice.insertTB(tb);
+		adservice.updatebigAD(seq);	//이거 상태만 바꾸고 그대로 둬서 조회는 안되게 만들어놓는게 좋을 듯
+		mav.setViewName("admin_advertising");
+		mav.addObject("list", adservice.findAll());
+		return mav;
+	}
+	
+	@GetMapping(value = "/gosmallad")
+	public ModelAndView gosmallad(ModelAndView mav,  @RequestParam(value = "adseq") String adseq) { 
+		Long seq = Long.parseLong(adseq);
+		adservice.updateSmallAD(seq);	
+		mav.setViewName("admin_advertising");
+		mav.addObject("list", adservice.findAll());
+		return mav;
 	}
 
 }

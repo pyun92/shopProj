@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 머티리얼 라이즈 css파일 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+.nav-wrapper {
+	padding-left: 10px;
+	padding-rigth: 10px;
+}
+
+section {
+	background-color: #e0e0e0;
+	height: 100%;
+	margin-left: 150px;
+}
+/* detail.html */
+.broad {
+	height: 100px;
+}
+
+#icon a {
+	align: center;
+}
+</style>
+</head>
+<body>
+	<!-- 메뉴바 -->
+	<header th:replace="admin_main :: mainHead"> </header>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col s12">
+					<div class="card">
+						<table class="highlight centered">
+							<thead>
+								<tr>
+									<th>광고번호</th>
+									<th>제품명</th>
+									<th>광고문구</th>
+									<th>미리보기</th>
+									<th>상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${list}!=null" th:each="prod:${list}">
+								<th:block th:each="adv: ${adlist}" th:if="${adv.prodseq}==${prod.productseq}">
+								<td th:text="${adv.adseq}"></td>
+									<td  th:text="${prod.proname}"></td>
+									<td  th:text="${adv.intro}"></td>
+									<td > <a th:href="@{/setad(adseq=${adv.adseq})}"><button th:value="${adv.adseq}" class="btn setad">미리보기</button> </td></a>
+									<td th:if="${adv.status}=='승인'">
+									<button th:value="${adv.adseq}" class="btn setad">광고설정</button></td>
+								</tr>
+								<tr th:if="${list}==null">
+									<td colspan="7">진행중인 추천광고가 없습니다.</td>
+								</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- 자바스크립트 -->
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script>
+		$(function() {
+
+		});
+
+		
+	</script>
+
+</body>
+</html>

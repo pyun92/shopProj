@@ -58,11 +58,16 @@ section {
 							<tbody>
 								<tr th:if="${list}!=null" th:each="adv:${list}">
 									<td th:text="${adv.adseq}"></td>
-									<td th:text="${adv.bigad}"></td>
-									<td th:text="${adv.smallad}"></td>
-									<td th:text="${adv.prodseq}"></td>
+									<td th:if="${adv.bigad}==2" th:text="진행중"></td>
+									<td th:if="${adv.bigad}==1" th:text="신청"></td>
+									<td th:if="${adv.bigad}==0" th:text="미신청"></td>
+									<td th:if="${adv.smallad}==2" th:text="진행중"></td>
+									<td th:if="${adv.smallad}==1" th:text="신청"></td>
+									<td th:if="${adv.smallad}==0" th:text="미신청"></td>
+									<td  th:text="${adv.prodseq}"></td>
 									<td><a th:href="${adv.vidurl}" th:text="${adv.vidurl}"></a></td>
-									<td th:text="${adv.status}"></td>
+									<td th:if="${adv.status}=='대기'"><a th:href="@{/setad(adseq=${adv.adseq})}" th:text="${adv.status}"></a></td>
+									<td th:unless="${adv.status}=='대기'" th:text="${adv.status}"></td>
 									<td th:if="${adv.status}=='대기'"><button
 											th:value="${adv.adseq}" class="btn okb">승인</button> <a
 										th:href="@{/addel(adseq=${adv.adseq})}"><button

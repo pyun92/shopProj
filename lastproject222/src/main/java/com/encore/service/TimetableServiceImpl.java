@@ -19,6 +19,11 @@ public class TimetableServiceImpl implements TimetableService {
 		List<Timetable> list = (List<Timetable>)rep.findAll();
 		return list;
 	}
+
+	@Override
+	public void insertTB(Timetable tb) {
+		rep.save(tb);
+	}
 	
 	
 }

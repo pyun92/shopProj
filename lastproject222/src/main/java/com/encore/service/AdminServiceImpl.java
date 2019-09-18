@@ -14,6 +14,7 @@ import com.encore.domain.Product;
 import com.encore.domain.Report;
 import com.encore.domain.Store;
 import com.encore.domain.Userdata;
+import com.encore.persistence.AdvertisingRepository;
 import com.encore.persistence.LoginRepository;
 import com.encore.persistence.ProductRepository;
 import com.encore.persistence.ReportRepository;

@@ -2,18 +2,44 @@ package com.encore.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.encore.domain.Advertising;
+import com.encore.domain.Product;
 import com.encore.persistence.AdvertisingRepository;
+import com.encore.persistence.LoginRepository;
+import com.encore.persistence.ProductImgRepository;
+import com.encore.persistence.ProductRepository;
+import com.encore.persistence.ReportRepository;
+import com.encore.persistence.ShopRepository;
 
 @Service
 public class AdvertisingServiceImpl implements AdvertisingService {
 
 	@Autowired
 	private AdvertisingRepository rep;
-
+	@Autowired
+	private ProductRepository prodrep;
+	@Autowired
+	private ProductImgRepository prodimgrep;
+	@PersistenceContext
+	private EntityManager entityManager;
+	
+	
+	@Override
+	public List<Product> findAdProduct() {
+		List<Product>list = null;
+		String qstr = "from Product a where a.productseq in (select b.prodseq from Advertising b where b.smallad = 2)";
+		Query query = entityManager.createQuery(qstr);
+		list = query.getResultList();
+		return list;
+	}
+	
 	@Override
 	public List<Advertising> findAll() {
 		List<Advertising> list=(List<Advertising>)rep.findAll();
@@ -42,6 +68,23 @@ public class AdvertisingServiceImpl implements AdvertisingService {
 	public Advertising findAdvertising(Long num) {
 		return rep.findById(num).get();
 	}
+
+	@Override
+	public void updatebigAD(Long num) {
+		Advertising ad1 = rep.findById(num).get();
+		 ad1.setBigad(2);
+		 rep.save(ad1);
+		
+	}
+
+	@Override
+	public void updateSmallAD(Long seq) {
+		Advertising ad = rep.findById(seq).get();
+		ad.setSmallad(2);
+		rep.save(ad);
+	}
+
+	
 	
 	
 	

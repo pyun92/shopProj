@@ -138,7 +138,7 @@ html, body {
 								<th:block th:each="prod : ${prodlist}">
 									<li  th:value="${prod.productseq}" class="prodchoice"><a
 										th:text="${prod.proname}"></a></li>
-										<input type="hidden" th:value="${prod.productseq}" name="prodseq">
+										<input type="hidden"  class="prodseq" name="prodseq">
 								</th:block>
 							</ul>
 						</div>
@@ -175,6 +175,7 @@ html, body {
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script>
 		$(document).ready(function() {
+			var a;
 			$('.dropdown-trigger').dropdown();
 			$('#submit').click(function() {
 				
@@ -183,6 +184,8 @@ html, body {
 
 		$('.prodchoice').click(function() {
 			var val = $(this).val();
+			a = val;
+			$('.prodseq').val(a);
 			$.ajax({
 				async : true,
 				type : 'POST',
@@ -222,7 +225,7 @@ html, body {
 					} else if ($('#storedetail').val() == "") {
 						alert("상점소개문구를 작성해주세요");
 						return false;
-					} else if ($('.fileaddrchek').val() == ""
+					} else if ($('.ad1').val()==1 && $('.fileaddrchek').val() == ""
 							&& $('#vidurl').val() == "") {
 						alert("동영상의 주소를 입력하거나 동영상을 업로드 해주세요");
 						return false;

@@ -6,4 +6,5 @@ import com.encore.domain.Timetable;
 
 public interface TimetableService {
 	List<Timetable> findAll();
+	void insertTB(Timetable tb); 
 }
