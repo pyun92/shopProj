@@ -12,9 +12,10 @@ public interface AdvertisingService {
 	void insertAD(Advertising ad);
 	void deleteAD(Long num);
 	void updateADstat(Long num);
-	void updatebigAD(Long num);
 	Advertising findAdvertising(Long num);
 	List<Product> findAdProduct();
 	void updateSmallAD(Long seq);
-	
+	void cancleSmallAD(Long seq);
+	void updatebigAD(Long num);
+	void cancelbigAD(Long num);
 }

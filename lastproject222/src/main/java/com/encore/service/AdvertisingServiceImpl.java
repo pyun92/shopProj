@@ -76,6 +76,12 @@ public class AdvertisingServiceImpl implements AdvertisingService {
 		 rep.save(ad1);
 		
 	}
+	@Override
+	public void cancelbigAD(Long num) {
+		Advertising ad1 = rep.findById(num).get();
+		 ad1.setBigad(1);
+		 rep.save(ad1);
+	}	
 
 	@Override
 	public void updateSmallAD(Long seq) {
@@ -84,8 +90,14 @@ public class AdvertisingServiceImpl implements AdvertisingService {
 		rep.save(ad);
 	}
 
-	
-	
+	@Override
+	public void cancleSmallAD(Long seq) {
+		Advertising ad = rep.findById(seq).get();
+		ad.setSmallad(1);
+		rep.save(ad);
+		
+	}
+
 	
 	
 }

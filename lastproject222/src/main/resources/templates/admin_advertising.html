@@ -64,16 +64,20 @@ section {
 									<td th:if="${adv.smallad}==2" th:text="진행중"></td>
 									<td th:if="${adv.smallad}==1" th:text="신청"></td>
 									<td th:if="${adv.smallad}==0" th:text="미신청"></td>
-									<td  th:text="${adv.prodseq}"></td>
+									<td th:text="${adv.prodseq}"></td>
 									<td><a th:href="${adv.vidurl}" th:text="${adv.vidurl}"></a></td>
-									<td th:if="${adv.status}=='대기'"><a th:href="@{/setad(adseq=${adv.adseq})}" th:text="${adv.status}"></a></td>
+									<td th:if="${adv.status}=='대기'"><a
+										th:href="@{/setad(adseq=${adv.adseq})}"
+										th:text="${adv.status}"></a></td>
 									<td th:unless="${adv.status}=='대기'" th:text="${adv.status}"></td>
 									<td th:if="${adv.status}=='대기'"><button
 											th:value="${adv.adseq}" class="btn okb">승인</button> <a
 										th:href="@{/addel(adseq=${adv.adseq})}"><button
 												th:value="${adv}" class="btn delb">삭제</button></a></td>
-									<td th:if="${adv.status}=='승인'"><a th:href="@{/setad(adseq=${adv.adseq})}">
-									<button th:value="${adv.adseq}" class="btn setad">광고설정</button></a></td>
+									<td th:if="${adv.status}=='승인'"><a
+										th:href="@{/setad(adseq=${adv.adseq})}">
+											<button th:value="${adv.adseq}" class="btn setad">광고설정</button>
+									</a></td>
 								</tr>
 								<tr th:if="${list}==null">
 									<td colspan="7">신청된 광고가 없습니다.</td>
@@ -91,16 +95,22 @@ section {
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script>
-		$(function() {
-
-		});
-
 		$('.delb').click(function() {
 			var chek = confirm("정말 삭제 하시겠습니까?");
 			var a = $(this).val();
+			var alldata = {
+				"adseq" : a
+			};
 			if (chek) {
-				alert("삭제완료");
-				return;
+				$.ajax({
+					url : "/addel",
+					type : 'GET',
+					data : alldata,
+					success : function(data) {
+						alert("삭제완료.");
+						location.reload(true);
+					}
+				});
 			} else {
 				alert("삭제가 취소되었습니다.");
 				return false;
@@ -129,7 +139,6 @@ section {
 			}
 
 		});
-		
 	</script>
 
 </body>

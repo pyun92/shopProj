@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.encore.domain.Advertising;
 import com.encore.domain.Product;
 import com.encore.domain.Store;
+import com.encore.domain.Timetable;
 import com.encore.service.AdminService;
 import com.encore.service.AdvertisingService;
 import com.encore.service.EmailChkService;
@@ -42,19 +43,19 @@ public class AdminController {
 
 	@Autowired
 	private EmailChkService eService;
-	
+
 	@Autowired
 	private ProductService prodservice;
-	
+
 	@Autowired
 	private ProductImgService prodimgservice;
-	
+
 	@Autowired
 	private ShopService shopservice;
 
 	@Autowired
 	private AdvertisingService adservice;
-	
+
 	@Autowired
 	private TimetableService tservice;
 
@@ -112,31 +113,39 @@ public class AdminController {
 	@RequestMapping("/admin_timetable")
 	public ModelAndView admin_timetable(ModelAndView mav) {
 		mav.addObject("list", tservice.findAll());
-		
+		mav.addObject("adlist", tservice.findallad());
+		for (Advertising a : tservice.findallad()) {
+			System.out.println("광고 시퀀스");
+			System.out.println(a.getProdseq());
+		}
+		for (Timetable a : tservice.findAll()) {
+			System.out.println("Timetable 시퀀스");
+			System.out.println(a.getProductseq());
+		}
 		return mav;
 	}
+
 	// 추천광고 설정
 	@RequestMapping("/admin_smallad")
 	public Model admin_smallad(Model model) {
 		model.addAttribute("adlist", adservice.findAll());
-		model.addAttribute("list", adservice.findAdProduct()); 
+		model.addAttribute("list", adservice.findAdProduct());
 		return model;
 	}
-	
-	//광고 쳌쳌
-	@GetMapping(value = "/addel")
-	public ModelAndView addel(ModelAndView mav, HttpServletRequest req, Advertising adv) { // 컨트롤러 거치면서 매핑주소때문에 url이상한데
-																							// 어떻게 할까요
-		adservice.deleteAD(adv.getAdseq());
 
+	// 광고삭제
+	@GetMapping(value = "/addel")
+	public ModelAndView addel(ModelAndView mav, HttpServletRequest req, @RequestParam(value = "adseq") String adseq) { 
+		Long seq = Long.parseLong(adseq);
+		adservice.deleteAD(seq);
 		mav.setViewName("admin_advertising");
 		mav.addObject("list", adservice.findAll());
 		return mav;
 	}
-	
-	//광고승인
+
+	// 광고승인
 	@GetMapping(value = "/adok")
-	public ModelAndView adok(ModelAndView mav,  @RequestParam(value = "adseq") String adseq) { 
+	public ModelAndView adok(ModelAndView mav, @RequestParam(value = "adseq") String adseq) {
 		Long seq = Long.parseLong(adseq);
 		System.out.println(seq);
 		adservice.updateADstat(seq);
@@ -146,24 +155,70 @@ public class AdminController {
 		return mav;
 	}
 
-	//광고설정
-		@GetMapping(value = "/setad")
-		public String setad(@RequestParam(value = "adseq") String adseq, Model model) { 
-			Advertising ad =  adservice.findAdvertising(Long.parseLong(adseq));
-			model.addAttribute("product", prodservice.getProd(ad.getProdseq())); //상품
-			model.addAttribute("prodimg", prodimgservice.getProdImg(ad.getProdseq())); //상품이미지
-			model.addAttribute("store",	shopservice.findbyid(prodservice.getProd(ad.getProdseq()).getStoreseq()));
-			//상점과 상점소개글
-			model.addAttribute("ad", ad);	//ad소개글, url
-			//이대로만 넣을 시 타임테이블 도메인 수정해야함
-			
-			return "admin_ad_update";
-		}
+	// 광고설정
+	@GetMapping(value = "/setad")
+	public String setad(@RequestParam(value = "adseq") String adseq, Model model) {
+		Advertising ad = adservice.findAdvertising(Long.parseLong(adseq));
+		model.addAttribute("product", prodservice.getProd(ad.getProdseq())); // 상품
+		model.addAttribute("prodimg", prodimgservice.getProdImg(ad.getProdseq())); // 상품이미지
+		model.addAttribute("store", shopservice.findbyid(prodservice.getProd(ad.getProdseq()).getStoreseq()));
+		// 상점과 상점소개글
+		model.addAttribute("ad", ad); // ad소개글, url
+		// 이대로만 넣을 시 타임테이블 도메인 수정해야함
+
+		return "admin_ad_update";
+	}
+
+	@GetMapping(value = "/setad2")
+	public String setad2(@RequestParam(value = "adseq") String adseq, Model model) {
+		Advertising ad = adservice.findAdvertising(Long.parseLong(adseq));
+		model.addAttribute("product", prodservice.getProd(ad.getProdseq())); // 상품
+		model.addAttribute("prodimg", prodimgservice.getProdImg(ad.getProdseq())); // 상품이미지
+		model.addAttribute("store", shopservice.findbyid(prodservice.getProd(ad.getProdseq()).getStoreseq()));
+		model.addAttribute("ad", ad); 
+
+		return "admin_smallad_update";
+	}
+	
+	@GetMapping(value = "/setad3")
+	public String setad3(@RequestParam(value = "adseq") String adseq, Model model) {
+		Advertising ad = adservice.findAdvertising(Long.parseLong(adseq));
+		model.addAttribute("product", prodservice.getProd(ad.getProdseq())); // 상품
+		model.addAttribute("prodimg", prodimgservice.getProdImg(ad.getProdseq())); // 상품이미지
+		model.addAttribute("store", shopservice.findbyid(prodservice.getProd(ad.getProdseq()).getStoreseq()));
+		model.addAttribute("ad", ad); 
+
+		return "admin_bigad_update";
+	}
+	
+	//각각 업데이트창 띄우기----------------------------------------------------------------------------
+	
+	// 추천광고에서 제거하는거
+	@GetMapping(value = "/adcancel")
+	public String adcancel(@RequestParam(value = "adseq") String adseq) {
+		adservice.cancleSmallAD(Long.parseLong(adseq));
+		return "/admin_smallad";
+
+	}
+
+	// 광고업데이트하는거
+	@GetMapping(value = "/updateintro")
+	public String updateintro(@RequestParam(value = "adseq") String adseq) {
+		adservice.cancleSmallAD(Long.parseLong(adseq));
+		return "/admin_smallad";
+
+	}
+
+	@GetMapping(value = "/outtable")
+	public String outtable(@RequestParam(value = "adseq") String adseq) {
+		adservice.cancelbigAD(Long.parseLong(adseq));
+		tservice.deletetb(Long.parseLong(adseq));
+		return "/admin_timetable";
+	}
 	
 	@RequestMapping("/admin_advertising")
 	public ModelAndView admin_advertising(ModelAndView mav) {
 		mav.addObject("list", adservice.findAll());
-
 		return mav;
 	}
 

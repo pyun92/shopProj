@@ -49,19 +49,21 @@ section {
 									<th>광고번호</th>
 									<th>제품명</th>
 									<th>광고문구</th>
-									<th>미리보기</th>
-									<th>상태</th>
+									<th>광고설정</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr th:if="${list}!=null" th:each="prod:${list}">
-								<th:block th:each="adv: ${adlist}" th:if="${adv.prodseq}==${prod.productseq}">
-								<td th:text="${adv.adseq}"></td>
-									<td  th:text="${prod.proname}"></td>
-									<td  th:text="${adv.intro}"></td>
-									<td > <a th:href="@{/setad(adseq=${adv.adseq})}"><button th:value="${adv.adseq}" class="btn setad">미리보기</button> </td></a>
-									<td th:if="${adv.status}=='승인'">
-									<button th:value="${adv.adseq}" class="btn setad">광고설정</button></td>
+									<th:block th:each="adv: ${adlist}"
+										th:if="${adv.prodseq}==${prod.productseq}">
+										<td th:text="${adv.adseq}"></td>
+										<td th:text="${prod.proname}"></td>
+										<td th:text="${adv.intro}"></td>
+										</a>
+										<td th:if="${adv.status}=='승인'"><a
+											th:href="@{/setad2(adseq=${adv.adseq})}">
+												<button th:value="${adv.adseq}" class="btn setad">광고설정</button>
+										</a></td>
 								</tr>
 								<tr th:if="${list}==null">
 									<td colspan="7">진행중인 추천광고가 없습니다.</td>
@@ -83,8 +85,6 @@ section {
 		$(function() {
 
 		});
-
-		
 	</script>
 
 </body>
