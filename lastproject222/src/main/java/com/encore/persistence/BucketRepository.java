@@ -11,9 +11,11 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.encore.domain.Bucket;
 
+@Repository
 public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	
 	List<Bucket> findByUserseq(Long num);
@@ -49,4 +51,8 @@ public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	Page<Bucket> findByStoreseq(Long seq,Pageable pageable);
 	
 	List<Bucket> findByStoreseq(Long seq);
-}
+	
+//	@Query(value ="select * from bucket where userseq=?1 and condition='complete'",nativeQuery = true)
+	@Query(value ="select b from Bucket b where b.userseq=?1 and condition='complete'")
+	List<Bucket> orderComplete(Long userseq); 
+} 

@@ -59,17 +59,8 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void updateLevel(Long seq) {
 		Userdata ouser=loginRepository.findById(seq).get();
-		Userdata nuser=new Userdata();
-		nuser.setAddress1(ouser.getAddress1());
-		nuser.setAddress2(ouser.getAddress2());
-		nuser.setBirthday(ouser.getBirthday());
-		nuser.setManage_level(1L);
-		nuser.setPassword(ouser.getPassword());
-		nuser.setPhone(ouser.getPhone());
-		nuser.setUserid(ouser.getUserid());
-		nuser.setUsername(ouser.getUsername());
-		nuser.setUserseq(ouser.getUserseq());
-		loginRepository.save(nuser);
+		ouser.setManage_level(1L);
+		loginRepository.save(ouser);
 	}
 
 	@Override

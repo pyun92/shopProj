@@ -271,18 +271,24 @@ $(function(){
 	//제출버튼 눌렀을때
 	$('#product_submit').on("click",function(){
 		 event.preventDefault();
-
+		 
 		 //유효성 검사
-		 if($('input[name="main_img"]')==0){
+		 if(!$('input[name="main_img"]').val()){
 			 alert("대표 이미지는 반드시 등록해야 합니다.");
 			 return;
 		 }
-		 if($('input[name="proname"]')=='' && $('input[name="price"]')=='' 
-				 && $('input[name="discount"]')=='' && $('input[name="discount"]')==''
-				 && $('input[name="jaego"]')==''){
+		 
+		 if($('input:radio[name="option"]').is(':checked')==false){
+			 alert("옵션여부를 선택해주세요");
+			 return;
+		 }
+		 
+		 if($('input[name="proname"]').val()=='' && $('input[name="price"]').val()=='' 
+				 && $('input[name="discount"]').val()==''  && $('input[name="jaego"]').val()==''){
 			 alert("모든 입력란을 입력해주세요!");
 			 return;
 		 }
+		
 		//190916--main_img 라는 값으로 넘기기
 		$("#product_detail").html(iframe.find('body').html());
 		

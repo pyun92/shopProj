@@ -41,14 +41,6 @@
 				<button class="btn red accent-1" id="stop_15">15일 정지</button>
 				<button class="btn red accent-1" id="stop_30">30일 정지</button>
 			</div>
-			<div class="col s12 card">
-				<!-- <ul id="tabs-swipe-demo" class="tabs">
-					<li class="tab col s6"><a href="#index1">상점</a></li>
-					<li class="tab col s6"><a href="#index2">회원</a></li>
-					<li></li>
-				</ul> -->
-				<!-- 상점테이블 -->
-				<!-- <div id="index1" class="col s12 white"> -->
 					<table>
 						<thead>
 							<tr><th></th><th>상점</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>경고해제날짜</th></tr>
@@ -70,28 +62,7 @@
 							</tr>
 						</tbody>
 					</table>
-				<!-- </div> -->
-				
-				<!-- 회원 -->
-				<!-- <div id="index2" class="col s12 white">
-					<table>
-						<thead>
-							<tr><th></th><th>회원아이디</th><th>상품</th><th>신고사유</th><th>신고날짜</th><th>경고해제날짜</th></tr>
-						</thead>
-						<tbody>
-							<tr class="rows" th:each="list2:${userlist}">
-								<td><label><input type="checkbox" class="reportitem"/><span></span></label></td>
-								<td th:hidden="seq"><input type="hidden" name="seq" th:value="${list2.reportseq}"></td>
-								<td th:text="${list2.reportname}"></td>
-								<td th:text="${list2.productseq}"></td>
-								<td><a href="#modal-report" class="modal-trigger subject"><th:block th:text="${list2.reportsubject}"></th:block></a></td>
-								<td th:class="detail" th:text="${list2.reportdetail}" style="display:none;"></td>
-								<td th:text="${list2.reportdate}"></td>
-								<td class="confirmdate" th:text="${list2.confirmdate}"></td>
-							</tr>
-						</tbody>
-					</table>
-				</div> -->
+
 			</div>
 			<!-- 모달창 신고내역 상세보기만 가능 -->
 			<div class="modal" id="modal-report">

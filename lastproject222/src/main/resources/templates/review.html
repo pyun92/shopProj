@@ -115,7 +115,6 @@ display: block;
 </style>
 </head>
 <body>
-
 	<div class="container row" >
 		<!-- 사이드바 불러오는 부분 -->
 		<th:block th:include="myinfoside.html"></th:block>
@@ -124,18 +123,14 @@ display: block;
 			<div class="recent-top">
 				<h1 class="txt">구매 후기 작성</h1> 
 			</div>
-			<div class="back-icon col s6 m6 l6">
-			<a href="#"> 
-			
-			</a> 
-			</div>
-		<div class="usericon col s6 m6 l6" >
+			<!-- <div class="back-icon col s6 m6 l6">
+			</div> -->
+		<!-- <div class="usericon col s6 m6 l6" >
 			<a href="#">
 			<div class="usericon-bg col s1 m1 l1" style="background-image: url('image/ba.jpg'); width: 32px;" ></div>
 			<strong>금손이</strong>
 			</a>
-		</div>
-	
+		</div> -->
 	
 		<div class="review-info">
 			<div class="review-head">
@@ -144,24 +139,22 @@ display: block;
 				<a href="#">마당발</a>
 			</div>
 			
-			<div class="item-score col s6 m6 l6"> 
+			<!-- <div class="item-score col s6 m6 l6"> 
 			<select class="item-score-select">
 			<option>★</option>
 			<option>★★</option>
 			<option>★★★</option>
 			<option>★★★★</option>
 			<option>★★★★★</option>
-			</select>
+			</select -->
 			</div>
 			
 			</div>
-			<h5 class="review-date"> 2019-08-20</h5>
-			
+<!-- 			<h5 class="review-date"></h5>
+ -->			
 			<div class="review-text"> 
 			<textarea rows="20" cols="100"></textarea> 
 			</div>
-			
-		  
 		        <div class="input_wrap" style="text-align: right;">
 		            <a href="javascript:" onclick="fileUploadAction();" class="btn">파일 업로드</a>
 		            <input type="file" id="input_imgs" multiple/>

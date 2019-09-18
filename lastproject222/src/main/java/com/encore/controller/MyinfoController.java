@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.encore.domain.Bucket;
 import com.encore.domain.ProductOrder;
 import com.encore.domain.Userdata;
+import com.encore.persistence.BucketRepository;
 import com.encore.service.MyinfoServiceImpl;
 import com.encore.service.OptionService;
 import com.encore.service.ProductServiceImpl;
@@ -35,7 +36,6 @@ public class MyinfoController {
 	
 	@Autowired
 	private ProductServiceImpl psl;
-	
 	
 	
 	@RequestMapping("/jumoon")
@@ -79,14 +79,15 @@ public class MyinfoController {
 	}
 	
 	@GetMapping("/myreview")
-	public String myReview(@ModelAttribute("data") Userdata data) {
-		
+	public String myReview(@ModelAttribute("data") Userdata data,Model model) {
+		System.out.println("데이터"+data.getUserseq());
+		model.addAttribute("completelist",myinfoservice.ordercompleteList(data.getUserseq()));
 		return "myreview";
 	}
 	
 	@GetMapping("/review")
 	public String review() {
-		return "review";
+		return "review2";
 	}
 	
 	@GetMapping("/myinfoside")

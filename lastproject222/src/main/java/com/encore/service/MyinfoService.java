@@ -11,7 +11,7 @@ import com.encore.domain.ProductOrder;
 
 public interface MyinfoService {
 	
-	Page<ProductOrder> listpage(Long seq,Pageable pageable);
+Page<ProductOrder> listpage(Long seq,Pageable pageable);
 	
 	List<ProductOrder> orderlist(Long seq);
 	
@@ -27,4 +27,5 @@ public interface MyinfoService {
 	
 	List<Bucket> jumoonsize(Long num);
 	
+	List<Bucket> ordercompleteList(Long seq);
 }

@@ -1,10 +1,11 @@
 <th:block th:include="main.html" ></th:block>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+
 .txt{
 font-size: 21px;
 font-family:맑은고딕;
@@ -24,6 +25,37 @@ font-size: 90%;
 padding: 20px; 
 margin: 0;
 background-color: #faf9f9;
+}
+
+.item-img{
+width: 80px;
+height: 80px;
+}
+
+/* insert.html의 css */
+.spimg{
+	overflow: hidden;
+	width:100%;
+	height:300px;
+}
+
+.sping img{
+	display: block;
+	max-width: 100%;
+	max-height: auto;
+	-ms-interpolation-mode: bicubic;
+}
+textarea{
+	height:100%;
+}
+.modal-main{
+	height:100%;
+	width:100%;
+}
+
+.col{
+	width:100%;
+	height:100%
 }
 </style>
 </head>
@@ -52,17 +84,88 @@ background-color: #faf9f9;
 			<th style="width: 100px;">수량</th>
 			<th>판매자 명</th>
 			<th>총 결제금액</th>
-			<th>배송 상태</th>
+			<th>후기작성</th>
 			</tr>
 		<!-- 상품 시작: 배송상태- 배송완료인것만-->
-		<tr>
-			
+		<tr class="r" th:each="list:${completelist}">
+			<td class="rows">
+				<a th:href="@{/review}">
+				<div class="col s6 m3 l3">
+					<img th:src="@{/upload/}+${list.imgname}" th:class="item-img"> 
+				</div>
+				<div class="col s6 m9 l9" th:text="${list.itemname}"></div>
+				</a>	
+			</td>
+			<td th:text="${list.quantity}"></td>
+			<td th:text="${list.sellername}"></td>
+			<td th:text="${list.price}"></td>
+			<td><p><a href="#review-create" class="modal-trigger btn review">작성하기</a></p></td>
 		</tr>
 	</table>	
+	<!-- 모달창 신고내역 상세보기만 가능 -->
+		<div class="modal" id="review-create">
+		<form method="post" enctype="multipart/form-data">
+			<div class="modal-content">
+				<input type="hidden" >
+				<table>
+				<tr>
+					<th>작성자</th>
+					<td th:text="${session['data'].username}">
+					<input type="hidden" name="userseq" th:value="${session['data'].userseq}">
+					</td>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td><label><input type="file" name="reviewimg" accept="image/*"></label></td>
+				</tr>
+				<tr>
+				<td colspan=2>
+					<div class="rows spimg">
+						<div class="col s5"><img class="img" src="image/camera.png"></div>
+						<div class="col s7"><textarea name="reviewdetail"rows="20" cols="300"></textarea> </div>
+					</div>
+				</td>
+				</tr>
+			</table>
+			
+			</div>
+			<div class="modal-footer">
+				<!-- <a href="#!" class="modal-close btn-flat">작성완료</a> -->
+				<a id="review_submit" class="btn">작성완료</a>
+			</div>
+			</form>
+		</div>
 </div>
 </div>
-
-
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$('.modal').modal();
+	//사진추가
+	$("input:file[name='reviewimg']").on("change",function(){//대표이미지 썸넬-1개
+		//기존에 이미지 파일 있으면 삭제하기
+		if(this.files && this.files[0]){
+			var reader=new FileReader();
+			reader.onload=function(e){
+				$(".spimg img").attr('src',e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		}	
+	});
+	
+	$('#review_submit').on("click",function(){
+		if($('input[name="reviewdetail"]').val()==''){
+			alert("후기를 입력해주세요!");
+			return;
+		}
+		
+		
+	});
+	
+});
+</script>
 </body>
 
 </html>

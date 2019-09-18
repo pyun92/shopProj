@@ -83,6 +83,13 @@ public class MyinfoServiceImpl implements MyinfoService{
 		List<Bucket> jumoonsize = buc.findByStoreseq(num);
 		return jumoonsize;
 	}
+
+
+	@Override
+	public List<Bucket> ordercompleteList(Long seq) {
+		System.out.println("userseq="+seq);
+		return buc.orderComplete(seq);
+	}
 	
 
 	

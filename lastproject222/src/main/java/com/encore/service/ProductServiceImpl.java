@@ -83,14 +83,6 @@ public class ProductServiceImpl implements ProductService {
 	public void productorder(ProductOrder order) {
 		porder.save(order);
 	}
-
-	@Override
-	public void afterpaymnet(String date,Long seq,Long idnum) {
-		System.out.println("111111111111111");
-		System.out.println(seq+"sadasdasdas");
-		buc.afterpayment(date,seq,idnum);
-		
-	}
 	
 	@Override
 	public void deleteProduct(Long seq) {
@@ -102,6 +94,14 @@ public class ProductServiceImpl implements ProductService {
 		return rep.findById(seq).get();
 	}
 
+	@Override
+	public void afterpaymnet(String date, Long seq, Long idnum) {
+		// TODO Auto-generated method stub
+		System.out.println("111111111111111");
+		System.out.println(seq+"sadasdasdas");
+		buc.afterpayment(date,seq,idnum);
+	}
 
-
+	
+	
 }

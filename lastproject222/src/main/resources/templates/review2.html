@@ -1,0 +1,203 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: 나눔고딕;
+}
+.usericon img{
+width: 32px;
+height:32px;
+border-radius: 50%;
+
+}
+.review-top{
+margin: 10px 0 0 0 ;
+padding:20px ;
+border: 1px solid black;
+}
+
+.usericon,.back-icon.col.s6.m6.l6,.usericon.col.s6.m6.l6 a{
+display: inline-block;
+text-align:right;
+vertical-align: middle;
+
+}
+.usericon strong, .back-icon a span,.usericon,.back-icon a{
+color:black;
+width: 100px;
+
+}
+.usericon-bg{
+width: 32px;
+height:32px;
+border-radius: 50%;
+
+}
+.review-info{
+width:100%;
+padding-top:50px;
+
+border-top:0; 
+margin-bottom:50px;
+}
+.review-item-info{
+display:table;
+padding-left: 30px;
+width: 50%;
+}
+.review-head{
+display: table;
+width: 100%;
+}
+.review-item-info .img{
+display: table-cell;
+width: 64px;
+height: 64px;
+background-image: url('image/a.jpg');
+}
+.review-text{
+text-align: center;
+}
+.review-text textarea{
+margin :10px 30px 20px 30px;
+height: auto;
+width: auto;
+}
+.review-item-info a{
+display: table-cell;
+color:black;
+padding-left:12px;
+vertical-align: middle;
+}
+.item-score{
+display: table-cell;
+}
+.review-upload{
+
+margin: 20px;
+}
+input[type=file] {
+display: none;
+ }
+ 
+ .txt{
+font-size: 21px;
+font-family:맑은고딕;
+color:black;
+margin-top: 0;
+}
+.recent-top {
+padding-bottom: 8px;
+margin-bottom: 20px;
+border-bottom: 2px solid #555;
+}
+.review-date{
+margin-left: 30px; 
+}
+.select-wrapper{
+width: 140px;
+text-align: right;
+display: inline-block;
+}
+.select-wrapper input.select-dropdown {
+
+}
+.item-score{
+text-align: right;
+display: block;
+}
+.imgs_wrap img {
+  max-width: 150px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.img {
+	height: 100%;
+	width: 100%;
+}
+/* insert.html의 css */
+.spimg{
+	overflow: hidden;
+	width:100%;
+	height:300px;
+}
+
+.sping img{
+	display: block;
+	max-width: 100%;
+	max-height: auto;
+	-ms-interpolation-mode: bicubic;
+}
+textarea{
+	height:100%;
+}
+</style>
+</head>
+<body>
+	<div class="container row" >
+		<!-- 사이드바 불러오는 부분 -->
+		<th:block th:include="myinfoside.html"></th:block>
+		<!-- 내정보 시작  -->
+		<div class="col s10 m10 l10 content">
+			<div class="recent-top">
+				<h1 class="txt">구매 후기 작성</h1> 
+			</div>
+			<div>
+				<!-- 상품인덱스로 가지고 오면서 뿌려주기 -->
+			</div>
+			<div class="divider"></div>
+			<table>
+				<tr>
+					<th>작성자</th>
+					<td th:text="${session['data'].username}"></td><!-- 작성자 -->
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td><label>대표이미지 업로드<input type="file" name="reviewimg" accept="image/*"></label></td>
+				</tr>
+				<tr>
+				<td colspan=2>
+					<div class="rows spimg">
+						<div class="col s5"><img class="img" src="image/camera.png"></div>
+						<div class="col s7"><textarea name="reviewdetail"rows="20" cols="300"></textarea> </div>
+					</div>
+				</td>
+				</tr>
+				<tr>
+					<td colspan=2><input type="submit" class="btn"></td>
+				</tr>
+			</table>
+			
+		</div>
+	</div>
+
+
+<th:block th:include="footer.html"></th:block>
+
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	//사진추가
+	$("input:file[name='review_img']").on("change",function(){//대표이미지 썸넬-1개
+		//기존에 이미지 파일 있으면 삭제하기
+		if(this.files && this.files[0]){
+			var reader=new FileReader();
+			reader.onload=function(e){
+				$(".spimg img").attr('src',e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		}	
+	});
+});
+</script>
+</body>
+</html>
