@@ -85,10 +85,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void afterpaymnet(Long seq,Long idnum) {
+	public void afterpaymnet(String date,Long seq,Long idnum) {
 		System.out.println("111111111111111");
 		System.out.println(seq+"sadasdasdas");
-		buc.afterpayment(seq,idnum);
+		buc.afterpayment(date,seq,idnum);
 		
 	}
 	

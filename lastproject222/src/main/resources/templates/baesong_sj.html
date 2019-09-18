@@ -107,19 +107,24 @@ th {
 						<td th:text="(${list.price}*${list.quantity}+
 						${option.optionprice}*${list.quantity}-${list.discount}*${list.quantity}+2500+'원')"></td>
 						
-						<td >2018-03-04</td>
-						<input th:if="${list.condition}!='cancel'" type="hidden" th:value="${list.bucketseq}" class="orderseq">
+						<td th:text="${list.bucketdate}"></td>
+						<input th:if="${list.condition}=='payment'" type="hidden" th:value="${list.bucketseq}" class="orderseq">
 						<td>
-							<p th:if="${list.condition}!='cancel'">
+							<p th:if="${list.condition}=='payment'">
 								<a class="waves-effect waves-light btn modal-trigger cancelbtn"
 									href="#">주문취소(개별통보필수)</a>
 							</p>
-							<p th:if="${list.condition}=='cancel'">
+							<p th:if="${list.condition}=='cancel'" style="color: red; font-weight: bold;" >
 								취소된 상품
 							</p>
-							
+							<p th:if="${list.condition}=='complete'" style="color: blue; font-weight: bold;">
+								배송중
+							</p>
+							<p th:if="${list.condition}=='receive'" style="color: green; font-weight: bold;">
+								배송완료
+							</p>
 							<p>
-								<a class="waves-effect btn modal-trigger baesongbtn" href="#" th:if="${list.condition}!='cancel'">배송완료</a>
+								<a class="waves-effect btn modal-trigger baesongbtn" href="#" th:if="${list.condition}=='payment'">배송완료</a>
 							</p>
 						</td>
 						</th:block>
@@ -204,29 +209,34 @@ th {
 				contentType: "application/json; charset=UTF-8",
 				success : function(data){
 					alert("성공");
-				}
-				
+				},
+				complete : function() {
+			    	location.reload(true);
+			    }
 			});
 			}
 
 		});
 		
 		$(".baesongbtn").click(function(){
-			var index=$(".cancelbtn").index(this);
+			var index=$(".baesongbtn").index(this);
 			var seq=$(".orderseq:eq("+index+")").val();
-			var choose=confirm("주문을 취소 하시겠습니까?");
+			var choose=confirm("상품 배송을 완료했습니까?");
 			alert(choose);
 			if(choose){
 	 			$.ajax({
 				async:true,
 				type:'POST',
 				data:JSON.stringify(seq),
-				url:"/buccondition",
+				url:"/bucconditioncomplete",
 				dataType : 'json',
 				contentType: "application/json; charset=UTF-8",
 				success : function(data){
 					alert("성공");
-				}
+				},
+				complete : function() {
+			    	location.reload(true);
+			    }
 				
 			});
 			}

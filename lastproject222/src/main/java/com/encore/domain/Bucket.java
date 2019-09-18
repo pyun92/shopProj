@@ -51,4 +51,5 @@ public class Bucket {
 	
 	private Long orderseq;       
 	
+	private String bucketdate;	
 }

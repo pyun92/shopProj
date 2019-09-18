@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="main.html">
+</th:block>
+<meta charset="UTF-8">
+<title></title>
+
+</head>
+<body>
+
+			<div class="col s3 pullheight grey lighten-5" th:fragment="shopside">
+				<ul id="slide-out" class=" center-align">
+					<li><div class="user-view">
+							<a href="#name"><span class="black-text name"><th:block th:text="${store.storename}"></th:block></span></a><br> <br> <a href="#user"><img class="circle"
+								th:src="@{../storeimages/}+${store.storeimg}"></a><br> <br><br>
+							<div>
+								<span class="black-text "><th:block th:text="${store.storedetail}"></th:block></span>
+							</div>
+
+						</div></li>
+					<li class="border1"><a class="red-text bold" href="#!"><i
+							class="material-icons">favorite_border</i>내 단골 상점에 추가하기</a></li>
+					<li class="border1"><a class="black-text"
+						href="product_getList_sj">판매목록 보기</a></li>
+					<li class="border1"><a class="black-text"
+						href="sjTimeLine.html">담벼락(공지사항) 보기</a></li>
+					
+					<li class="border1"><a class="black-text" href="#!">응원하기</a></li>
+					<!-- 관리자 아이디로 로그인시 상품 보이게  -->
+					
+					<th:block th:if="${session['data']!=null}">
+					<th:block th:if="${session['data'].userseq}==${store.storeseq}">
+					<li class="border1 hiddenSj"><a class="black-text"
+						href="product_insert">상품등록</a></li>
+					<li class="border1 hiddenSj"><a class="black-text"
+						href="product_getList_sj.html">상품관리</a></li>
+						<li class="border1 hiddenSj"><a class="black-text"
+						href="/advertisereg">광고신청</a></li>
+						<li class="border1"><a class="black-text" href="#!">후기확인</a></li>
+						</th:block>
+						</th:block>
+						
+					<li><div class="divider paddingup200"></div></li>
+					<li><a class="subheader"><th:block th:text="${store.storename}"></th:block></a></li>
+					<li><a class="waves-effect" href="#!">copyright-장날</a></li>
+				</ul>
+			</div>
+
+</body>
+</html>

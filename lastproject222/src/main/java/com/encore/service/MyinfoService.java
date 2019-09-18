@@ -19,6 +19,10 @@ public interface MyinfoService {
 	
 	void cancel(Long seq);
 	
+	void complete(Long seq);
+	
+	void receive(Long seq);
+	
 	Page<Bucket> jumoonmanager(Long num,Pageable pageable);
 	
 	List<Bucket> jumoonsize(Long num);

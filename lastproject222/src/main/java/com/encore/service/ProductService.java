@@ -27,7 +27,7 @@ public interface ProductService {
 	
 	void productorder(ProductOrder order);
 	
-	void afterpaymnet(Long seq,Long idnum);
+	void afterpaymnet(String date,Long seq,Long idnum);
 	
 	void deleteProduct(Long seq);
 	Product getProd(Long seq);

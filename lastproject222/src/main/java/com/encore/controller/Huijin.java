@@ -131,7 +131,14 @@ public class Huijin {
 		@ResponseBody
 		public void bucconditioncomplete(@RequestBody Long seq) {
 			System.out.println(seq);
-			myinfo.cancel(seq);
+			myinfo.complete(seq);
+		}
+		
+		@RequestMapping("/bucconditioncompletereceive")
+		@ResponseBody
+		public void bucconditioncompletereceive(@RequestBody Long seq) {
+			System.out.println(seq);
+			myinfo.receive(seq);
 		}
 		
 	

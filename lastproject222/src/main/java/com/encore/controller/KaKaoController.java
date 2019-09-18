@@ -3,8 +3,11 @@ package com.encore.controller;
 
 
 
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,7 +36,8 @@ import lombok.extern.java.Log;
 public class KaKaoController {
 		@Autowired
 		private ProductService service;
-	
+		
+		
 	    @Autowired
 	    private KaKaoPay kakaopay;
 	    
@@ -42,8 +46,11 @@ public class KaKaoController {
 	    @PostMapping("/kakaoPay")
 	    public String kakaoPay(HttpServletRequest request,ProductOrder order,@ModelAttribute("data") Userdata user,Bucket bucket) {
 	        log.info("kakaoPay post............................................");
-	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/mm/dd");
-	        Calendar cal =Calendar.getInstance();
+	        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
+	        Date currentTime =new Date();
+	        String mTime = mSimpleDateFormat.format ( currentTime );
+	       
+	        
 	        String[] arrayParam = request.getParameterValues("itemname");
 	        System.out.println(arrayParam);
 	        StringBuilder sb = new StringBuilder();
@@ -55,9 +62,11 @@ public class KaKaoController {
 		    			sb.append(arrayParam[i]);
 		    		}
 	    		}
+	    	bucket.setBucketdate(mTime);
+	    	
 	    	
 	    	order.setItemname(sb.toString());
-	        order.setOrderdate("2019-09-03");
+	        order.setOrderdate(mTime);
 	        order.setOrderstate("배송 준비중");
 	        order.setUserseq(user.getUserseq());
 	        order.setTotalprice(Integer.parseInt(request.getParameter("totalprice")));
@@ -73,8 +82,9 @@ public class KaKaoController {
 	        service.productorder(order);
 	        
 	        Long oseq=(order.getOrderseq()); 
+	        String date = (bucket.getBucketdate());
 	        System.out.println(oseq+" "+user.getUserseq());
-	        service.afterpaymnet(oseq,user.getUserseq());
+	        service.afterpaymnet(date,oseq,user.getUserseq());
 	        
 	        return "redirect:" + kakaopay.kakaoPayReady(order);
 	 

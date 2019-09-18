@@ -49,7 +49,17 @@ public class MyinfoServiceImpl implements MyinfoService{
 	public void cancel(Long seq) {
 		buc.cancelbucket(seq);
 		
+	}
+	
+	@Override
+	public void complete(Long seq) {
+		buc.completebucket(seq);
 		
+	}
+	
+	@Override
+	public void receive(Long seq) {
+		buc.receivebucket(seq);
 		
 	}
 	//판매자 물품 판매 내용

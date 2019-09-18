@@ -23,8 +23,8 @@ public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	
 	@Modifying
 	@Transactional
-	@Query(value ="update bucket set condition='payment', orderseq=?1 where condition='bucket' and checked=1 and userseq=?2",nativeQuery = true)
-	void afterpayment(Long num,Long idnum);
+	@Query(value ="update bucket set condition='payment', bucketdate=?1 , orderseq=?2 where condition='bucket' and checked=1 and userseq=?3",nativeQuery = true)
+	void afterpayment(String date,Long num,Long idnum);
 	
 	@Modifying
 	@Transactional
@@ -36,6 +36,17 @@ public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	@Query(value ="update bucket set condition='cancel' where bucketseq=?1",nativeQuery = true)
 	void cancelbucket(Long num);
 	
+	@Modifying
+	@Transactional
+	@Query(value ="update bucket set condition='complete' where bucketseq=?1",nativeQuery = true)
+	void completebucket(Long num);
+	
+	@Modifying
+	@Transactional
+	@Query(value ="update bucket set condition='receive' where bucketseq=?1",nativeQuery = true)
+	void receivebucket(Long num);
+	
 	Page<Bucket> findByStoreseq(Long seq,Pageable pageable);
+	
 	List<Bucket> findByStoreseq(Long seq);
 }
