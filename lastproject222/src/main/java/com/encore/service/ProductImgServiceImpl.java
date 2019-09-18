@@ -1,6 +1,7 @@
 package com.encore.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class ProductImgServiceImpl implements ProductImgService {
 	}
 	
 	@Override
-	public void deleteProdImg(Long seq) {
+	public void deleteProd(Long seq) {
 		rep.deleteByImgnum(seq);
 		System.out.println("삭제성공");
 	}
@@ -60,4 +61,16 @@ public class ProductImgServiceImpl implements ProductImgService {
 		System.out.println("이미지 "+list.get(0).getFileName());
 		return list;
 	}
+
+	@Override
+	public void deleteProdImg(Long seq,Long detailNum) {
+		rep.deleteByImgnumAndDetailNum(seq,detailNum);
+		System.out.println(detailNum+"번 삭제 성공");
+	}
+
+	@Override
+	public ProductImg getDetail(Long seq, Long detail) {
+		return rep.getdetail(seq, detail);
+	}
+
 }

@@ -156,6 +156,7 @@ public class ProductController {
 	public Map<Object,Object> updateProc(MultipartHttpServletRequest mtfReqeust,@ModelAttribute("data") Userdata data){
 		//수정된 값만 넘어가기
 		//게시글 insert
+		Map<Object,Object> m= new HashMap<Object, Object>();
 		Long seq=Long.parseLong(mtfReqeust.getParameter("seq"));
 		Product pr=service.getProd(seq);
 		pr.setProname(mtfReqeust.getParameter("proname"));
@@ -167,27 +168,35 @@ public class ProductController {
         pr.setCategorysmall(mtfReqeust.getParameter("categorysmall"));
         pr.setStoreseq(data.getUserseq());
         service.insertProd(pr);
-        
+        int arrange=Integer.parseInt(mtfReqeust.getParameter("delImg"));
         //이미지 
-        //재정렬
-        List<ProductImg> img=imgService.getProdImg(seq);
-        for(int i=0;i<img.size();i++) {
-        	img.get(i).setDetailnum((long)i);
-        	System.out.println("파일이름 "+img.get(i).getFileName()+"상세번호" +img.get(i).getDetailnum());
-        	imgService.insertProdImg(img.get(i));
+        //재정렬 (서버에서 한번이라도 삭제된적 있으면)
+    	List<ProductImg> img=imgService.getProdImg(seq);
+        if(arrange==1) {
+            for(int i=0;i<img.size();i++) {
+            	img.get(i).setDetailnum((long)i);
+            	System.out.println("파일이름 "+img.get(i).getFileName()+"상세번호" +img.get(i).getDetailnum());
+            	imgService.insertProdImg(img.get(i));
+            }
         }
         
         //대표이미지 수정됬으면 넘기기fgg
         MultipartFile main_img=mtfReqeust.getFile("main_img");
         List<MultipartFile> img_array=mtfReqeust.getFiles("files");//제품이미지
         
-        System.out.println("이미지 main_img:"+main_img.getOriginalFilename()+"main_img1"+main_img.getSize());
+        System.out.println("이미지 main_img:"+main_img.getOriginalFilename()+"main_img1 "+main_img.getSize());
         img=imgService.getProdImg(seq);
-        if(!main_img.isEmpty()) {
+        System.out.println("대표이미지 수정됬너ㅏ?:"+main_img.isEmpty());
+       
+        
+       if(main_img.getSize()>0L) {
         	if(!img.get(0).getFileOriginalName().equals(main_img.getOriginalFilename())) {
-            	imgSave(main_img,pr.getProductseq(),0L);
+            	//imgSave(main_img,pr.getProductseq(),0L);
+        		System.out.println("원래 대표이미지"+img.get(0).getFileOriginalName()+",새롭게 추가된거:"+main_img.getOriginalFilename()); 
+        		
             }
         }
+ 
         
         System.out.println("이미지 사이즈 :"+img.size());
         
@@ -197,11 +206,37 @@ public class ProductController {
         	jseq++;
         }
       
-    	Map<Object,Object> m= new HashMap<Object, Object>();
+    
 		System.out.println("상품수정함");
 		m.put("ok", 1);
 		m.put("seq", pr.getProductseq());
 		return m;
+	}
+	//상품이미지 삭제
+	@RequestMapping("/deleteproImg")
+	@ResponseBody
+	public Map<Object,Object> deleteProImg(@RequestBody Map<String,Object> obj) {
+		Long detailNum=Long.valueOf(String.valueOf(obj.get("detailNum")));
+		Long seq=Long.valueOf((String)obj.get("seq"));
+		System.out.println("상품번호 : "+seq+"삭제할 번호 :"+detailNum);
+		//파일삭제
+		ProductImg img=imgService.getDetail(seq, detailNum);
+		System.out.println("삭제할 번호 :"+img.getDetailnum()+"이미지 이름"+img.getFileOriginalName());
+		File file=new File(img.getFileUrl()+img.getFileName());
+		if(file.exists()) {
+			if(file.delete()) {//파일삭제 성공
+				System.out.println("파일삭제 성공"+img.getFileName());
+			}else {
+				System.out.println("파일 삭제 실패");
+			}
+		}else {
+			System.out.println("파일이 존재하지 않습니다.");
+		}
+		imgService.deleteProdImg(seq,detailNum);
+		System.out.println("상품삭제함");
+		Map<Object,Object> map=new HashMap<Object, Object>();
+		map.put("del", true);
+		return map;
 	}
 	
 	//상품삭제
@@ -229,7 +264,7 @@ public class ProductController {
 		}
 		
 		//데이터베이스 삭제
-		imgService.deleteProdImg(seq);
+		imgService.deleteProd(seq);
 		Map<Object,Object> m= new HashMap<Object, Object>();
 		System.out.println("상품삭제함 controller");
 		m.put("ok", 1);

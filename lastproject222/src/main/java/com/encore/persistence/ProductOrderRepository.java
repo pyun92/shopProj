@@ -14,7 +14,9 @@ public interface ProductOrderRepository extends CrudRepository<ProductOrder, Lon
 	@Query(value ="select * from Product_Order where userseq=1? order by orderseq DESC  ",nativeQuery = true)
 	List<ProductOrder> findByUserseqOrder(Long seq);
 	
-	
+	@Query(value ="select * from Product_Order where userseq=1? and orderstate='배송완료'",nativeQuery = true)
+	List<ProductOrder> findByUserseqAndOrderState(Long seq);
 	
 	List<ProductOrder> findByUserseq(Long seq);
+	
 }

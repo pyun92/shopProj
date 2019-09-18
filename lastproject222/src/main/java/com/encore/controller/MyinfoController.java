@@ -77,4 +77,20 @@ public class MyinfoController {
 		return "redirect:jumoon";
 		
 	}
+	
+	@GetMapping("/myreview")
+	public String myReview(@ModelAttribute("data") Userdata data) {
+		
+		return "myreview";
+	}
+	
+	@GetMapping("/review")
+	public String review() {
+		return "review";
+	}
+	
+	@GetMapping("/myinfoside")
+	public void myinfoside() {
+	
+	}
 }

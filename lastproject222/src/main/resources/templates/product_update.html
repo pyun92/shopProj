@@ -239,6 +239,8 @@ html .pullheight {
 var index=0;//이미지추가시 인덱스
 var img_Files=[];
 
+var delImg=0;//서버이미지 삭제 했는지 체크
+var proseq;
 var li_list=['식품','음료/주류','인테리어소품','의류','악세사리','기타'];
 var small_list=new Array();
 small_list[0]=new Array('전통발효식품','장','떡','김치','전통과자','그외 먹거리');
@@ -259,7 +261,8 @@ $(function(){
 	var text=$("#product_detail").html();
 	text = text.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 	iframe.find('body').html(text);
-	
+	proseq=$("input:hidden[name='seq']").val();
+	//alert(proseq);
 	//제출버튼 눌렀을때
 	$('#product_submit').on("click",function(){
 		 event.preventDefault();
@@ -285,6 +288,7 @@ $(function(){
 		
 		console.log("카테고리 1"+big+"카테고리2"+small);
 		//카테고리추가
+		formData.append("delImg",delImg);
 		formData.append("categorybig",big);
 		formData.append("categorysmall",small);
 		
@@ -424,18 +428,36 @@ function fileReader(file){
 }
 
 function re(e){//이미지클릭해서 삭제
-	var img=$(this).children("img").attr('src');
-	alert(img);
+	var img=$('.'+e+'del').find('img').attr('src');
+	//alert(img);
+	alert(e);
 	if(confirm("사진을 삭제 하시겠습니까?")== true){
 		//이미지를 upload 했으면 서버로 가서 사진삭제
-		
 		if(img.indexOf('upload')!=-1){
-			alert($("this > img").attr('src'));
-			return;
+			alert("포함 o, 번호 :"+e);
+			$.ajax({
+				type:'POST',
+				url:'/deleteproImg',
+				processData:false,
+				data:JSON.stringify({"seq":proseq,"detailNum":e}),
+				dataType:'json',
+				contentType:"application/json; charset=UTF-8",
+				cache:false,
+				success:function(data){
+					if(data.del){
+						delImg=1;
+						alert("삭제되었습니다.");
+						
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+			})
 		}
 		$('.'+e+'del').remove();//이미지 클래스 숫자+del
 		/* img_Files.splice(e,1);//이미지 배열 삭제 */
-		
+		return;
 	}else{
 		return;
 	}

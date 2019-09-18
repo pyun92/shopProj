@@ -92,14 +92,6 @@ public class BoardController {
 	public void point() {
 	
 	}
-	@GetMapping("/myreview")
-	public void myreview() {
-	
-	}
-	@GetMapping("/review")
-	public void review() {
-	
-	}
 	
 	@GetMapping("/cancel")
 	public void cancel() {
@@ -171,9 +163,5 @@ public class BoardController {
 	public void modify() {
 	
 	}
-	
-	@GetMapping("/myinfoside")
-	public void myinfoside() {
-	
-	}
+
 }
