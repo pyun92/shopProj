@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.encore.domain.Bucket;
 import com.encore.domain.ProductOrder;
+import com.encore.domain.Review;
 
 public interface MyinfoService {
 	
@@ -28,4 +29,16 @@ Page<ProductOrder> listpage(Long seq,Pageable pageable);
 	List<Bucket> jumoonsize(Long num);
 	
 	List<Bucket> ordercompleteList(Long seq);
+	
+	Bucket reviewProduct(Long seq);
+	
+	void reviewSave(Review r,Long seq);
+	
+	List<Review> reviewList(Long seq);
+	
+	void updateReview(Review r);
+	
+	Review review(Long reviewseq);
+	
+	void deleteReview(Long seq);
 }

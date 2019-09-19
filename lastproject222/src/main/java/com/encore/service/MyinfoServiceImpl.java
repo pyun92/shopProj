@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.encore.domain.Bucket;
 import com.encore.domain.ProductOrder;
+import com.encore.domain.Review;
 import com.encore.persistence.BucketRepository;
 import com.encore.persistence.PagingRepository;
 import com.encore.persistence.ProductOrderRepository;
+import com.encore.persistence.ReviewRepository;
 
 @Service
 public class MyinfoServiceImpl implements MyinfoService{
@@ -28,6 +30,9 @@ public class MyinfoServiceImpl implements MyinfoService{
 	
 	@Autowired
 	private PagingRepository prs;
+	
+	@Autowired
+	private ReviewRepository review;
 	
 	@Override
 	public List<ProductOrder> orderlist(Long seq) {
@@ -90,9 +95,47 @@ public class MyinfoServiceImpl implements MyinfoService{
 		System.out.println("userseq="+seq);
 		return buc.orderComplete(seq);
 	}
-	
 
-	
-	
+
+	@Override
+	public Bucket reviewProduct(Long seq) {
+		return buc.findByBucketseq(seq).get();
+	}
+
+
+	@Override
+	public void reviewSave(Review r,Long seq) {
+		Bucket b=buc.findByBucketseq(seq).get();
+		b.setReviewcheck(1);
+		buc.save(b);//리뷰상태바꾸기
+		review.save(r);
+	}
+
+
+	@Override
+	public List<Review> reviewList(Long seq) {
+		return review.findByUserseq(seq);
+	}
+
+
+	@Override
+	public void updateReview(Review r) {
+		review.save(r);
+	}
+
+	@Override
+	public Review review(Long reviewseq) {
+		return review.findById(reviewseq).get();
+	}
+
+
+	@Override
+	public void deleteReview(Long seq) {
+		Bucket b=buc.findByBucketseq(seq).get();
+		b.setReviewcheck(0);
+		buc.save(b);//리뷰상태바꾸기
+		review.deleteById(seq);
+		System.out.println("삭제!"+seq);
+	}
 
 }

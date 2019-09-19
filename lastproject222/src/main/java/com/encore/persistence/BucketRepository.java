@@ -14,6 +14,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.encore.domain.Bucket;
+import java.lang.Long;
 
 @Repository
 public interface  BucketRepository extends CrudRepository<Bucket, Long>{
@@ -53,6 +54,8 @@ public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	List<Bucket> findByStoreseq(Long seq);
 	
 //	@Query(value ="select * from bucket where userseq=?1 and condition='complete'",nativeQuery = true)
-	@Query(value ="select b from Bucket b where b.userseq=?1 and condition='complete'")
+	@Query(value ="select b from Bucket b where b.userseq=?1 and condition='receive'")
 	List<Bucket> orderComplete(Long userseq); 
+	
+	Optional<Bucket> findByBucketseq(Long seq);
 } 

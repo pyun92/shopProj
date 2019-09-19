@@ -139,6 +139,11 @@ display: block;
 textarea{
 	height:100%;
 }
+
+.item-img{
+width: 80px;
+height: 80px;
+}
 </style>
 </head>
 <body>
@@ -151,9 +156,27 @@ textarea{
 				<h1 class="txt">구매 후기 작성</h1> 
 			</div>
 			<div>
-				<!-- 상품인덱스로 가지고 오면서 뿌려주기 -->
+				<table>
+				<tr>
+					<th class="col s8">상품정보</th><th class="cols s4">판매자명</th>
+				</tr>
+				<tr>
+					<td>
+						<div>
+						<a th:href="@{/product_getProduct2(productseq=${prodde.productseq})}">
+							<img class="item-img" th:src="@{/upload/}+${prodde.imgname}">
+							<th:block th:text="${prodde.itemname}"></th:block>
+						</a>
+						</div>
+					</td>
+					<td>
+						<a th:href="@{/index(storeseq=${prodde.storeseq})}"><th:block th:text="sellername"></th:block></a>
+					</td>
+				</tr>
+				</table>
 			</div>
 			<div class="divider"></div>
+			<form th:action="@{/reviewsave}" method="post" enctype="multipart/form-data">
 			<table>
 				<tr>
 					<th>작성자</th>
@@ -172,10 +195,12 @@ textarea{
 				</td>
 				</tr>
 				<tr>
+					<input type="hidden" name="bucketseq" th:value="${prodde.bucketseq}">
+					<input type="hidden" name="productseq" th:value="${prodde.storeseq}">
 					<td colspan=2><input type="submit" class="btn"></td>
 				</tr>
 			</table>
-			
+			</form>
 		</div>
 	</div>
 
@@ -187,8 +212,7 @@ textarea{
 <script type="text/javascript">
 $(function(){
 	//사진추가
-	$("input:file[name='review_img']").on("change",function(){//대표이미지 썸넬-1개
-		//기존에 이미지 파일 있으면 삭제하기
+	$("input:file[name='reviewimg']").on("change",function(){//대표이미지 썸넬-1개
 		if(this.files && this.files[0]){
 			var reader=new FileReader();
 			reader.onload=function(e){
