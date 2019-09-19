@@ -292,13 +292,10 @@ public class ProductController {
 				buc.setOptionseq(Long.parseLong(request.getParameter("optionseq")));
 				buc.setCondition("bucket");
 				buc.setChecked(1);
+				buc.setReviewcheck(0);
 				service.insertBucket(buc);
-				int dirnum=Integer.parseInt(request.getParameter("directnum"));
-				Long bucnum=buc.getBucketseq();
-				if(dirnum==1){
-					return "redirect:paymentwindowdir?bucnum="+bucnum;
-				}
-				return "redirect:newbucketlist";
+				
+				return "redirect:newbucketlist?optionseq="+request.getParameter("optionseq");
 				
 			}
 
