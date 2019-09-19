@@ -31,6 +31,12 @@ public class OptionImplService implements OptionService {
 		
 		return list;
 	}
+
+	@Override
+	public Option findopforbuc(Long num) {
+		
+		return 	rep.findByOptionseq(num);	
+		}
 	
 	
 	

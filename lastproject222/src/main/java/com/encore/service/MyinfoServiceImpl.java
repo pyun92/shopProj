@@ -99,13 +99,13 @@ public class MyinfoServiceImpl implements MyinfoService{
 
 	@Override
 	public Bucket reviewProduct(Long seq) {
-		return buc.findByBucketseq(seq).get();
+		return buc.findAllByBucketseq(seq).get();
 	}
 
 
 	@Override
 	public void reviewSave(Review r,Long seq) {
-		Bucket b=buc.findByBucketseq(seq).get();
+		Bucket b=buc.findAllByBucketseq(seq).get();
 		b.setReviewcheck(1);
 		buc.save(b);//리뷰상태바꾸기
 		review.save(r);
@@ -131,7 +131,7 @@ public class MyinfoServiceImpl implements MyinfoService{
 
 	@Override
 	public void deleteReview(Long seq,Long buckseq) {
-		Bucket b=buc.findByBucketseq(buckseq).get();
+		Bucket b=buc.findAllByBucketseq(buckseq).get();
 		b.setReviewcheck(0);
 		buc.save(b);//리뷰상태바꾸기
 		review.deleteById(seq);

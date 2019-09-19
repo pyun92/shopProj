@@ -65,6 +65,23 @@ public class Huijin {
 		
 	}
 	
+	@RequestMapping("/paymentwindowdir")
+	public String paymentwindowdir(HttpServletRequest request,Model model,@ModelAttribute("data") Userdata user,Long bucnum) {
+	ProductOrder order = new ProductOrder();
+	System.out.println(bucnum);
+	Bucket buc = new Bucket();
+	buc =service.findByseq(bucnum);
+	Option op= optionservice.findopforbuc(buc.getOptionseq());
+	order.setTotaldis(buc.getDiscount()*buc.getQuantity());
+	order.setDelivery(buc.getDeliveryfee());
+	order.setTotalprice(buc.getPrice()*buc.getQuantity());
+	order.setCalprice((buc.getPrice()*buc.getQuantity())-(buc.getDiscount()*buc.getQuantity())+buc.getDeliveryfee()-(Integer.parseInt(op.getOptionprice())*buc.getQuantity()));
+	model.addAttribute("order",order);
+	model.addAttribute("bucketinfo",service.findallbucket(user.getUserseq()));
+		return "baesong";
+		
+	}
+	
 	@RequestMapping("baesong_sj")
 	public String beasongsj(@ModelAttribute("data") Userdata user,Model model,Integer pgno) {
 		

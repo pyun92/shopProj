@@ -12,7 +12,8 @@ import com.encore.domain.Option;
 @Repository
 public interface OptionRepository extends CrudRepository<Option, Long> {
 
-	Optional<Option> findByOptionseq(Long optionseq );
+	Optional<Option> findAllByOptionseq(Long optionseq );
 	List<Option> findByProductseq(Long productseq);//상품번호받아오기
-
+	Option findByOptionseq(Long num);
+	
 }

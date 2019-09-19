@@ -1,6 +1,7 @@
 package com.encore.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,6 +101,12 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println("111111111111111");
 		System.out.println(seq+"sadasdasdas");
 		buc.afterpayment(date,seq,idnum);
+	}
+
+	@Override
+	public Bucket findByseq(Long num) {
+	Bucket list = buc.findByBucketseq(num);
+		return list;
 	}
 
 	
