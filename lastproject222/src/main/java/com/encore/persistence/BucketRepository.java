@@ -57,5 +57,7 @@ public interface  BucketRepository extends CrudRepository<Bucket, Long>{
 	@Query(value ="select b from Bucket b where b.userseq=?1 and condition='receive'")
 	List<Bucket> orderComplete(Long userseq); 
 	
-	Optional<Bucket> findByBucketseq(Long seq);
+	Optional<Bucket> findAllByBucketseq(Long seq);
+	
+	Bucket findByBucketseq(Long num);
 } 
