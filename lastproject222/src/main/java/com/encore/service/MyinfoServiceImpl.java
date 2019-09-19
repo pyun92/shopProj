@@ -130,8 +130,8 @@ public class MyinfoServiceImpl implements MyinfoService{
 
 
 	@Override
-	public void deleteReview(Long seq) {
-		Bucket b=buc.findByBucketseq(seq).get();
+	public void deleteReview(Long seq,Long buckseq) {
+		Bucket b=buc.findByBucketseq(buckseq).get();
 		b.setReviewcheck(0);
 		buc.save(b);//리뷰상태바꾸기
 		review.deleteById(seq);

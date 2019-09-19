@@ -40,5 +40,5 @@ Page<ProductOrder> listpage(Long seq,Pageable pageable);
 	
 	Review review(Long reviewseq);
 	
-	void deleteReview(Long seq);
+	void deleteReview(Long seq,Long buckseq);
 }

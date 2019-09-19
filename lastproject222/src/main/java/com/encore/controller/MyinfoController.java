@@ -210,7 +210,7 @@ public class MyinfoController {
 			System.out.println("파일이 존재하지 않습니다.");
 		}
 		
-		myinfoservice.deleteReview(seq);
+		myinfoservice.deleteReview(seq,review.getBucketseq());
 		Map<Object,Object> m= new HashMap<Object, Object>();
 		m.put("ok", 1);
 		return m;
