@@ -109,7 +109,7 @@ p {
 				</h5>
 			</div>
 			<div class="col s12 4d ww1">
-				<div class="card center-align">
+				<div class="card center-align hidden" >
 					<th:block th:each="bigad:${bigadlist}" th:if="${bigad.bigad}==2">
 						<th:block th:each="product: ${bigprod}"
 							th:if=${bigad.prodseq}==${product.productseq}>
@@ -180,23 +180,14 @@ p {
 		$(document).ready(function() {
 			$('.scrollspy').scrollSpy();
 
-			//이미지 엑박이면 reload or 로드되면 화면에 뿌리기
-
-			// 			$('img').each(function(n) {
-			// 				$(this).error(function() {
-
-			// 					location.reload(true);
-			// 				});
-			// 			});
 
 			$('.indicator-item').click(function() {
 				var a = $(this).index();
-				alert(a);
 				var b = $('.item:eq(' + a + ')').val();
-				alert(b);
 				const c = $('.carousel-item').val();
-				alert(c);
 			});
+			
+// 			$('.hidden').attr('display','none');
 
 		});
 		/* $(window).scroll(function(){
