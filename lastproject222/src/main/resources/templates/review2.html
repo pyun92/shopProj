@@ -170,7 +170,7 @@ height: 80px;
 						</div>
 					</td>
 					<td>
-						<a th:href="@{/index(storeseq=${prodde.storeseq})}"><th:block th:text="sellername"></th:block></a>
+						<a th:href="@{/index(storeseq=${prodde.storeseq})}"><th:block th:text="${prodde.sellername}"></th:block></a>
 					</td>
 				</tr>
 				</table>
@@ -196,7 +196,7 @@ height: 80px;
 				</tr>
 				<tr>
 					<input type="hidden" name="bucketseq" th:value="${prodde.bucketseq}">
-					<input type="hidden" name="productseq" th:value="${prodde.storeseq}">
+					<input type="hidden" name="productseq" th:value="${prodde.productseq}">
 					<td colspan=2><input type="submit" class="btn"></td>
 				</tr>
 			</table>

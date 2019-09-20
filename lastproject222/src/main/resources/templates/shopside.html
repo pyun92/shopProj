@@ -24,7 +24,7 @@
 <!-- 							class="material-icons">favorite_border</i>내 단골 상점에 추가하기</a></li> -->
 					
 					<li class=" border1 hiddenSj"><a class="black-text"
-						href="/product_getList2">판매목록 보기</a></li>	
+						th:href="@{/product_getList2(storeseq=${store.storeseq})}">판매목록 보기</a></li>	
 						
 <!-- 					<li class="border1"><a class="black-text" -->
 <!-- 						href="sjTimeLine.html">담벼락(공지사항) 보기</a></li> -->
@@ -37,7 +37,7 @@
 					<li class="border1 hiddenSj"><a class="black-text"
 						href="product_insert">상품등록</a></li>
 						<li class="border1"><a class="black-text"
-						href="product_getList_sj">상품 관리</a></li>
+						th:href="@{/product_getList_sj(storeseq=${store.storeseq})}">상품 관리</a></li>
 					<li class="border1 hiddenSj"><a class="black-text"
 						href="/baesong_sj?pgno=1">주문 관리</a></li>
 						<li class="border1 hiddenSj"><a class="black-text"

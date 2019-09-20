@@ -123,7 +123,7 @@ public class AdvertisingServiceImpl implements AdvertisingService {
 	@Override
 	public List<ProductImg> findbigadimg() {
 		List<ProductImg> list = null;
-		String qstr = "from ProductImg a where a.imgnum in (select b.productseq from Product b where b.productseq in (select c.prodseq from Advertising c))";
+		String qstr = "from ProductImg a where a.detailnum=0 and a.imgnum in (select c.prodseq from Advertising c where bigad=2)";
 		Query query = entityManager.createQuery(qstr);
 		list = query.getResultList();
 		return list;

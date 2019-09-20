@@ -118,13 +118,26 @@ public class ProductController {
 	
 
 	//개인 상점 등록 상품관리 & 개인상점 상품리스트
-	@RequestMapping(value= {"/product_getList_sj","/product_getList2"})
-	public void product_getList_sj(@ModelAttribute("data") Userdata user,Model model ,Product proc) {
-		List<Product> proclist= service.getProdList(user.getUserseq());
+	@RequestMapping(value= {"/product_getList2"})
+	public String product_getList2(@ModelAttribute("data") Userdata user,Model model ,Product proc,Long storeseq) {
+		List<Product> proclist= service.getProdList(storeseq);
 		List<ProductImg> procimg =imgService.getDetailNum();
-		model.addAttribute("store", shopservice.findbyid(user.getUserseq()));
+		model.addAttribute("store", shopservice.findbyid(storeseq));
 		model.addAttribute("proc",proclist);
 		model.addAttribute("procimg",procimg);
+		return"product_getList2";
+		//return "redirect:index?storeseq="+storeseq;
+	}
+	
+	@RequestMapping(value= {"/product_getList_sj"})
+	public String product_getList_sj(@ModelAttribute("data") Userdata user,Model model ,Product proc,Long storeseq) {
+		List<Product> proclist= service.getProdList(storeseq);
+		List<ProductImg> procimg =imgService.getDetailNum();
+		model.addAttribute("store", shopservice.findbyid(storeseq));
+		model.addAttribute("proc",proclist);
+		model.addAttribute("procimg",procimg);
+		return"product_getList_sj";
+		//return "redirect:index?storeseq="+storeseq;
 	}
 
 	@GetMapping("/product_getProduct2")

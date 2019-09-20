@@ -100,7 +100,10 @@ textarea{
 			</td>
 			<td th:text="${list.quantity}"></td>
 			<td th:text="${list.sellername}"></td>
-			<td th:text="${list.price}"></td>
+			<td th:each="option:${options}" th:if="${option.optionseq}==${list.optionseq}"
+			th:text="(${list.price}*${list.quantity}
+			-${list.discount}*${list.quantity}
+			+${list.deliveryfee}+${option.optionprice}*${list.quantity})"></td>
 			<td>
 				<p>
 					<a th:if="${list.reviewcheck}==0" th:href="@{/review(seq=${list.bucketseq})}" class="modal-trigger btn review">작성하기</a>

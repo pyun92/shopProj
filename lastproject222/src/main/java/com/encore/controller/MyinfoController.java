@@ -146,12 +146,14 @@ public class MyinfoController {
 	public String myReview(@ModelAttribute("data") Userdata data,Model model) {
 		System.out.println("데이터"+data.getUserseq());
 		model.addAttribute("completelist",myinfoservice.ordercompleteList(data.getUserseq()));
+		model.addAttribute("options",optionservice.findoption());
 		return "myreview";
 	}
 	
 	//내가 쓴 리뷰보기
 	@RequestMapping("/myreviewpage")
 	public String myreivewPage(@ModelAttribute("data") Userdata data,Model model) {
+		System.out.println("sdddddddddddddddd");
 		model.addAttribute("relist",myinfoservice.reviewList(data.getUserseq()));
 		return "myreviewpage";
 	}

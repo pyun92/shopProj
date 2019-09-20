@@ -17,6 +17,12 @@ html .pullheight {
 	margin-bottom: 60%;
 }
 
+.cardlist{
+	margin-top:30px;
+	height: 270px;
+	margin-bottom: 0;
+}
+
 .sidenav {
 	padding-bottom: 40px;
 	padding-top: 40px;
@@ -58,7 +64,7 @@ padding-top: 60px;
     <!-- 상품한개 -->
     <div class="col s12 l3" th:each="product : ${list}">
     <th:block th:each="procimgdetail:${procimgdetail}" th:if="${product.productseq}==${procimgdetail.imgnum}"> 
-      <div class="card" >
+      <div class="card cardlist" >
       <a th:href="@{/product_getProduct2(productseq=${product.productseq})}">
         <div class="card-image" >
           <img th:src="@{../upload/}+${procimgdetail.fileName}" >
@@ -99,7 +105,7 @@ padding-top: 60px;
 		<!-- 상품한개 -->
       <div class="col s12 l3" th:each="prodall : ${prodall}">
     <th:block th:each="procimgdetail:${procimgdetail}" th:if="${prodall.productseq}==${procimgdetail.imgnum}"> 
-      <div class="card" >
+      <div class="card cardlist" >
       <a th:href="@{/product_getProduct2(productseq=${prodall.productseq})}"><!--  @{/getBoard(seq=${board.seq})} -->
         <div class="card-image" >
           <img th:src="@{../upload/}+${procimgdetail.fileName}" >

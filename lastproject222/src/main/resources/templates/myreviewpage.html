@@ -1,0 +1,315 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: 나눔고딕;
+}
+.usericon img{
+width: 32px;
+height:32px;
+border-radius: 50%;
+
+}
+.review-top{
+margin: 10px 0 0 0 ;
+padding:20px ;
+border: 1px solid black;
+}
+
+.usericon,.back-icon.col.s6.m6.l6,.usericon.col.s6.m6.l6 a{
+display: inline-block;
+text-align:right;
+vertical-align: middle;
+
+}
+.usericon strong, .back-icon a span,.usericon,.back-icon a{
+color:black;
+width: 100px;
+
+}
+.usericon-bg{
+width: 32px;
+height:32px;
+border-radius: 50%;
+
+}
+.review-info{
+width:100%;
+padding-top:50px;
+
+border-top:0; 
+margin-bottom:50px;
+}
+.review-item-info{
+display:table;
+padding-left: 30px;
+width: 50%;
+}
+.review-head{
+display: table;
+width: 100%;
+}
+.review-item-info .img{
+display: table-cell;
+width: 64px;
+height: 64px;
+background-image: url('image/a.jpg');
+}
+.review-text{
+text-align: center;
+}
+.review-text textarea{
+margin :10px 30px 20px 30px;
+height: auto;
+width: auto;
+}
+.review-item-info a{
+display: table-cell;
+color:black;
+padding-left:12px;
+vertical-align: middle;
+}
+.item-score{
+display: table-cell;
+}
+.review-upload{
+
+margin: 20px;
+}
+input[type=file] {
+display: none;
+ }
+ 
+ .txt{
+font-size: 21px;
+font-family:맑은고딕;
+color:black;
+margin-top: 0;
+}
+.recent-top {
+padding-bottom: 8px;
+margin-bottom: 20px;
+border-bottom: 2px solid #555;
+}
+.review-date{
+margin-left: 30px; 
+}
+.select-wrapper{
+width: 140px;
+text-align: right;
+display: inline-block;
+}
+.select-wrapper input.select-dropdown {
+
+}
+.item-score{
+text-align: right;
+display: block;
+}
+.imgs_wrap img {
+  max-width: 150px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.img {
+	height: 100%;
+	width: 100%;
+}
+/* insert.html의 css */
+.spimg{
+	overflow: hidden;
+	width:100%;
+	height:300px;
+}
+
+.sping img{
+	display: block;
+	max-width: 100%;
+	max-height: auto;
+	-ms-interpolation-mode: bicubic;
+}
+textarea{
+	height:100%;
+}
+
+.item-img{
+width: 80px;
+height: 80px;
+}
+
+img {
+	width:100%;
+}
+</style>
+</head>
+<body>
+	<div class="container row" >
+		<!-- 사이드바 불러오는 부분 -->
+		<th:block th:include="myinfoside.html"></th:block>
+		<!-- 내정보 시작  -->
+		<div class="col s10 m10 l10 content">
+			<div class="recent-top">
+				<h1 class="txt">내가 쓴 구매후기</h1> 
+			</div>
+			
+			<div class="row">
+				<div class="col s12 l4 review" th:each="list: ${relist}">
+      				<div class="card">
+        				<div class="card-image" >
+        					<p class="reseq" th:text="${list.reviewseq}" style="display:none;"></p>
+          					<img class="reimg" th:src="@{../upload/}+${list.reviewimg}" >
+        				</div>
+        				<div class="card-content">
+        					<p><a th:href="@{/product_getProduct2(productseq=${list.productseq})}">상품상세보기</a></p>
+          					<div class="divider"></div>
+          					<p class="redetail" th:text="${list.reviewdetail}"></p>
+          					<p th:text="'작성일자: '+ ${list.reviewdate}"></p><!-- 좀 작게 -->
+        				</div>
+        				 <div class="card-action">
+          					<a href="#updateReview" class="modal-trigger reupdate">수정</a>
+          					<a class="delete">삭제</a>
+        				</div>
+      				</div>
+    			</div>
+			</div>
+			
+			<!--수정: 모달창  -->
+			<div class="modal fade" id="updateReview">
+				<div class="modal-content">
+      				<div class="container">
+      				<!-- 폼 시작 -->
+      					<form id="updateform" method="post" enctype="multipart/form-data">
+      						<table>
+								<tr>
+									<input type="hidden" name="updateseq">
+									<th>작성자</th>
+									<td th:text="${session['data'].userid}"></td><!-- 작성자 -->
+								</tr>
+								<tr>
+									<th>첨부파일</th>
+									<td><label>대표이미지 업로드<input type="file" name="reviewimg" accept="image/*"></label></td>
+								</tr>
+								<tr>
+									<td colspan=2>
+										<div class="rows spimg">
+										<div class="col s5"><img class="img" src="image/camera.png"></div>
+										<div class="col s7"><textarea name="reviewdetail" rows="20" cols="300"></textarea> </div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan=2>
+										<input type="button" class="btn" value="제출하기" id="updateBtn">
+										<input type="button" class="btn modal-close" value="작성취소">
+									</td>
+								</tr>
+							</table>
+      					</form>
+      				</div>
+    			</div>
+			</div>
+			
+			<!-- 모달창끝 -->
+		</div>
+	</div>
+<th:block th:include="footer.html"></th:block>
+
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	//사진추가
+	var reviewseq;
+	$('.review').each(function(i){
+		$('.reupdate:eq('+i+')').on("click",function(e){
+			e.preventDefault();
+			console.log("글 :"+$('.redetail:eq('+i+')').html());
+			console.log("이미지"+$('.reimg:eq('+i+')').attr('src'));
+			
+			$('.modal').modal({
+				onOpenStart:function(){
+					$('#updateform')[0].reset();
+					$('input[name="updateseq"]').val($('.reseq:eq('+i+')').html());
+					$(".spimg img").attr('src',$('.reimg:eq('+i+')').attr('src'));
+					$('textarea[name="reviewdetail"]').html($('.redetail:eq('+i+')').html());
+				}
+			});
+		});
+		
+		$('.delete:eq('+i+')').on("click",function(){
+			//alert($('.reseq:eq('+i+')').html());
+			alert($('.reseq:eq('+i+')').html());
+			if(confirm("리뷰를 정말 삭제하시겠습니까?")==true){
+				$.ajax({
+					type:'POST',
+					url:'/deleteReview',
+					data:JSON.stringify({"reviewseq":$('.reseq:eq('+i+')').html()}),
+					dataType:'json',
+					contentType:"application/json; charset=UTF-8",
+					cache:false,
+					success:function(data){
+						if(data.ok==1){//삭제되었을때
+							alert("삭제되었습니다.");
+							location.href="/myreviewpage";
+						}
+					},
+					error:function(data){
+						console.log(data);
+					}
+				});
+			}
+		});
+	});
+
+	//수정버튼 눌렀을때
+	$("#updateBtn").on("click",function(){
+		var formData=new FormData($('#updateform')[0]);
+		console.log(formData);
+		
+		$.ajax({
+			url:'/updateReview',
+			processData: false,
+			contentType: false,
+			data: formData,
+			type: 'POST',
+	        cache: false,
+	        enctype: 'multipart/form-data',
+	        success:function(data){
+	        	if(data.ok){
+	        		alert("수정에 성공하였습니다.");
+	        		location.href="/myreviewpage";
+	        	}
+	        },
+	        error:function(xhr){
+	        	console.log(xhr.responseText);
+	        }
+		});
+		
+		alert($('input[name="updateseq"]').val());
+	});
+	
+	
+	
+	$("input:file[name='reviewimg']").on("change",function(){//대표이미지 썸넬-1개
+		if(this.files && this.files[0]){
+			var reader=new FileReader();
+			reader.onload=function(e){
+				$(".spimg img").attr('src',e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		}	
+	});
+	
+	
+});
+</script>
+</body>
+</html>

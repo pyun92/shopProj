@@ -57,7 +57,7 @@ public class BoardController {
 		mav.addObject("bigadlist",adservice.findbigad());	//대문광고만 가져오기
 		mav.addObject("bigprod",adservice.findbigadprod()); //대문광고한 제품가져오기
 		mav.addObject("adstore",adservice.findadstore());  //대문광고한 상점가져오기
-		
+		mav.addObject("adprodimg",adservice.findbigadimg());  //대문광고한 상점가져오기
 		//---------------------------------------
 		mav.addObject("adlist", adservice.findAll());		//광고 다가져오기(intro 쓰려면)
 		mav.addObject("list", adservice.findAdProduct());	//추천광고관련 상품 다가져오기

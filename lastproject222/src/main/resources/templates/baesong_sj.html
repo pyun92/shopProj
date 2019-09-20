@@ -73,7 +73,7 @@ margin-top: 20px;
 						<!--재고수량이 5개 이상일 경우 ->"재고수량이 5개이하입니다. 삭제하시겠습니까?" 추가 -->
 						<th>배송확인</th>
 					</tr>
-					<tr th:each="list:${list}" class="listtr">
+					<tr th:each="list:${list}" th:if="${list.condition}!='bucket'" class="listtr">
 						<th:block th:each="option:${options}" th:if="${option.optionseq}==${list.optionseq}">
 						<td th:text="${list.bucketseq}"></td>
 						<td th:text="${list.itemname}"></td>
