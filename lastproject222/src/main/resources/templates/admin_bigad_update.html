@@ -160,7 +160,7 @@ section {
 						<div class="card-image">
 							<th:block th:each="img:${prodimg}"
 								th:if="${img.imgnum}==${product.productseq}">
-								<img th:src="@{../upload/}+${img.fileName}">
+								<img th:if="${img.detailnum}==0" th:src="@{../upload/}+${img.fileName}">
 							</th:block>
 						</div>
 						<div class="card-content center-align">

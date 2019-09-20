@@ -144,7 +144,7 @@ section {
 						<div class="card-image">
 							<th:block th:each="img:${prodimg}"
 								th:if="${img.imgnum}==${product.productseq}">
-								<img th:src="@{../upload/}+${img.fileName}">
+								<img th:if="${img.detailnum}==0" th:src="@{../upload/}+${img.fileName}">
 						</div>
 						<div class="card-content ">
 							<p th:text="${ad.intro}"></p>
