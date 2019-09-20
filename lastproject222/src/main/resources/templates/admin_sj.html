@@ -181,7 +181,7 @@ $(document).ready(function(){
 					success:function(data){
 						if(data.email_ok==1&&data.store_update==1){
 							/* location.href = location.href; */
-							history.go(0);
+							location.reload(true);
 						}
 					},
 					error:function(data){

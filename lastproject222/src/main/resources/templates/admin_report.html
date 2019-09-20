@@ -111,7 +111,7 @@ function stop(day){
 		cache:false,
 		success:function(data){
 			if(data.confirm==1){
-				history.go(0);
+				location.reload(true);
 				alert("처리되었습니다.");
 				//체크박스 체크되게
 			}
