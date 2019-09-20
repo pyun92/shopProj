@@ -93,8 +93,8 @@ p {
 /* #video_main{
 	z-index:1;
 } */
-.container.row.grey.lighten-3{
-margin-top: 30px;
+.container.row.grey.lighten-3 {
+	margin-top: 30px;
 }
 </style>
 </head>
@@ -102,67 +102,45 @@ margin-top: 30px;
 
 	<div class="container row grey lighten-3">
 		<div class="col s3 align1">
-			<div class="col s12 ">
-				<div class="card center-align">
-					<div class="card-image">
-						<img src="image/a.jpg">
-					</div>
-					<div class="card-content center-align">
-						<p>안녕하세요 저는 개량한복을 파는 ~~라고 합니다.</p>
-					</div>
-
-				</div>
-			</div>
 			<div class="col s12">
 
 				<h5 class="center-align">
-					<i class="small material-icons">shopping_cart</i>영상 속 상점 들르기
+					<i class="small material-icons">shopping_cart </i> 영상 속 상점 들르기
 				</h5>
 			</div>
-			<!-- 편성표 -->
-			<div class="col s12 4d ww1" style="background-color: red;">
-				<span>편성표 보이는 곳입니다.</span>
+			<div class="col s12 4d ww1">
+				<div class="card center-align">
+					<th:block th:each="bigad:${bigadlist}" th:if="${bigad.bigad}==2">
+						<th:block th:each="product: ${bigprod}"
+							th:if=${bigad.prodseq}==${product.productseq}>
+							<th:block th:each="adshop:${adstore}"
+								th:if="${product.storeseq}==${adshop.storeseq}">
+								<div class="card-image">
+									<img th:src="@{../storeimages/}+${adshop.storeimg}">
+								</div>
+								<div class="card-content center-align">
+									<p th:text="${adshop.storename}"></p>
+								</div>
+							</th:block>
+						</th:block>
+					</th:block>
+				</div>
 			</div>
 
-			<!-- <div class="col s12 4d">
-				<div class="col s6 ww1">
-					<img src="image/han4.jpg">
-				</div>
-				<div class="col s6 ww1">
-					<img src="image/han2.png">
-				</div>
-				<div class="col s6 ww1">
-					<img src="image/han3.jpg">
-				</div>
-				<div class="col s6 ww1">
-					<img src="image/han4.jpg">
-				</div>
-			</div> -->
 		</div>
 
 
 		<div class="col s9 align1">
 			<div class="carousel carousel-slider" id="video_main">
-				<a class="carousel-item" href="#one!"> <iframe width="100%"
-						height="100%" src="https://www.youtube.com/embed/VfYC_mPfgd4"
-						frameborder="0"
-						allow="accelerometer;  encrypted-media; gyroscope; picture-in-picture"
-						allowfullscreen></iframe>
-				</a> <a class="carousel-item" href="#two!"> <iframe width="100%"
-						height="100%" src="https://www.youtube.com/embed/oLn3UURHunk"
-						frameborder="0"
-						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-						allowfullscreen></iframe></a> <a class="carousel-item" href="#three!">
-					<iframe width="100%" height="100%"
-						src="https://www.youtube.com/embed/WG9d3Toe7Dk" frameborder="0"
-						allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-						allowfullscreen></iframe>
-				</a> <a class="carousel-item" href="#four!"> <iframe width="100%"
-						height="100%" src="https://www.youtube.com/embed/no3K4M0PqRY"
-						frameborder="0"
-						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-						allowfullscreen></iframe>
-				</a>
+				<div class="carousel-item" th:each="bigad,index: ${bigadlist}">
+					<input type="hidden" class="item" th:value="${bigad.intro}">
+					<a> <iframe width="100%" height="100%" th:src="${bigad.vidurl}"
+							frameborder="0"
+							allow="accelerometer;  encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen></iframe>
+					</a>
+
+				</div>
 			</div>
 		</div>
 	</div>
@@ -201,16 +179,25 @@ margin-top: 30px;
 		});
 		$(document).ready(function() {
 			$('.scrollspy').scrollSpy();
-			
-			
-			//이미지 엑박이면 reload or 로드되면 화면에 뿌리기
-			
-// 			$('img').each(function(n) {
-// 				$(this).error(function() {
 
-// 					location.reload(true);
-// 				});
-// 			});
+			//이미지 엑박이면 reload or 로드되면 화면에 뿌리기
+
+			// 			$('img').each(function(n) {
+			// 				$(this).error(function() {
+
+			// 					location.reload(true);
+			// 				});
+			// 			});
+
+			$('.indicator-item').click(function() {
+				var a = $(this).index();
+				alert(a);
+				var b = $('.item:eq(' + a + ')').val();
+				alert(b);
+				const c = $('.carousel-item').val();
+				alert(c);
+			});
+
 		});
 		/* $(window).scroll(function(){
 			var scrollTop = $(document).scrollTop();

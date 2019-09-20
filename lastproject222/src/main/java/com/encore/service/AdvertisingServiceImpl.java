@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.encore.domain.Advertising;
 import com.encore.domain.Product;
+import com.encore.domain.ProductImg;
+import com.encore.domain.Store;
 import com.encore.persistence.AdvertisingRepository;
 import com.encore.persistence.LoginRepository;
 import com.encore.persistence.ProductImgRepository;
@@ -27,9 +29,10 @@ public class AdvertisingServiceImpl implements AdvertisingService {
 	private ProductRepository prodrep;
 	@Autowired
 	private ProductImgRepository prodimgrep;
+	@Autowired
+	private ShopService storeservice;
 	@PersistenceContext
 	private EntityManager entityManager;
-	
 	
 	@Override
 	public List<Product> findAdProduct() {
@@ -39,6 +42,16 @@ public class AdvertisingServiceImpl implements AdvertisingService {
 		list = query.getResultList();
 		return list;
 	}
+	
+	@Override
+	public List<Advertising> findbigad() {
+		List<Advertising>list = null;
+		String qstr = "from Advertising a where a.bigad=2";
+		Query query = entityManager.createQuery(qstr);
+		list = query.getResultList();
+		return list;
+	}
+	
 	
 	@Override
 	public List<Advertising> findAll() {
@@ -98,6 +111,31 @@ public class AdvertisingServiceImpl implements AdvertisingService {
 		
 	}
 
-	
+	@Override
+	public List<Product> findbigadprod() {
+		List<Product>list = null;
+		String qstr = "from Product a where a.productseq in (select b.prodseq from Advertising b)";
+		Query query = entityManager.createQuery(qstr);
+		list = query.getResultList();
+		return list;
+	}
+
+	@Override
+	public List<ProductImg> findbigadimg() {
+		List<ProductImg> list = null;
+		String qstr = "from ProductImg a where a.imgnum in (select b.productseq from Product b where b.productseq in (select c.prodseq from Advertising c))";
+		Query query = entityManager.createQuery(qstr);
+		list = query.getResultList();
+		return list;
+	}
+
+	@Override
+	public List<Store> findadstore() {
+		List<Store> list = null;
+		String qstr = "from Store a where a.storeseq in (select b.storeseq from Product b where b.productseq in (select c.prodseq from Advertising c))";
+		Query query = entityManager.createQuery(qstr);
+		list = query.getResultList();
+		return list;
+	}
 	
 }

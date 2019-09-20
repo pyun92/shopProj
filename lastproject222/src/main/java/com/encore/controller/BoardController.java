@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.encore.service.AdvertisingService;
 import com.encore.service.EmailChkService;
 import com.encore.service.ProductImgService;
 import com.encore.service.ProductService;
+import com.encore.service.TimetableService;
 
 
 
@@ -39,10 +41,26 @@ public class BoardController {
 	@Autowired
 	private ProductImgService imgService;
 	
+	@Autowired
+	private AdvertisingService adservice;
+	
+	@Autowired
+	private TimetableService tservice;
+	
 	@GetMapping("/welcome")
 	public ModelAndView product_getList(ModelAndView mav) {
 					
 		mav.setViewName("welcome");
+		
+		//대문광고용 
+		mav.addObject("tblist", tservice.findAll());	//타임테이블가져오기
+		mav.addObject("bigadlist",adservice.findbigad());	//대문광고만 가져오기
+		mav.addObject("bigprod",adservice.findbigadprod()); //대문광고한 제품가져오기
+		mav.addObject("adstore",adservice.findadstore());  //대문광고한 상점가져오기
+		
+		//---------------------------------------
+		mav.addObject("adlist", adservice.findAll());		//광고 다가져오기(intro 쓰려면)
+		mav.addObject("list", adservice.findAdProduct());	//추천광고관련 상품 다가져오기
 		mav.addObject("prodall", service.getProdListAll());
 		mav.addObject("procimgdetail",imgService.getDetailNum());
 		return mav;
