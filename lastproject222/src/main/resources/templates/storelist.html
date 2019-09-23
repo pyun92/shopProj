@@ -1,0 +1,32 @@
+<th:block th:include="main.html"></th:block>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="container">
+	<section>
+		<h5 id="chart0">상점목록</h5>
+		<div class="row">
+    <!-- 상품한개 -->
+    	<div class="col s12 l3" th:each="store : ${stlist}">
+      		<div class="card cardlist" >
+     		 <a th:href="@{/index(storeseq=${store.storeseq})}">
+        		<div class="card-image">
+          			<img th:src="@{../storeimages/}+${store.storeimg}" >
+          			<span class="card-title" style="color: black;"><th:block th:text="${store.storeseq}" ></th:block> </span>
+        		</div>
+        		<div class="card-content">
+					<p th:text="${store.storename}"></p>
+					<p th:text="${store.storetype}"></p>
+       	 		</div>
+        	</a>
+      	</div>
+    </div>
+    </div>
+    </section>
+</div>
+</body>
+</html>
