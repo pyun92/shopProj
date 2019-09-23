@@ -34,7 +34,7 @@ Page<ProductOrder> listpage(Long seq,Pageable pageable);
 	
 	void reviewSave(Review r,Long seq);
 	
-	List<Review> reviewList(Long seq);
+	List<Review> reviewList(String userid);
 	
 	void updateReview(Review r);
 	

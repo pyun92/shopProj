@@ -25,7 +25,7 @@ public class Review {
 	
 	private Long bucketseq;
 	
-	private Long userseq;//session값에 저장된 작성자 아이디 넣기
+	private String userid;//session값에 저장된 작성자 아이디 넣기
 	
 	private String reviewdetail;//리뷰내용
 	

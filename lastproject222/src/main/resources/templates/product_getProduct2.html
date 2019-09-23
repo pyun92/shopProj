@@ -117,26 +117,29 @@ height: 100%;
 		<!-- 3*3구조 -->
 		<div class="row">
 				<div class="col s6 l4 review" th:each="list: ${review}">
-      				<a href="#review-detail" class="modal-trigger modal-dd">
+      				<!-- <a href="#review-detail" class="modal-trigger modal-dd"> -->
       				<div class="card">
         				<div class="card-image" >
+        					<p class="productseq" th:text="${proDe.productseq}" style="display:none;"></p>
         					<p class="reseq" th:text="${list.reviewseq}" style="display:none;"></p>
           					<img class="reimg" th:src="@{../upload/}+${list.reviewimg}" >
         				</div>
         				<div class="card-content">
           					<div class="divider"></div>
           					<p class="redetail" th:text="${list.reviewdetail}"></p>
-          					<p class="user" th:text="'작성자: '+ ${session['data'].username}"></p>
+          					<p class="user" th:text="${list.userid}"></p><!--사용자이름으로 바꾸기 -->
           					<p class="date" th:text="'작성일자: '+ ${list.reviewdate}"></p><!-- 좀 작게 -->
+        					<a href="#review-detail" class="modal-trigger modal-dd">상세보기</a>
+        					<button class="report" th:if="${storeadmin.storeseq}==${session['data'].userseq}">신고</button>
         				</div>
       				</div>
-      				</a>
+      				<!-- </a> -->
     			</div>
 			</div>
     	<!-- 후기를 클릭했을때 나타나는 모달창 -->
   			<div id="review-detail" class="modal fade">
     			<div class="modal-content">
-    				<div class="row">
+    				<div class="row detailrow">
     					<div class="rows spimg">
 							<div class="col s5"><img></div>
 							<div class="col s7">
@@ -196,7 +199,41 @@ $(document).ready(function(){
     
     
     $('.review').each(function(i){
-		$('.modal-dd:eq('+i+')').on("click",function(e){
+		//신고버튼 클릭시
+		$('.report:eq('+i+')').on("click",function(){
+			alert("신고버튼 클릭함");
+			var reportsubject=prompt("신고사유를 입력해주세요","");
+			if(reportsubject!=''){
+				var d={"productseq":$(".productseq:eq("+i+")").html(),
+						"reportdetail":$(".redetail:eq("+i+")").html(),
+						"reportname":$(".user:eq("+i+")").html(),
+						"reportsubject":reportsubject};
+				 $.ajax({
+					type:'POST',
+					url:'/reviewreport',//신고테이블로보내기
+					data:JSON.stringify(d),
+					dataType:'json',
+					contentType:"application/json; charset=UTF-8",
+					cache:false,
+					success:function(data){
+						if(data.ok==1){//삭제되었을때
+							alert("신고접수가 완료되었습니다.");
+							return;
+						}
+					},
+					error:function(data){
+						console.log(data);
+					}
+				});
+			}else{
+				alert("신고사유는 반드시 입력해주세요");
+				return;
+			}
+			
+		});
+		
+		//모달클릭시
+    	$('.modal-dd:eq('+i+')').on("click",function(e){
 			e.preventDefault();
 			alert("모달 클릭됨");
 			$('.modal').modal({
@@ -209,6 +246,7 @@ $(document).ready(function(){
 				}
 			});
 		});
+		
     });
     
  });

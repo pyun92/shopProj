@@ -2,6 +2,8 @@ package com.encore.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,7 @@ import com.encore.domain.Bucket;
 import com.encore.domain.Option;
 import com.encore.domain.Product;
 import com.encore.domain.ProductImg;
+import com.encore.domain.Report;
 import com.encore.domain.Store;
 import com.encore.domain.Userdata;
 import com.encore.service.OptionService;
@@ -118,32 +121,20 @@ public class ProductController {
 	
 
 	//개인 상점 등록 상품관리 & 개인상점 상품리스트
-	@RequestMapping(value= {"/product_getList2"})
-	public String product_getList2(@ModelAttribute("data") Userdata user,Model model ,Product proc,Long storeseq) {
-		List<Product> proclist= service.getProdList(storeseq);
+	@RequestMapping(value= {"/product_getList_sj","/product_getList2"})
+	public void product_getList_sj(@ModelAttribute("data") Userdata user,Model model ,Product proc) {
+		List<Product> proclist= service.getProdList(user.getUserseq());
 		List<ProductImg> procimg =imgService.getDetailNum();
-		model.addAttribute("store", shopservice.findbyid(storeseq));
+		model.addAttribute("store", shopservice.findbyid(user.getUserseq()));
 		model.addAttribute("proc",proclist);
 		model.addAttribute("procimg",procimg);
-		return"product_getList2";
-		//return "redirect:index?storeseq="+storeseq;
-	}
-	
-	@RequestMapping(value= {"/product_getList_sj"})
-	public String product_getList_sj(@ModelAttribute("data") Userdata user,Model model ,Product proc,Long storeseq) {
-		List<Product> proclist= service.getProdList(storeseq);
-		List<ProductImg> procimg =imgService.getDetailNum();
-		model.addAttribute("store", shopservice.findbyid(storeseq));
-		model.addAttribute("proc",proclist);
-		model.addAttribute("procimg",procimg);
-		return"product_getList_sj";
-		//return "redirect:index?storeseq="+storeseq;
 	}
 
 	@GetMapping("/product_getProduct2")
-	public ModelAndView product_getProduct(ModelAndView mav,Product prod) {
+	public ModelAndView product_getProduct(ModelAndView mav,Product prod,@ModelAttribute("data") Userdata user) {
 		System.out.println("번호 :"+prod.getProductseq());
 		mav.setViewName("product_getProduct2");
+		mav.addObject("storeadmin",shopservice.findbyid(user.getUserseq()));
 		mav.addObject("proDe", service.getProd(prod));
 		mav.addObject("proDeImg", imgService.getProdImg(prod));
 		mav.addObject("proOption",opService.selectOption(prod.getProductseq()));
@@ -384,6 +375,28 @@ public class ProductController {
         }
 	}
 	
+	//리뷰창신고기능
+	@RequestMapping("/reviewreport")
+	@ResponseBody
+	public Map<Object,Object> reviewReport(@RequestBody Map<String,Object> obj){
+		Long productseq=Long.valueOf((String)obj.get("productseq"));
+		String reportdetail=(String)obj.get("reportdetail");
+		String reportname=(String)obj.get("reportname");//이부분 나중에 이름으로 들어오면 바꾸기
+		String reportsubject=(String)obj.get("reportsubject");
+		
+		Report report=new Report();
+		report.setProductseq(productseq);
+		report.setReportdetail(reportdetail);
+		report.setReportname(reportname);
+		report.setReportsubject(reportsubject);
+		report.setReportdate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
+		
+		reviewService.insertReport(report);
+		Map<Object,Object> m=new HashMap<Object, Object>();
+		m.put("ok", 1);
+		return m;
+	}
+	
 //	//결제창 
 //	@RequestMapping("/paymentwindow")
 //	public String paymentwindow(HttpServletRequest request,Model model) {
@@ -394,6 +407,7 @@ public class ProductController {
 //		
 //	}
 
+	
 	
 	
 }

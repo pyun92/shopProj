@@ -131,7 +131,7 @@ public class MyinfoController {
 		}
 		System.out.println("파일 저장됨");
 		review.setReviewimg(realFilename);
-		review.setUserseq(data.getUserseq());
+		review.setUserid(data.getUserid());//0923수정--사용자아이디
 		review.setBucketseq(Long.valueOf(mtfReqeust.getParameter("bucketseq")));
 		review.setProductseq(Long.valueOf(mtfReqeust.getParameter("productseq")));
 		review.setReviewdetail(mtfReqeust.getParameter("reviewdetail"));
@@ -146,15 +146,14 @@ public class MyinfoController {
 	public String myReview(@ModelAttribute("data") Userdata data,Model model) {
 		System.out.println("데이터"+data.getUserseq());
 		model.addAttribute("completelist",myinfoservice.ordercompleteList(data.getUserseq()));
-		model.addAttribute("options",optionservice.findoption());
 		return "myreview";
 	}
 	
 	//내가 쓴 리뷰보기
 	@RequestMapping("/myreviewpage")
 	public String myreivewPage(@ModelAttribute("data") Userdata data,Model model) {
-		System.out.println("sdddddddddddddddd");
-		model.addAttribute("relist",myinfoservice.reviewList(data.getUserseq()));
+		//0923수정--리뷰사용자아이디로 받아오기-o
+		model.addAttribute("relist",myinfoservice.reviewList(data.getUserid()));
 		return "myreviewpage";
 	}
 	
@@ -163,6 +162,7 @@ public class MyinfoController {
 	@ResponseBody
 	public Map<Object,Object> updateReview(MultipartHttpServletRequest mtfReqeust,@ModelAttribute("data") Userdata data) {
 		System.out.println("쓴 내용:"+mtfReqeust.getParameter("reviewdetail"));
+		//0923수정--리뷰사용자아이디로받아오기
 		Review review=myinfoservice.review(Long.valueOf(mtfReqeust.getParameter("updateseq")));
 		review.setReviewdetail(mtfReqeust.getParameter("reviewdetail"));
 		review.setReviewdate(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));

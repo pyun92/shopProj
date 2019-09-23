@@ -113,8 +113,8 @@ public class MyinfoServiceImpl implements MyinfoService{
 
 
 	@Override
-	public List<Review> reviewList(Long seq) {
-		return review.findByUserseq(seq);
+	public List<Review> reviewList(String userid) {
+		return review.findByUserid(userid);
 	}
 
 
