@@ -66,6 +66,7 @@ height: 100%;
 			</div>
 		<!-- 제품명,가격,판매수량,옵션 -->
 			<div class="col s6">
+			
 			<input type="hidden" th:value="${proDe.productseq}" name="productseq">
 			<input type="hidden" th:value="${proDe.proname}" name="name">
 			<input type="hidden" th:value="${proDe.discount}" name="discount">
@@ -93,6 +94,9 @@ height: 100%;
 			<p>
 				<a class="waves-effect waves-light btn" id ="directorder-btn" href="#">구매하기</a>
 				<input type="hidden" id="directorder-num" name="directnum" value="0"></input>
+<!-- 				<th:block th:if="${session.['data']==null}"> -->
+<!-- 				<input type="hidden" value="22" id="datadata"> -->
+<!-- 				</th:block> -->
 				<a href="javascript:void(0)" id ="bucket-btn" class="waves-effect waves-light btn">장바구니 담기</a>
 			</p>
 			</div>	
@@ -178,8 +182,14 @@ $(document).ready(function(){
     
     
     $("#bucket-btn").on('click' ,function(){
+// 		var inss=$("#datadata").val();
+// 		alert(inss);
+    	if($("#optionseq").val()==""){
+	    	alert("옵션을 선택해주세요");
+	    }else{
+	    	document.getElementById("item-detail-bucket").submit();
+	    }
     	
-    	document.getElementById("item-detail-bucket").submit();
     });
     
    // alert($('#editor').html());
