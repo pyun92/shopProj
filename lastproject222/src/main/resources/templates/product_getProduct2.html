@@ -130,7 +130,9 @@ height: 100%;
           					<p class="user" th:text="${list.userid}"></p><!--사용자이름으로 바꾸기 -->
           					<p class="date" th:text="'작성일자: '+ ${list.reviewdate}"></p><!-- 좀 작게 -->
         					<a href="#review-detail" class="modal-trigger modal-dd">상세보기</a>
-        					<button class="report" th:if="${storeadmin.storeseq}==${session['data'].userseq}">신고</button>
+        					<th:block th:if="${storeadmin}!=null">
+        						<button class="report" th:if="${storeadmin.storeseq}==${session['data'].userseq}">신고</button>
+        					</th:block>
         				</div>
       				</div>
       				<!-- </a> -->
