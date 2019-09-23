@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -60,6 +61,19 @@ public class ProductController {
 	
 	@Autowired
 	private ShopService shopservice;
+	
+	
+	
+	@ModelAttribute("data")
+	private Userdata momo(@ModelAttribute("data") Userdata data){
+	if(data.getUserseq()==null) {
+		System.out.println("모델이없어 새로 만듬");
+		data = new Userdata();
+	}
+	return data;
+	}
+	
+	
 	
 	//에디터 이미지 등록
 /*	@RequestMapping("/editorImage")
@@ -132,13 +146,16 @@ public class ProductController {
 
 	@GetMapping("/product_getProduct2")
 	public ModelAndView product_getProduct(ModelAndView mav,Product prod,@ModelAttribute("data") Userdata user) {
-		System.out.println("번호 :"+prod.getProductseq());
 		mav.setViewName("product_getProduct2");
 		mav.addObject("storeadmin",shopservice.findbyid(user.getUserseq()));
 		mav.addObject("proDe", service.getProd(prod));
 		mav.addObject("proDeImg", imgService.getProdImg(prod));
 		mav.addObject("proOption",opService.selectOption(prod.getProductseq()));
 		mav.addObject("review",reviewService.findReview(prod));
+		if(user.getUserseq()==null) {
+			mav.addObject("data", null);
+		}
+		System.out.println(user.getUserseq()+"유저시퀀스 생략되었나 안돼었나");
 		return mav;
 	}
 	
