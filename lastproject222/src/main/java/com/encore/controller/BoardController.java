@@ -53,7 +53,7 @@ public class BoardController {
 		mav.setViewName("welcome");
 		
 		//대문광고용 
-		mav.addObject("tblist", tservice.findAll());	//타임테이블가져오기
+		mav.addObject("tblist", tservice.findAll().size()>0?tservice.findAll():null);	//타임테이블가져오기
 		mav.addObject("bigadlist",adservice.findbigad());	//대문광고만 가져오기
 		mav.addObject("bigprod",adservice.findbigadprod()); //대문광고한 제품가져오기
 		mav.addObject("adstore",adservice.findadstore());  //대문광고한 상점가져오기

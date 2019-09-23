@@ -12,13 +12,16 @@ html {
 	height: 660px;
 }
 
+.align2{height: 110px;}
+
+
 .carousel.carousel-slider {
 	width: 100%;
 	height: 90%;
 }
 
 .card {
-	margin-top:30px;
+	margin-top: 30px;
 	height: 35%;
 	margin-bottom: 0;
 }
@@ -86,8 +89,8 @@ p {
 	visibility: hidden;
 }
 
-.s1 {
-	
+.textbig {
+	font-size: 33px;
 }
 
 /* 따라다니는 애 안보이게 맨 앞으로 둠 */
@@ -97,62 +100,70 @@ p {
 .container.row.grey.lighten-3 {
 	margin-top: 30px;
 }
-.center-align{
-font-size: 150%;
+
+.center-align {
+	font-size: 150%;
 }
 </style>
 </head>
 <body>
 
 	<div class="container row grey lighten-3">
-		<div class="col s3 align1">
-				<p class="center-align" >
-					<i class="small material-icons">shopping_cart </i> 
-					영상 속 상점 들르기
-				</p>
-				 
-				<div class="hidden card center-align" th:each="bigad,index1:${bigadlist}">
-						<input type="hidden" th:value="${index1.index}" class="123">
-						<th:block th:each="product: ${bigprod}"
-							th:if="${bigad.prodseq}==${product.productseq}">
-							<th:block th:each="adshop,index:${adstore}"
-								th:if="${product.storeseq}==${adshop.storeseq}" >
-								
-								<div class="card-image">
-									<a th:href="@{/index(storeseq=${product.storeseq})}">
-									<img th:src="@{../storeimages/}+${adshop.storeimg}">
- 										</a>
-								</div>
-								
-								<div class="card-content center-align">
-									<p th:text="${adshop.storename}"></p>
-								</div>
-								
-							</th:block>
-						</th:block>
-					</div>
-				
-			
-<!-- 					상품정보 -->
-					<div class="hidden2 card center-align" th:each="product,index1: ${adprodimg}" >
-							<input type="hidden" th:value="${index1.index}" class="1233">
-								<div class="card-image">
-									<a th:href="@{/product_getProduct2(productseq=${product.imgnum})}">
- 									<img th:src="@{../upload/}+${product.fileName}"> 
- 									</a>
-								</div>
-								
-								<div class="card-content center-align" th:each="list:${list}" th:if="${product.imgnum}==${list.productseq}">
-									<p th:text="${list.proname}" style="border: 0px"></p>
-									<p th:text="${list.price}" ></p>
-								</div>
-					</div>
-		
+		<div class="col s12 align2" th:if="${tblist}==null">
+			<p class="textbig">
+				<i class="Medium material-icons">sentiment_very_satisfied </i> 광고가 등록되지 않았습니다.
+			</p>
+		</div>
+		<div class="col s3 align1" th:if="${tblist}!=null">
+			<p class="center-align">
+				<i class="small material-icons">shopping_cart </i> 영상 속 상점 들르기
+			</p>
+
+			<div class="hidden card center-align"
+				th:each="bigad,index1:${bigadlist}">
+				<input type="hidden" th:value="${index1.index}" class="123">
+				<th:block th:each="product: ${bigprod}"
+					th:if="${bigad.prodseq}==${product.productseq}">
+					<th:block th:each="adshop,index:${adstore}"
+						th:if="${product.storeseq}==${adshop.storeseq}">
+
+						<div class="card-image">
+							<a th:href="@{/index(storeseq=${product.storeseq})}"> <img
+								th:src="@{../storeimages/}+${adshop.storeimg}">
+							</a>
+						</div>
+
+						<div class="card-content center-align">
+							<p th:text="${adshop.storename}"></p>
+						</div>
+
+					</th:block>
+				</th:block>
+			</div>
+
+
+			<!-- 					상품정보 -->
+			<div class="hidden2 card center-align " th:if="${tblist}!=null"
+				th:each="product,index1: ${adprodimg}">
+				<input type="hidden" th:value="${index1.index}" class="1233">
+				<div class="card-image">
+					<a th:href="@{/product_getProduct2(productseq=${product.imgnum})}">
+						<img th:src="@{../upload/}+${product.fileName}">
+					</a>
+				</div>
+
+				<div class="card-content center-align" th:each="list:${list}"
+					th:if="${product.imgnum}==${list.productseq}">
+					<p th:text="${list.proname}" style="border: 0px"></p>
+					<p th:text="${list.price}"></p>
+				</div>
+			</div>
+
 
 		</div>
 
 
-		<div class="col s9 align1">
+		<div class="col s9 align1" th:if="${tblist}!=null">
 			<div class="carousel carousel-slider" id="video_main">
 				<div class="carousel-item" th:each="bigad,index: ${bigadlist}">
 					<input type="hidden" class="item" th:value="${bigad.intro}">
@@ -201,27 +212,23 @@ font-size: 150%;
 		});
 		$(document).ready(function() {
 			$('.scrollspy').scrollSpy();
-			
-			$('.hidden').css('display','none');
-			$('.hidden:eq('+$(".123").val()+')').css('display','block');
-			
-			
-			$('.hidden2').css('display','none');
-			$('.hidden2:eq('+$(".1233").val()+')').css('display','block');
-			
-			
+
+			$('.hidden').css('display', 'none');
+			$('.hidden:eq(' + $(".123").val() + ')').css('display', 'block');
+
+			$('.hidden2').css('display', 'none');
+			$('.hidden2:eq(' + $(".1233").val() + ')').css('display', 'block');
+
 			$('.indicator-item').click(function() {
 				var a = $(this).index();
 				var b = $('.item:eq(' + a + ')').val();
 				const c = $('.carousel-item').val();
-				$('.hidden').css('display','none');
-				$('.hidden:eq('+a+')').css('display','block');
-				
-				$('.hidden2').css('display','none');
-				$('.hidden2:eq('+a+')').css('display','block');
+				$('.hidden').css('display', 'none');
+				$('.hidden:eq(' + a + ')').css('display', 'block');
+
+				$('.hidden2').css('display', 'none');
+				$('.hidden2:eq(' + a + ')').css('display', 'block');
 			});
-			
-			
 
 		});
 		/* $(window).scroll(function(){
