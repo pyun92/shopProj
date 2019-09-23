@@ -1,5 +1,6 @@
 package com.encore.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class ShopServiceImpi implements ShopService {
 	public Store findbyid(Long seq) {
 		Store store = repository.findByStoreseq(seq);
 		return store;
+	}
+
+	@Override
+	public List<Store> AllstoreList() {
+		return (List<Store>)repository.findAll();
 	}
 
 }

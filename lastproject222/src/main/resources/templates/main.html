@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha256-OweaP/Ic6rsV+lysfyS4h+LM6sRwuO3euTYfr6M124g=" crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js" integrity="sha256-6DDZX77BrYnAmK9a3N3tvNPtyTIk1q1w9iW+UBtot3Y=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/aj	ax/libs/materialize/1.0.0/js/materialize.min.js" integrity="sha256-U/cHDMTIHCeMcvehBv1xQ052bPSbJtbuiw4QA9cTKz0=" crossorigin="anonymous"></script>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
 	-->
 
@@ -67,7 +66,7 @@
 				</div>
 
 				<!--실시간 검색어-->
-				<div class="col s1 m1 l1"></div>
+				<div class="col s1 m1 l1">검색어</div>
 
 				<!--회원가입 ,장바구니 -->
 				<div class="col s2 m2 l2">
@@ -179,10 +178,12 @@
 					</th:block>
 				</div>
 			</div>
-			</nav>
 	</div>
 
 
+	</nav>
+
+	</div>
 	<nav class="menu-nav-con1">
 		<div class="menu-nav-con col s12 m12 l12 ">
 			<!-- 매뉴 목록 -->
@@ -269,8 +270,7 @@
 							</ul>
 						</div>
 					</div></li>
-				<li><a href="#" onclick="already()"> LifeStyle</a></li>
-				
+				<li><a th:href="@{/storelist}">상점목록</a></li>
 
 				<th:block
 					th:if="${session['data']!=null && session['data'].manage_level==1}">
@@ -286,34 +286,26 @@
 	</nav>
 
 	<!-- 스크립트  -->
-
 	<!-- Compiled and minified JavaScript -->
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script type="text/javascript">
 		function already() {
 			alert("준비중입니다.");
-
 		}
-
 		$(document).ready(
 				function() {
-
 					// 					$("#food1").on('click', function() {
 					// 						var food = $("#food1").val();
 					// 						alert(food);
 					// 					});
-
 					$(".zeta-menu ul li:has(ul)").find("a:first").append(
 							"<p style='float:right;margin:-3px'>&#9656;</p>");
-
 					//모달 오픈
 					$('.modal').modal();
 					$('.cardmodal').modal();
 					$('.accountmodal').modal();
-
 					$('select').formSelect();
-
 					//이메일 주소 다시 입력하는 창
 					$('.new-email-btn').click(function() {
 						if ($('.new-email').css("display") == "none") {
@@ -334,27 +326,21 @@
 							$('.new-phone-btn').text("변경하기");
 						}
 					})
-
 					$('.email-check').click(function() {
 						var email = $('input.name-insert-input').val();
 						alert(email);
 						$('.insert-email').text(email);
 						if ($('.new-email').css("display") != "none") {
-
 							$('.new-email').hide();
 							$('.new-email-btn').text("변경하기");
 						}
 					})
-
 					$("input:text[numberOnly]").on("keyup", function() {
 						$(this).val($(this).val().replace(/[^0-9]/g, ""));
 					});
-
 					$('.scrollspy').scrollSpy();
-
 					$(window).scroll(function() {
 						var scrollTop = $(document).scrollTop();
-
 						if (scrollTop >= 690) {
 							$("#followquick").css('visibility', 'visible');
 						} else {
@@ -366,10 +352,8 @@
 							"top" : scrollTop + 50
 						});
 					});
-
 					$(window).scroll(function() {
 						var scrollTop = $(document).scrollTop();
-
 						if (scrollTop <= 125) {
 							$(".menu-nav-con").css('position', 'relative');
 						} else {
@@ -379,25 +363,8 @@
 								top : 0,
 							}, 10000);
 						}
-
 					});
-
 				});
-		
-		$(window).scroll(function() {
-			var scrollTop = $(document).scrollTop();
-
-			if (scrollTop <= 125) {
-				$(".menu-nav-con").css('position', 'relative');
-			} else {
-				$(".menu-nav-con").css('position', 'fixed');
-				$(".menu-nav-con").css({
-					opacity : 1,
-					top : 0,
-				}, 10000);
-			}
-
-		});
 	</script>
 </body>
 </html>
