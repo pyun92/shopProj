@@ -61,17 +61,12 @@ public class LoginController {
 				try {
 					SimpleDateFormat format=new SimpleDateFormat("yyyy/mm/dd");
 					Date today=format.parse(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
-					Date freeday=format.parse(r.getConfirmdate());
-					
-					long cal=(freeday.getTime()-today.getTime())/(24*60*60*1000);
-					cal=Math.abs(cal);
-					System.out.println("날짜차이:"+cal);
-					if(cal>=0) {
+					if(r.getConfirmdate()==null) {
 						response.setContentType("text/html; charset=UTF-8");
 						PrintWriter out;
 						try {
 							out = response.getWriter();
-							out.println("<script>alert('"+r.getConfirmdate()+"일 까지 이용이 불가합니다.');"
+							out.println("<script>alert('신고접수상태입니다.');"
 									+ "location.href='welcome';</script>");
 							out.flush();
 							out.close();
@@ -79,7 +74,27 @@ public class LoginController {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+					}else {
+						Date freeday=format.parse(r.getConfirmdate());
+						long cal=(freeday.getTime()-today.getTime())/(24*60*60*1000);
+						cal=Math.abs(cal);
+						System.out.println("날짜차이:"+cal);
+						if(cal>=0) {
+							response.setContentType("text/html; charset=UTF-8");
+							PrintWriter out;
+							try {
+								out = response.getWriter();
+								out.println("<script>alert('"+r.getConfirmdate()+"일 까지 이용이 불가합니다.');"
+										+ "location.href='welcome';</script>");
+								out.flush();
+								out.close();
+								return "";
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
 					}
+					
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
