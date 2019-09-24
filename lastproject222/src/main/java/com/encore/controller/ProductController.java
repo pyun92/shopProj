@@ -73,20 +73,6 @@ public class ProductController {
 	return data;
 	}
 	
-	
-	
-	//에디터 이미지 등록
-/*	@RequestMapping("/editorImage")
-	public Map<String,Object> editorImage(MultipartHttpServletRequest mtfRequest,@ModelAttribute("data") Userdata user){
-		Map<String,Object> map=new HashMap<String, Object>();
-		String fileName=
-		
-		String fileExtends=mtfRequest.getFile("uploadfile").getOriginalFilename()
-		
-		return null;
-	}
-*/
-	//
 	//상품 등록
 	@RequestMapping("/insertProc" )
     public String requestupload2(MultipartHttpServletRequest mtfRequest,@ModelAttribute("data") Userdata userdata ) {
@@ -131,7 +117,6 @@ public class ProductController {
 
 	        return "redirect:product_getList2"; //판매목록보기로 이동
     }
-	
 	
 
 	//개인 상점 등록 상품관리 & 개인상점 상품리스트
@@ -333,6 +318,7 @@ public class ProductController {
 				buc.setCondition("bucket");
 				buc.setChecked(1);
 				buc.setReviewcheck(0);
+				System.out.println("장바구니 ");
 				service.insertBucket(buc);
 				
 				return "redirect:newbucketlist?optionseq="+request.getParameter("optionseq");

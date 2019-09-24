@@ -4,44 +4,17 @@
 <meta charset="UTF-8">
 
 <link rel="stylesheet" type="text/css" href="main.css">
-
-<!--  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>-->
-<!-- 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css" integrity="sha256-13EKEXRsynh3cmmNF1dlW6uvoC1SZVaW94bIHZQJoMU=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" integrity="sha256-OweaP/Ic6rsV+lysfyS4h+LM6sRwuO3euTYfr6M124g=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js" integrity="sha256-6DDZX77BrYnAmK9a3N3tvNPtyTIk1q1w9iW+UBtot3Y=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/aj	ax/libs/materialize/1.0.0/js/materialize.min.js" integrity="sha256-U/cHDMTIHCeMcvehBv1xQ052bPSbJtbuiw4QA9cTKz0=" crossorigin="anonymous"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
-	-->
-
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet"> -->
 <!-- 폰트 어썸 -->
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-	crossorigin="anonymous">
-
-
-<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
-	integrity="sha256-U/cHDMTIHCeMcvehBv1xQ052bPSbJtbuiw4QA9cTKz0="
-	crossorigin="anonymous"></script>
-
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="navbar-fixed-top ">
+	<div class="navbar-fixed-top">
 		<nav class="nav-fix col s12 m12 l12">
 			<!--  Logo 부분-->
 			<div class="row top-menu">
@@ -61,13 +34,12 @@
 
 						<!--검색 버튼-->
 						<button class="div-search btn col s2 m2 l2">검색</button>
-
+						
 					</form>
 				</div>
-
-				<!--실시간 검색어-->
-				<div class="col s1 m1 l1">검색어</div>
-
+				<!-- <th:block th:if="${session['data'] != null}">
+				<div th:text="${session['data'].userid} +' 님 이 로그인하셨습니다'"></div>
+				</th:block> -->
 				<!--회원가입 ,장바구니 -->
 				<div class="col s2 m2 l2">
 
@@ -104,10 +76,10 @@
 						</div>
 
 						<div class="bucket-icon col s4 m4 l4">
-							<a href="/jumoon?pgno=1" class="modal-trigger">
+							<a href="mydetail" class="modal-trigger">
 								<ul>
 									<li><i class="fas fa-user-check fa-3x"></i></li>
-									<li style="color: black; padding: 0">주문내역</li>
+									<li style="color: black; padding: 0">개인정보</li>
 								</ul>
 							</a>
 						</div>
@@ -154,8 +126,6 @@
 					</div>
 
 					<!-- 회원 가입 모달창 끝 -->
-
-
 					<th:block th:if="${session['data']==null}">
 						<div class="bucket-icon col s4 m4 l4">
 							<a href="#loginModal" class="modal-trigger">
@@ -177,10 +147,9 @@
 						</div>
 					</th:block>
 				</div>
+				
 			</div>
 	</div>
-
-
 	</nav>
 
 	</div>
@@ -274,7 +243,7 @@
 
 				<th:block
 					th:if="${session['data']!=null && session['data'].manage_level==1}">
-					<li><a th:href="@{/index(storeseq=${session['data'].userseq})}"> 개인
+					<li><a th:href="@{/index(storeseq=${session['data'].userseq})}">내
 							상점</a></li>
 				</th:block>
 
@@ -287,6 +256,7 @@
 
 	<!-- 스크립트  -->
 	<!-- Compiled and minified JavaScript -->
+	<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script type="text/javascript">
@@ -295,10 +265,6 @@
 		}
 		$(document).ready(
 				function() {
-					// 					$("#food1").on('click', function() {
-					// 						var food = $("#food1").val();
-					// 						alert(food);
-					// 					});
 					$(".zeta-menu ul li:has(ul)").find("a:first").append(
 							"<p style='float:right;margin:-3px'>&#9656;</p>");
 					//모달 오픈

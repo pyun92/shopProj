@@ -26,12 +26,6 @@ import com.encore.service.TimetableService;
 @Controller
 public class BoardController {
 	
-
-	/*
-	 * @GetMapping("/welcome") public void welcome() {
-	 * 
-	 * }
-	 */
 	@Autowired
 	private ProductService service;
 	
@@ -105,64 +99,9 @@ public class BoardController {
 		map.put("certkey", certkey);
 		return map;
 	}
-	
-	@GetMapping("/point")
-	public void point() {
-	
-	}
-	
-	@GetMapping("/cancel")
-	public void cancel() {
-	
-	}
-	
-	@GetMapping("/favoritem")
-	public void favoritem() {
-	
-	}
-	
-	@GetMapping("/recentitem")
-	public void recentitem() {
-	
-	}
-	
-	@GetMapping("/favormaker")
-	public void favormaker() {
-	
-	}
-	
 
-	
-
-	/*
-	 * @GetMapping("/jumoon") public void jumoon() {
-	 * 
-	 * }
-	 */
-	@GetMapping("/account")
-	public void account() {
-	
-	}
-	@GetMapping("/baesong")
-	public void baesong() {
-	
-	}
-	
-//	@GetMapping("/baesong_sj")
-//	public void baesongsj() {
-//	
-//	}
 	@GetMapping("/main")
 	public void main() {
-	
-	}
-
-//	@GetMapping("/index")
-//	public void index() {
-//	
-//	}
-	@GetMapping("/22222")
-	public void eeeee() {
 	
 	}
 	
@@ -174,9 +113,6 @@ public class BoardController {
 	public void detail() {
 	
 	}
-	@GetMapping("/infomodify")
-	public void modify() {
-	
-	}
+
 
 }

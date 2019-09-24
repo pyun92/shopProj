@@ -107,7 +107,6 @@ p {
 </style>
 </head>
 <body>
-
 	<div class="container row grey lighten-3">
 		<div class="col s12 align2" th:if="${tblist}==null">
 			<p class="textbig">
@@ -116,7 +115,7 @@ p {
 		</div>
 		<div class="col s3 align1" th:if="${tblist}!=null">
 			<p class="center-align">
-				<i class="small material-icons">shopping_cart </i> 영상 속 상점 들르기
+				<i class="small material-icons">shopping_cart</i> 영상 속 상점 들르기
 			</p>
 
 			<div class="hidden card center-align"
@@ -140,9 +139,6 @@ p {
 					</th:block>
 				</th:block>
 			</div>
-
-
-			<!-- 					상품정보 -->
 			<div class="hidden2 card center-align " th:if="${tblist}!=null"
 				th:each="product,index1: ${adprodimg}">
 				<input type="hidden" th:value="${index1.index}" class="1233">
@@ -186,9 +182,8 @@ p {
 		<div id="followquick" class="col hide-on-small-only s1 m3 l2"
 			style="border: 1px solid grey">
 			<ul class="section table-of-contents">
-				<li><a href="#chart0">주간 인기 상품</a></li>
-				<li><a href="#chart1">주간 인기 작가</a></li>
-				<li><a href="#chart2">작가 추천!</a></li>
+				<li><a href="#chart0">추천상품</a></li>
+				<li><a href="#chart1">전체상품</a></li>
 			</ul>
 		</div>
 	</div>

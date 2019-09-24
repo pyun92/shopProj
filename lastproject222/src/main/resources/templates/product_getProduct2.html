@@ -42,6 +42,13 @@ height: 370px;
 width: 100%;
 height: 100%;
 }
+
+.originPrice{
+	color:#bdbdbd;
+	text-decoration: line-through;
+	display:inline;
+}
+
 </style>
 </head>
 <body>
@@ -53,12 +60,8 @@ height: 100%;
 		<!-- 상품 이미지 버튼 -->
 			<div class="col s6 spalgin">
 			<!-- 사진추가할때 가져오는거 생각하기<input type="file" value="사진을 선택해주세요"> -->
-			
-<!-- 					mav.addObject("proDe", service.getProd(prod)); -->
-<!-- 		mav.addObject("proDeImg", imgService.getProdImg()); -->
-			
 			 <div class="carousel carousel-slider center" >
-    		 	<div class="carousel-item"  th:each="pro:${proDeImg}">
+    		 	<div class="carousel-item"   th:each="pro:${proDeImg}">
     				<img class="total-image" th:src="@{../upload/}+${pro.fileName}">
     				<input type="hidden" th:value="${pro.fileName}" name="filename">
    			 	</div>
@@ -74,29 +77,25 @@ height: 100%;
 			<input type="hidden" th:value="${proDe.storeseq}" name="storeseq">
 			<!-- <th:block th:if="${{session['data']!=null}"><input type="hidden" th:value="${session['data'].userseq}" name="owner"></th:block> -->
 			<h2 th:text="${proDe.proname}"></h2>
-			<h5 th:text="할인  + ${proDe.discount}"></h5>
-			<h4 th:text=" ${proDe.price} +' → '+(${proDe.price} - ${proDe.discount})+원"></h4><!-- 이부분 수정 -->
-			<label><span >판매수량</span></label> 
-			<th:block th:text="${proDe.jaego}+개"></th:block>
+			<h5 th:text="'할인  '+ ${proDe.discount} +' 원'"></h5>
+			<h4 class="originPrice" th:text="${proDe.price}"></h4><h3 style="display:inline;"th:text="' → '+(${proDe.price} - ${proDe.discount})+원"></h3><!-- 이부분 수정 -->
+			<p><label>판매수량</label><th:block th:text="${proDe.jaego}+개"></th:block></p>
 			<p>
 			<select id="options">
-				<option  >옵션을 선택해주세요</option>
-				
+				<option>옵션을 선택해주세요</option>
 				<option th:each="option:${proOption}" th:value="${option.optionseq}" >
 				<th:block th:if="${option.optioncontent}!='no'" th:text="${option.optioncontent}+' '+${option.optionname}+' (추가금액 : '+${option.optionprice}+')'"></th:block>
 				<th:block th:unless="${option.optioncontent}!='no'">옵션없음</th:block>
 				</option>
-				
 			</select>
 			<input type="hidden" id="optionseq" name="optionseq"> 
 			</p>
-			<p><div class="col s3">수량</div><input class="col s9" type="number" value="1" min="1" max="10" name="quantity"></p><!-- 수량 추가 버튼 -->
 			<p>
-				<a class="waves-effect waves-light btn" id ="directorder-btn" href="#">구매하기</a>
+				<label class="col s3">수량</label><input class="col s9" style="display:inline;" type="number" value="1" min="1" max="10" name="quantity">
+			</p><!-- 수량 추가 버튼 -->
+			<p>
+				<a class="waves-effect waves-light btn" id ="directorder-btn" href="javascript:void(0)">구매하기</a>
 				<input type="hidden" id="directorder-num" name="directnum" value="0"></input>
-<!-- 				<th:block th:if="${session.['data']==null}"> -->
-<!-- 				<input type="hidden" value="22" id="datadata"> -->
-<!-- 				</th:block> -->
 				<a href="javascript:void(0)" id ="bucket-btn" class="waves-effect waves-light btn">장바구니 담기</a>
 			</p>
 			</div>	
@@ -109,8 +108,7 @@ height: 100%;
 		<p>제품소개</p>
 			<div class="row">
 			<p id="editor" th:text="${proDe.editor}" style="display:none;"></p>
-			 <div id="content" class="card-panel teal lighten-2">
-			 	
+			 <div id="content">
 			 </div>
 			</div>
 		</section>
@@ -161,16 +159,16 @@ height: 100%;
     			</div>
   			</div>
   			<!-- 모달 끝 -->
-		</div>		
+	<!-- 	</div> -->		
 		</section>
   </div>
-</div>
-	<th:block th:include="footer.html"></th:block>
+<!-- </div> -->
+<th:block th:include="footer.html"></th:block>
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>		
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
 $(document).ready(function(){
-   // $('.carousel').carousel();
+   
     $('.carousel.carousel-slider').carousel({
         fullWidth: true,
         indicators: true
@@ -178,12 +176,7 @@ $(document).ready(function(){
     
     $('select').formSelect();
     
-  //  $('.modal').modal();
-    
-    
     $("#bucket-btn").on('click' ,function(){
-// 		var inss=$("#datadata").val();
-// 		alert(inss);
     	if($("#optionseq").val()==""){
 	    	alert("옵션을 선택해주세요");
 	    }else{
@@ -192,7 +185,6 @@ $(document).ready(function(){
     	
     });
     
-   // alert($('#editor').html());
     $('#content').append($('#editor').text());
     
     $("#options").on('change' ,function(){

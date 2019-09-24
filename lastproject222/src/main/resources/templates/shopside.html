@@ -23,8 +23,7 @@
 <!-- 					<li class="border1"><a class="red-text bold" href="#!"><i -->
 <!-- 							class="material-icons">favorite_border</i>내 단골 상점에 추가하기</a></li> -->
 					
-					<li class=" border1 hiddenSj"><a class="black-text"
-						th:href="@{/product_getList2(storeseq=${store.storeseq})}">판매목록 보기</a></li>	
+					
 						
 <!-- 					<li class="border1"><a class="black-text" -->
 <!-- 						href="sjTimeLine.html">담벼락(공지사항) 보기</a></li> -->
@@ -34,6 +33,8 @@
 					
 					<th:block th:if="${session['data']!=null}">
 					<th:block th:if="${session['data'].userseq}==${store.storeseq}">
+					<li class=" border1 hiddenSj"><a class="black-text"
+						th:href="@{/product_getList2(storeseq=${store.storeseq})}">판매목록 보기</a></li>	
 					<li class="border1 hiddenSj"><a class="black-text"
 						href="product_insert">상품등록</a></li>
 						<li class="border1"><a class="black-text"
