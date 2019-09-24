@@ -146,6 +146,7 @@ public class MyinfoController {
 	public String myReview(@ModelAttribute("data") Userdata data,Model model) {
 		System.out.println("데이터"+data.getUserseq());
 		model.addAttribute("completelist",myinfoservice.ordercompleteList(data.getUserseq()));
+		model.addAttribute("options",optionservice.findoption());
 		return "myreview";
 	}
 	
