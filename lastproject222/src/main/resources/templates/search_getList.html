@@ -55,6 +55,43 @@ html {
 	
 }
 
+.font001 {
+	font-family: NanumGothic;
+	font-size: 40px;
+}
+
+.font002 {
+	font-size: 21px;
+	font-family: NanumGothic;
+	font-weight: bold;
+}
+.nopadding{
+margin-bottom: 0px;
+margin-top: 0px;
+}
+.nopadding2{
+margin-top: 4px;
+margin-bottom: 0px;
+}
+.fullcard {
+	margin-top: 30px;
+	margin-bottom: 0;
+	font-family: NanumGothic;
+}
+
+img {
+	height: 100%;
+	width: 100%;
+}
+
+.card-image {
+	height: 220px;
+}
+
+.card-content {
+	height: 130px;
+	font-family: NanumGothic;
+}
 /* 따라다니는 애 안보이게 맨 앞으로 둠 */
 /* #video_main{
 	z-index:1; 
@@ -63,44 +100,48 @@ html {
 </head>
 <body>
 	<div></div>
-	<div class="container row grey lighten-3">
-		<div class="col s12">
+	<div class="container row ">
+		<div class="col s12 ">
 			<p class="fontsize20px">상점 리스트 (검색 상품을 판매하는 상점입니다)</p>
-			<div class="col s12 row">
-				<th:block th:if="${storelist}!=null" th:each="store : ${storelist}">
-					<div class="col s12 l4 ">
+			<div class="col s12 row " >
+				<th:block th:if="${storelist}!=null" th:each="store : ${firstp}">
+					<div class="col s12 l4">
+						<div class="card cardlist">
 						<a th:href="@{/index(storeseq=${store.storeseq})}">
-							<div class="imgdiv ">
-								<img th:src="@{../storeimages/}+${store.storeimg}" class="img1">
+							<div class="card-image">
+								<img th:src="@{../storeimages/}+${store.storeimg}">
 							</div>
-							<div class="col s12 l12">
-								<div th:text="${store.storetype}" class="storecategories"></div>
-								<div th:text="${store.storename}" class="storenames marginbb"></div>
-								<div th:text="${store.storedetail}"
-									class=" marginbb storedetails"></div>
+							<div class="card-content ">
+								<p class="grey-text text-darken-2">
+									<th:block th:text="${store.storetype}"></th:block>
+								</p>
+								<p class="black-text font002">
+									<th:block th:text="${store.storename}"></th:block>
+								</p>
+								<p class="grey-text text-darken-2">
+									<th:block th:text="${store.storedetail}"></th:block>
+								</p>
 							</div>
 						</a>
 					</div>
+					</div>
 				</th:block>
 				<p th:if="${storelist}==null">"검색한 단어와 관련된 상점이 없습니다."</p>
-				<div class="col s12 l12 center-align ">
-					<ul class="pagination">
-						<li class="disabled"><a href="#!"><i
-								class="material-icons">chevron_left</i></a></li>
-						<th:block th:if="${pagesu>0}"
-							th:each="num: ${#numbers.sequence(1,{pagesu})}">
-							<li class="active"><a href="#!" th:text="${num}"></a></li>
-						</th:block>
-						<li class="waves-effect"><a href="#!"><i
-								class="material-icons">chevron_right</i></a></li>
+<!-- 				<div class="col s12 l12 center-align "> -->
+<!-- 					<ul class="pagination"> -->
+<!-- 						<th:block th:if="${pagesu>0}" -->
+<!-- 							th:each="num: ${#numbers.sequence(1,{pagesu})}"> -->
+<!-- 							<li class="active"><a href="#!"  th:value="${num}" th:text="${num}"></a></li> -->
+<!-- 						</th:block> -->
 
-					</ul>
-				</div>
+<!-- 					</ul> -->
+<!-- 				</div> -->
 
 			</div>
 			<div class="col s12">
 				<p class="fontsize20px">상품 리스트</p>
-				<div class="col s12 l3" th:if="${prodlist}!=null" th:each="prod : ${prodlist}">
+				<div class="col s12 l3" th:if="${prodlist}!=null"
+					th:each="prod : ${prodlist}">
 					<th:block th:each="prodimg : ${prodimglist}"
 						th:if="${prod.productseq}==${prodimg.imgnum}">
 						<div class="card card1">
@@ -110,16 +151,16 @@ html {
 									<img th:src="@{../upload/}+${prodimg.fileName}" class="img2">
 								</div>
 								<div class="card-content align1 center-align">
-									<div>
+									<p>
 										<th:block th:text="${prod.categorysmall}"
 											th:class="strcategorysmall"></th:block>
-									</div>
-									<div>
+									</p>
+									<p class="black-text font002">
 										<th:block th:text="${prod.proname}" th:class="stname"></th:block>
-									</div>
-									<div>
+									</p>
+									<p class="grey-text text-darken-2">
 										<th:block th:text="${prod.price} +원" th:class="stprice"></th:block>
-									</div>
+									</p>
 								</div>
 							</a>
 						</div>

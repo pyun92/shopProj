@@ -63,6 +63,11 @@ public class SearchServiceImpl implements SearchService {
 		int n = shoprep.gettotalpage()==null?0:shoprep.gettotalpage();
 		return n;
 	}
+	
+//	@Override
+//	public List<Store> getpagestore(int page){
+//		return shoprep.getstorebypage(page);
+//	}
 
 	@Override
 	public List<Store> searchStorebycate(String word) {

@@ -13,4 +13,5 @@ import com.encore.domain.Store;
 public interface SearchStoreRepository extends JpaRepository<Store, Long>{
 	@Query(value = "select max(ceil(rownum/3)) as page from (select * from Store order by rownum desc) ",nativeQuery = true)
 	Integer gettotalpage();
+	
 }

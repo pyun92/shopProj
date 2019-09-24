@@ -25,6 +25,7 @@ public class SearchController {
 		System.out.println("service.searchProd(word)"+service.searchProd(word).size());
 		System.out.println("service.searchStore(word)"+service.searchStore(word));
 		model.addAttribute("pagesu", service.getTotalPage());
+//		model.addAttribute("firstp", service.getpagestore(1));
 		
 		model.addAttribute("prodimglist", imgservice.getDetailNum());
 		model.addAttribute("storelist", service.searchStore(word).size()==0?null:service.searchStore(word));

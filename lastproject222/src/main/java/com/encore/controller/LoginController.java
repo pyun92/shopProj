@@ -47,7 +47,7 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(Userdata data, Model model, HttpServletResponse response) {
 		Userdata findMember = logindata.login(data);
-		Report r= adminservice.selectReportuser(findMember.getUserid());
+		Report r= findMember==null?null:adminservice.selectReportuser(findMember.getUserid());
 		
 		if (findMember != null && findMember.getPassword().equals(data.getPassword())) {
 			System.out.println(findMember.getManage_level());

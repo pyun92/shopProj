@@ -13,4 +13,5 @@ public interface SearchService{
 	List<Store> searchStorebycate(String word);
 	List<Product> searchProdbycate(String word);
 	int getTotalPage();
+//	List<Store> getpagestore(int page);
 }
