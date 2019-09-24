@@ -22,7 +22,11 @@ html .pullheight {
 	height: 270px;
 	margin-bottom: 0;
 }
-
+.cardlist2 {
+	margin-top: 30px;
+	height: 330px;
+	margin-bottom: 0;
+}
 .sidenav {
 	padding-bottom: 40px;
 	padding-top: 40px;
@@ -37,7 +41,15 @@ html .pullheight {
 	border-color: #90a4ae;
 	margin-bottom: 11px;
 }
+.font001 {
+	font-family: Yet R;
+	font-size: 40px;
+}
 
+.font002 {
+	font-size: 21px;
+	font-family: NanumGothic;
+}
 .list_img{
 	width: 200px;
 	height:auto;
@@ -53,58 +65,77 @@ padding-top: 60px;
 </style>
 </head>
 <body>
-	<div class="container" >
-		<!-- <div class="row"> -->		
-	<!-- <div class="col s12" style="padding-left:30px;" > -->
-	<section>
-		<h5 id="chart0" >추천 상품</h5>
+	<div class="container">
 		<div class="row">
-    		<!-- 상품한개 -->
-    		<div class="col s12 m6 l3" th:each="product : ${list}">
-    		<th:block th:each="procimgdetail:${procimgdetail}" th:if="${product.productseq}==${procimgdetail.imgnum}"> 
-      			<div class="card cardlist" >
-      				<a th:href="@{/product_getProduct2(productseq=${product.productseq})}">
-        			<div class="card-image">
-          				<img th:src="@{../upload/}+${procimgdetail.fileName}" >
-          				<span class="card-title" style="color: black;"><th:block th:text="${procimgdetail.imgnum}" ></th:block> </span>
-        			</div>
-        		<div class="card-content">
-        			<p><th:block th:each="advertisement: ${adlist}" th:if="${advertisement.prodseq}==${product.productseq}" th:text="${advertisement.intro}"></th:block></p>
-          			<p><th:block th:text="${product.price}"></th:block> </p>
-        		</div>
-       			 </a>
-      			</div>
-      		</th:block>
-    		</div>
-    	</div>
-	</section>
-	<div class="divider"></div>
-<!-- 전체상품 :나중에 foreach 문으로 바꾸기-->
-	<section>
-		<h5 id="chart1">전체상품</h5>
-		<div class="row">
-		<!-- 상품한개 -->
-      		<div class="col s12 m6 l3" th:each="prodall : ${prodall}">
-    		<th:block th:each="procimgdetail:${procimgdetail}" th:if="${prodall.productseq}==${procimgdetail.imgnum}"> 
-      			<div class="card cardlist" >
-     	 			<a th:href="@{/product_getProduct2(productseq=${prodall.productseq})}"><!--  @{/getBoard(seq=${board.seq})} -->
-        			<div class="card-image">
-          				<img th:src="@{../upload/}+${procimgdetail.fileName}" >
-          				<!-- <span class="card-title" style="color: black;"><th:block th:text="${procimgdetail.imgnum}" ></th:block> </span> -->
-        			</div>
-        			<div class="card-content">
-        				<p th:text="${prodall.proname}"></p>
-          				<p th:text="${prodall.price}"></p>
-        			</div>
-        			</a>
-      			</div>
-      		</th:block>
-    		</div>
-  		</div>
-  	</section>
-  <!-- </div> -->
- <!--  </div> -->
- </div>
+			<div class="col s12" style="padding-left: 30px;">
+				<section>
+					<h5 id="chart0" class="font001">추천 상품</h5>
+					<div class="row">
+
+						<!-- 상품한개 -->
+						<div class="col s12 l3" th:each="product : ${list}">
+							<th:block th:each="procimgdetail:${procimgdetail}"
+								th:if="${product.productseq}==${procimgdetail.imgnum}">
+								<div class="card cardlist2">
+									<a
+										th:href="@{/product_getProduct2(productseq=${product.productseq})}">
+										<div class="card-image">
+											<img th:src="@{../upload/}+${procimgdetail.fileName}">
+										</div>
+										<div class="card-content">
+											<p class="grey-text text-darken-2">
+												<th:block th:text="${product.price}+'원'"></th:block>
+											</p>
+											<p class="black-text font002">
+												<th:block th:text="${product.proname}"></th:block>
+											</p>
+											<p>
+												<th:block th:each="advertisement: ${adlist}"
+													th:if="${advertisement.prodseq}==${product.productseq}"
+													th:text="${advertisement.intro}"></th:block>
+											</p>
+
+										</div>
+									</a>
+								</div>
+							</th:block>
+						</div>
+					</div>
+
+				</section>
+
+				<div class="divider"></div>
+				<section>
+					<h5 id="chart1" class="font001">전체 상품</h5>
+					<div class="row">
+						<!-- 상품한개 -->
+						<div class="col s12 l3" th:each="prodall : ${prodall}">
+							<th:block th:each="procimgdetail:${procimgdetail}"
+								th:if="${prodall.productseq}==${procimgdetail.imgnum}">
+								<div class="card cardlist">
+									<a
+										th:href="@{/product_getProduct2(productseq=${prodall.productseq})}">
+										<!--  @{/getBoard(seq=${board.seq})} -->
+										<div class="card-image">
+											<img th:src="@{../upload/}+${procimgdetail.fileName}">
+										</div>
+										<div class="card-content">
+											<p class="grey-text text-darken-2">
+												<th:block th:text="${prodall.price}+'원'"></th:block>
+											</p>
+											<p class="black-text font002">
+												<th:block th:text="${prodall.proname}"></th:block>
+											</p>
+										</div>
+									</a>
+								</div>
+							</th:block>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
  
 <!--머티리얼 디자인 자바스크립트-->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
