@@ -40,10 +40,6 @@
 	<div class="container">
 		<div class="row repo_table">
 		<!-- 상점판매순위 -->
-			<div id="charts" class="col s12 card">
-			<!-- 최고매출상점 -->
-			</div>
-			
 			<!-- 상점목록 -->
 			<div class="col s12 card">
 				<div id="index1" class="col s12 white">
@@ -112,29 +108,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script><!-- 구글차트 -->
 <script>
-function drawChart() {
 
-    var data = new google.visualization.DataTable();
-    /* 데이터 가져왔을때 이부분 수정 */
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
-    data.addRows([
-      ['Mushrooms', 3],
-      ['Onions', 1],
-      ['Olives', 1],
-      ['Zucchini', 1],
-      ['Pepperoni', 2]]);
-      /* 수정끝! */
-      var options = {'title':'최고매출상점',
-              'width':400,
-              'height':300};
-      var chart = new google.visualization.PieChart(document.getElementById('charts'));
-      chart.draw(data, options);
-}
 $(document).ready(function(){
 
-	google.charts.load('current', {'packages':['corechart']});
-	google.charts.setOnLoadCallback(drawChart);
+	
 	
 	var tr,email,seq;
 	
