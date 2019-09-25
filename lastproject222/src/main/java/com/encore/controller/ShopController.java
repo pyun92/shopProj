@@ -46,15 +46,17 @@ public class ShopController {
 	}
 
 	@RequestMapping(value= {"/index","/"})
-	public ModelAndView index(ModelAndView mav, Store store) {
+	public String index(Model model, Store store) {
 		if(shopservice.findbyid(store.getStoreseq())==null) {
 //			mav.setViewName("welcome");
-			mav.setViewName("redirect:welcome");
+//			model.setViewName("redirect:welcome");
+			return "redirect:welcome";
 		}else {
-			mav.setViewName("index");
-			mav.addObject("store", shopservice.findbyid(store.getStoreseq()));
+//			model.addObject("store", shopservice.findbyid(store.getStoreseq()));
+			model.addAttribute("store", shopservice.findbyid(store.getStoreseq()));
+			return "redirect:product_getList2?storeseq="+store.getStoreseq();
 		}
-		return mav;
+	
 	}
 
 	@RequestMapping("/storelist")

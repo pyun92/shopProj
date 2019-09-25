@@ -115,7 +115,7 @@ public class ProductController {
 				}
 			}
 
-	        return "redirect:product_getList2"; //판매목록보기로 이동
+	        return "redirect:welcome"; //판매목록보기로 이동
     }
 	
 
