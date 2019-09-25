@@ -94,9 +94,22 @@ height: 100%;
 				<label class="col s3">수량</label><input class="col s9" style="display:inline;" type="number" value="1" min="1" max="10" name="quantity">
 			</p><!-- 수량 추가 버튼 -->
 			<p>
-				<a class="waves-effect waves-light btn" id ="directorder-btn" href="javascript:void(0)">구매하기</a>
+				<th:block th:if="${session['data']==null}">
+				<a class="waves-effect waves-light btn" id ="directorder-btn1" href="#">구매하기</a>
+				</th:block>
+				
+				<th:block th:if="${session['data']!=null}">
+				<a class="waves-effect waves-light btn" id ="directorder-btn2" href="#">구매하기</a>
 				<input type="hidden" id="directorder-num" name="directnum" value="0"></input>
-				<a href="javascript:void(0)" id ="bucket-btn" class="waves-effect waves-light btn">장바구니 담기</a>
+				</th:block>
+				
+				<th:block th:if="${session['data']==null}">
+				<a href="javascript:void(0)" id ="bucket-btn1" class="waves-effect waves-light btn">장바구니 담기</a>
+			</th:block>
+			
+			<th:block th:if="${session['data']!=null}">
+				<a href="javascript:void(0)" id ="bucket-btn2" class="waves-effect waves-light btn">장바구니 담기</a>
+			</th:block>
 			</p>
 			</div>	
 		</div>
@@ -192,7 +205,19 @@ $(document).ready(function(){
     	$("#optionseq").val(index);
     });
     
-    $("#directorder-btn").on('click' ,function(){
+    $("#directorder-btn2").on('click' ,function(){
+    	if($("#optionseq").val()==""){
+	    	alert("옵션을 선택해주세요");
+	    }else{
+	    	$("#directorder-num").val(1);
+	    	document.getElementById("item-detail-bucket").submit();
+	    }
+  });
+    $("#bucket-btn1").on('click' ,function(){
+    	alert("로그인이 필요한 서비스 입니다");
+    });
+    
+    $("#directorder-btn2").on('click' ,function(){
     	if($("#optionseq").val()==""){
 	    	alert("옵션을 선택해주세요");
 	    }else{
@@ -201,7 +226,9 @@ $(document).ready(function(){
 	    }
   });
     
-    
+    $("#directorder-btn1").on('click' ,function(){
+    	alert("로그인이 필요한 서비스 입니다");
+    });
     $('.review').each(function(i){
 		//신고버튼 클릭시
 		$('.report:eq('+i+')').on("click",function(){

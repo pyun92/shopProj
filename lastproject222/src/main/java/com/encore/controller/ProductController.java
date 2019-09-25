@@ -321,7 +321,15 @@ public class ProductController {
 				System.out.println("장바구니 ");
 				service.insertBucket(buc);
 				
-				return "redirect:newbucketlist?optionseq="+request.getParameter("optionseq");
+				if(Integer.parseInt(request.getParameter("directnum"))==1) {
+					System.out.println("dddd");
+					buc.setCondition("dirorder");
+					return "redirect:paymentwindowdir?bucnum="+buc.getBucketseq();
+					}else {
+						System.out.println("1111111");
+					return "redirect:newbucketlist";
+					
+					}
 				
 			}
 
