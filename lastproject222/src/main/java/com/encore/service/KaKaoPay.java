@@ -1,6 +1,7 @@
 package com.encore.service;
 
 
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
  
@@ -28,7 +29,7 @@ public class KaKaoPay {
 	    public String kakaoPayReady(ProductOrder order) {
 	 
 	        RestTemplate restTemplate = new RestTemplate();
-	 
+	        
 	        // 서버로 요청할 Header
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.add("Authorization", "KakaoAK " + "242388b65644c20e2687e29b7f8cb428");
@@ -44,19 +45,20 @@ public class KaKaoPay {
 	        params.add("quantity", "1");
 	        params.add("total_amount", order.getCalprice());
 	        params.add("tax_free_amount", "100");
-	        params.add("approval_url", "http://localhost:8080/kakaoPaySuccess");
-	        params.add("cancel_url", "http://localhost:8080/kakaoPayCancel");
-	        params.add("fail_url", "http://localhost:8080/kakaoPaySuccessFail");
+	        params.add("approval_url", "http://192.168.113.60:8080/kakaoPaySuccess");
+	        params.add("cancel_url", "http://192.168.113.60:8080/kakaoPayCancel");
+	        params.add("fail_url", "http://192.168.113.60:8080/kakaoPaySuccessFail");
 	 
 	         HttpEntity<MultiValueMap<String, Object>> body = new HttpEntity<MultiValueMap<String, Object>>(params, headers);
 	 
 	        try {
 	            kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KaKao.class);
-	            
+//	            kakaoPayReadyVO.setNext_redirect_pc_url("http://192.168.113.60:8080/");
 	           // log.info("" + kakaoPayReadyVO);
 	            
 	            return kakaoPayReadyVO.getNext_redirect_pc_url();
-	 
+//	            return "/kakaoPaySuccess";
+	            
 	        } catch (RestClientException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();

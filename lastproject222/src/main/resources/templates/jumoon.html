@@ -170,15 +170,19 @@ font-size: 15px;
 		<td th:text="${jude.deliveryfee}" class="item-deliveryfee"></td>
 		<td th:text="${jude.sellername}"></td>
 		<td class="cal-price1" th:each="option:${options}" th:if="${option.optionseq}==${jude.optionseq}" th:text="(${jude.price}*${jude.quantity}-${jude.discount}*${jude.quantity}+2500+${option.optionprice}*${jude.quantity})+원"></td>
+		<input type="hidden" th:value="${jude.bucketseq}" class="jumoonlist-bucseq"></input>
 		<td  th:if="${jude.condition}=='cancel'" style="color: red">주문이 취소됨</td>
 		<td  th:if="${jude.condition}=='payment'" style="color: green ;text-align: center;">
-		<p><a class="btn cancelbtn1">상품 취소하기</a></p>
+		<p><a class="btn">상품 취소하기</a></p>
 		배송 준비중</td>
-		<input type="hidden" th:value="${jude.bucketseq}" class="jumoonlist-bucseq"></input>
+		
+		<input type="text" th:value="${jude.bucketseq}"></input>
 		
 		<td  th:if="${jude.condition}=='complete' or ${jude.condition}=='receive'" style="color: blue">
+		
 		<p><a href="#" class="received btn" th:if="${jude.condition}=='complete'">상품 수령 확인</a></p>
-		<p class="bfreceived" th:if="${jude.condition}=='complete'">배송 중</p>
+		<p class="bfreceived" th:if="${jude.condition}=='complete'" style="display: show;">배송 중</p>
+		
 		<p  th:if="${jude.condition}=='receive'">상품 수령 완료</p>
 		<p  th:if="${jude.condition}=='receive'"><a href="/myreview"class="btn">상품 후기 작성하기</a></p>
 		</td>
@@ -267,9 +271,10 @@ font-size: 15px;
 	});
 	
 	$('.cancelbtn1').on('click',function(){
-		var index=$(".cancelbtn1").index(this);
-		var seq=$(".jumoonlist-bucseq:eq("+index+")").val();
+		aler("aaa"); 
+		var seq=$(".jumoonlist-bucseq").val();
 		var choose=confirm("주문을 취소 하시겠습니까?");
+		
 		alert("seq"+seq);
 		 if(choose){
  			$.ajax({
@@ -296,6 +301,7 @@ font-size: 15px;
 		var index=$(".received").index(this);
 		var seq=$(".jumoonlist-bucseq:eq("+index+")").val();
 		var choose=confirm("상품을 수령을 하셨습니까?");
+		alert(index);
 		alert("seq"+seq);
 		 if(choose){
  			$.ajax({

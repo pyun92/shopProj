@@ -45,19 +45,22 @@ public class LoginController {
 	
 	//회원 로그인
 	@PostMapping("/login")
-	public String login(Userdata data, Model model, HttpServletResponse response) {
+	public String login(SessionStatus status,Userdata data, Model model, HttpServletResponse response) {
 		Userdata findMember = logindata.login(data);
 		Report r= findMember==null?null:adminservice.selectReportuser(findMember.getUserid());
 		
 		if (findMember != null && findMember.getPassword().equals(data.getPassword())) {
 			System.out.println(findMember.getManage_level());
 			//admin일때
+			
 			if(findMember.getManage_level()==2L) {
 				System.out.println("매니저");
 				return "redirect:admin_main";
 			}
+			
 			//신고게시판에 이름이 있을때
-			if(r!=null && findMember.getManage_level()==1L) {
+			if(r!=null) {
+				System.out.println("신고리스트"+r.getProductseq());
 				try {
 					SimpleDateFormat format=new SimpleDateFormat("yyyy/mm/dd");
 					Date today=format.parse(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
@@ -65,6 +68,7 @@ public class LoginController {
 						response.setContentType("text/html; charset=UTF-8");
 						PrintWriter out;
 						try {
+							
 							out = response.getWriter();
 							out.println("<script>alert('신고접수상태입니다.');"
 									+ "location.href='welcome';</script>");
@@ -80,6 +84,7 @@ public class LoginController {
 						cal=Math.abs(cal);
 						System.out.println("날짜차이:"+cal);
 						if(cal>=0) {
+							
 							response.setContentType("text/html; charset=UTF-8");
 							PrintWriter out;
 							try {
@@ -104,7 +109,6 @@ public class LoginController {
 			}
 			//신고테이블에 이름이 있건 없건 둘다 welcome 페이지로 넘어감
 			return "redirect:welcome";
-
 		} else {
 			return "redirect:welcome";
 		}

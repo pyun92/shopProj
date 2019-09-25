@@ -117,6 +117,7 @@ public class AdminServiceImpl implements AdminService{
 		for(int i=0;i<list.size();i++) {
 			products.add(productRepository.findByProductseq(list.get(i).getProductseq()).get());
 		}
+		System.out.println("관리자 상품번호 :"+products.get(0).getProductseq());
 		return products;
 	}
 

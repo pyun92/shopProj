@@ -23,6 +23,7 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public List<Review> findReview(Product prod) {
 		List<Review> list=  rep.findByProductseq(prod.getProductseq());
+		//System.out.println(list.get(0).getReviewdetail());
 		return list.size()==0?null:list;
 	}
 

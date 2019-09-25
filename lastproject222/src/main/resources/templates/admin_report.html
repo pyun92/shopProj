@@ -52,7 +52,7 @@
 								<td><label><input type="checkbox" class="reportitem"/><span></span></label></td>
 								<td th:hidden="seq"><input type="hidden" name="seq" th:value="${list1.reportseq}"></td>
 								<td th:text="${list1.reportname}"></td>
-								<th:block th:each="pro,index:${product}" th:if="${index.index}==${list1.productseq}">
+								<th:block th:each="pro:${product}" th:if="${pro.productseq}==${list1.productseq}">
 									<td><a th:href=@{/product_getProduct2(productseq=${pro.productseq})} th:text="${pro.proname}"></a></td>
 								</th:block>
 								<td><a href="#modal-report" class="modal-trigger subject"><th:block th:text="${list1.reportsubject}"></th:block></a></td>
