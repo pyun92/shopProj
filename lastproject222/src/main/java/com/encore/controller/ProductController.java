@@ -313,7 +313,7 @@ public class ProductController {
 				buc.setUserseq(user.getUserseq());
 				buc.setStoreseq(Long.parseLong(request.getParameter("storeseq")));
 				buc.setProductseq(Long.parseLong(request.getParameter("productseq")));
-				//buc.setBucketoption(option.getOptioncontent()+"   "+option.getOptionname()+"  (+"+option.getOptionprice()+"원)");
+				//buc.setBucketoption(option.getOptioncontent()+" 1  "+option.getOptionname()+"  (+"+option.getOptionprice()+"원)");
 				buc.setOptionseq(Long.parseLong(request.getParameter("optionseq")));
 				buc.setCondition("bucket");
 				buc.setChecked(1);
