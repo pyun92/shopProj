@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailChkService {
-
 	public void send(String username, String password, String recipientEmail, String ccEmail, String title,
 			String message) throws AddressException, MessagingException {
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());

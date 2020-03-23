@@ -12,7 +12,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+<<<<<<< HEAD
 import org.springframework.ui.Model;
+=======
+>>>>>>> master
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,9 +37,12 @@ public class ShopController {
 	@Value("${store.upload-dir}")
 	String storeFileURL;
 
+<<<<<<< HEAD
 	@Value("${storeimg.upload-dir}")
 	String storeimgFileURL;
 	
+=======
+>>>>>>> master
 	@Autowired
 	private ShopService shopservice;
 
@@ -45,6 +51,7 @@ public class ShopController {
 
 	}
 
+<<<<<<< HEAD
 	@RequestMapping(value= {"/index","/"})
 	public String index(Model model, Store store) {
 		if(shopservice.findbyid(store.getStoreseq())==null) {
@@ -63,8 +70,19 @@ public class ShopController {
 	public String list(Model mav) {
 		mav.addAttribute("stlist",shopservice.AllstoreList());
 		return "storelist";
+=======
+	@RequestMapping("/index")
+	public ModelAndView index(ModelAndView mav, Store store) {
+		if(shopservice.findbyid(store.getStoreseq())==null) {
+			mav.setViewName("welcome");
+		}else {
+			mav.setViewName("index");
+			mav.addObject("store", shopservice.findbyid(store.getStoreseq()));
+		}
+		return mav;
+>>>>>>> master
 	}
-	
+
 	@RequestMapping("/namecheck")
 	@ResponseBody
 	public Map<Object, Object> nameCheck(@RequestBody String data) {
@@ -76,12 +94,19 @@ public class ShopController {
 	@PostMapping("/insertShop")
 	public String insertShop(MultipartHttpServletRequest mrequest, @ModelAttribute("data") Userdata user) {
 		List<MultipartFile> storefile = mrequest.getFiles("storefile");
+<<<<<<< HEAD
 		MultipartFile storeimg = mrequest.getFile("storeimg");
 
 		Store store = new Store();
 		String storename;
 		
 		store.setStorename(mrequest.getParameter("storename"));
+=======
+
+		Store store = new Store();
+		String storename = mrequest.getParameter("storename");
+		store.setStorename(storename);
+>>>>>>> master
 		System.out.println("세션 아이디" + user.getUserseq());
 		store.setStoreseq(user.getUserseq());
 		store.setStoredetail(mrequest.getParameter("storedetail"));
@@ -91,21 +116,37 @@ public class ShopController {
 		System.out.println(store.getStoredetail() + store.getStoreemail() + store.getStoretype());
 		// 이미지파일 추가
 		for (int i = 0; i < storefile.size(); i++) {
+<<<<<<< HEAD
 			String fileName=user.getUserid()+"_"+i;
 			String fileExtendsion=FilenameUtils.getExtension(storefile.get(i).getOriginalFilename()).toLowerCase();
 			storename=fileName+"."+fileExtendsion;
 			File lastFile=new File(storeFileURL+storename);
+=======
+			String fileName = storename + "_" + i;
+
+			String fileExtendsion = FilenameUtils.getExtension(storefile.get(i).getOriginalFilename()).toLowerCase();
+			File lastFile = new File(storeFileURL + fileName + "." + fileExtendsion);
+>>>>>>> master
 
 			try {
 				storefile.get(i).transferTo(lastFile);
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
+<<<<<<< HEAD
 			}
 
 			lastFileName+=storename;
 			if (i + 1 < storefile.size()) {
 				lastFileName += ",";
 			}
+=======
+			}
+
+			lastFileName += fileName;
+			if (i + 1 < storefile.size()) {
+				lastFileName += ",";
+			}
+>>>>>>> master
 			System.out.println("저장할 파일 이름:" + lastFileName);
 
 		}
@@ -129,8 +170,11 @@ public class ShopController {
 		System.out.println("store " + store.toString());
 		shopservice.insertStore(store);
 
+<<<<<<< HEAD
 		
 		
+=======
+>>>>>>> master
 		return "welcome";
 	}
 }

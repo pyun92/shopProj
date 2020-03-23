@@ -38,9 +38,12 @@ public class ShopServiceImpi implements ShopService {
 		return store;
 	}
 
+<<<<<<< HEAD
 	@Override
 	public List<Store> AllstoreList() {
 		return (List<Store>)repository.findAll();
 	}
 
+=======
+>>>>>>> master
 }

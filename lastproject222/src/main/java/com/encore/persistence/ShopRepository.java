@@ -13,5 +13,8 @@ public interface ShopRepository extends CrudRepository<Store, Long> {
 
 	Optional<Store> findByStorename(String data);
 	Store findByStoreseq(Long storeseq);
+<<<<<<< HEAD
 	Optional<Store> findByStoreemail(String email);
+=======
+>>>>>>> master
 }

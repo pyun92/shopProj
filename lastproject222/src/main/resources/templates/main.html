@@ -156,6 +156,7 @@
 	<nav class="menu-nav-con1">
 		<div class="menu-nav-con col s12 m12 l12 ">
 			<!-- 매뉴 목록 -->
+<<<<<<< HEAD
 			<ul class="nav">
 				<!----- Full Drop Down Name ---->
 				<li class="dropdown"><a href="#">카테고리</a> <!----- Full Drop Down Name Ends Here ---->
@@ -169,6 +170,67 @@
 										<a href="/search_getLists?category=식품">식품</a>
 									</p>
 								</li>
+=======
+	        <ul class="nav">
+            <!----- Full Drop Down Name ----> 
+              <li class="dropdown">
+              <a href="#">메인 메뉴</a>     
+            <!----- Full Drop Down Name Ends Here ---->     
+                         
+            <!----- Full Drop Down Contents  Starts Here---->     
+              <div class="fulldrop">              
+                <div class="column">
+                  <h3>식품</h3>
+                  <ul> 
+					<li><a href="getList/" id="food1">주류</a></li>
+					<li><a href="#" id="food2">간식</a></li>
+					<li><a href="#" id="food3">발효 식품</a></li>
+					<li><a href="#" id="food4">김치</a></li>
+					<li><a href="#" id="food5">김치</a></li>
+					<li><a href="#" id="food6">김치</a></li>
+					<li><a href="#" id="food7">김치</a></li>		
+					<li><a href="#"></a></li>
+                  </ul>
+                </div>
+                
+                
+                
+                <div class="column">
+                  <h3>옷</h3>
+                  <ul>
+					<li><a href="#" id="dress1">전통 한복</a></li>
+					<li><a href="#" id="dress2">계량 한복</a></li>
+					<li><a href="#" id="dress3">신</a></li>
+					<li><a href="#" ></a></li>
+                  </ul>
+                </div>
+                
+                
+     		  <div class="column">
+      	            <h3>식품</h3>
+                  <ul>
+					<li><a href="#">주류</a></li>
+					<li><a href="#">간식</a></li>
+					<li><a href="#">발효 식품</a></li>
+					<li><a href="#">김치</a></li>
+					<li><a href="#"></a></li>
+                  </ul>
+                </div>
+ 
+              </div>
+              </li>
+             
+              
+         
+               <li><a href="#"> LifeStyle</a></li>
+               <li><a href="#"> About</a></li>
+      
+              <th:block th:if="${session['data']!=null && session['data'].manage_level==1}" > 
+              <li><a th:href="@{/index(storeseq=${session['data'].userseq})}"> 개인 상점</a></li>
+               </th:block>
+              
+     
+>>>>>>> master
 
 								<li><a href="/search_getLists?category=전통발효식품" id="food1">전통발효식품</a></li>
 								<li><a href="/search_getLists?category=장" id="food2">장</a></li>
